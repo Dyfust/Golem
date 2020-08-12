@@ -15,6 +15,8 @@ public class CharacterController : IMovementController
     {
         _rb = rb;
         _settings = settings;
+
+        DebugWindow.AddPrintTask(() => { return "Golem Surface Normal: " + _groundNormal.ToString(); });
     }
 
     public void FixedUpdate()
@@ -25,26 +27,23 @@ public class CharacterController : IMovementController
         Vector3 velocity = _rb.velocity;
         Vector3 acceleration = _bufferedAcceleration * Time.fixedDeltaTime;
 
-        Debug.DrawRay(_rb.position + Vector3.up * _settings.rayOffset + velocity.normalized * (_settings.colliderRadius / 2f), Vector3.down * _settings.colliderRadius, Color.magenta);
         // This raycast is responsible for detecting a slope in front of the character.
-        if (Physics.Raycast(_rb.position + Vector3.up * _settings.rayOffset + velocity.normalized * (_settings.colliderRadius / 2f), Vector3.down, out RaycastHit hitInfo, _settings.colliderRadius))
+        if (_isGrounded)
         {
             // Transform the direction we're accelerating to be parallel to the slope.
-            Vector3 slope = Vector3.Cross(_rb.transform.right, hitInfo.normal).normalized;
-            Vector3 accelerationDir = Vector3.ProjectOnPlane(acceleration, hitInfo.normal).normalized;
+            Vector3 slope = Vector3.Cross(_rb.transform.right, _groundNormal).normalized;
+            Vector3 accelerationDir = Vector3.ProjectOnPlane(acceleration.normalized, _groundNormal).normalized;
             float accelerationMag = acceleration.magnitude;
             velocity += accelerationDir * accelerationMag;
 
             // Transform the direction we're moving to be parallel to the slope.
-            Vector3 velocityDir = Vector3.ProjectOnPlane(velocity, hitInfo.normal).normalized;
+            Vector3 velocityDir = Vector3.ProjectOnPlane(velocity.normalized, _groundNormal).normalized;
             float velocityMag = velocity.magnitude;
             velocity = velocityDir * velocityMag;
 
             // for angle constraints later on.
             Vector3 flat = slope;
             flat.y = 0f;
-
-            Debug.DrawRay(_rb.position, velocityDir, Color.blue);
         }
         else
         {
@@ -103,21 +102,31 @@ public class CharacterController : IMovementController
 
         // Reset buffered values.
         _isGrounded = false;
+        _groundNormal = Vector3.zero;
         _bufferedAcceleration = Vector3.zero;
 
         _rb.velocity = velocity;
     }
 
-    private ContactPoint[] _contacts = new ContactPoint[4];
+    private Vector3 _groundNormal;
+    private ContactPoint[] _contacts;
     public void OnCollisionEnter(Collision collision)
     {
+        int amountOfGroundNormals = 0;
+        _groundNormal = Vector3.zero;
         // Grounded if atleast 1 surface is facing upwards.
-        collision.GetContacts(_contacts);
+        _contacts = collision.contacts; // collision.GetContacts() seems to be bugged. Sometimes it doesn't reset the array when collisions change.
         for (int i = 0; i < _contacts.Length; i++)
         {
             if (_contacts[i].normal.y > 0f)
+            {
                 _isGrounded = true;
+                _groundNormal += _contacts[i].normal;
+                amountOfGroundNormals++;
+            }
         }
+
+        _groundNormal = (_groundNormal / amountOfGroundNormals).normalized;
     }
 
     public void AddExternalForce(Vector3 force)
