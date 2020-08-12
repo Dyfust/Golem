@@ -42,18 +42,18 @@ public class Golem : MonoBehaviour, IRequireInput
         _thisTransform = transform;
         _cameraTransform = Camera.main.transform;
 
-        InitaliseFSM();
+        _controller = new CharacterController(_rb, _controllerSettings);
     }
 
     private void Start()
     {
-        _controller = new CharacterController(_rb, _controllerSettings);
         InitaliseFSM();
 
         DebugWindow.AddPrintTask(() => { return "Golem State: " + _fsm.GetCurrentState().debugName; });
         DebugWindow.AddPrintTask(() => { return "Golem Heading: " + _heading.ToString(); });
         DebugWindow.AddPrintTask(() => { return "Golem Speed: " + _rb.velocity.magnitude.ToString(); });
         DebugWindow.AddPrintTask(() => { return "Golem Velocity: " + _rb.velocity.ToString(); });
+        DebugWindow.AddPrintTask(() => { return "Orb Grounded: " + _controller.IsGrounded().ToString(); });
     }
 
     private void Update()
