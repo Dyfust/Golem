@@ -48,38 +48,6 @@ public class InteractableCube : MonoBehaviour
 
 	void Update()
 	{
-		//if (_isInteracted == false)
-		//{
-		//	float halfLength = transform.localScale.x / 2;
-		//	bool _topRight = Physics.Raycast(transform.position + new Vector3(halfLength, -halfLength + 0.1f, halfLength), Vector3.down, _rayPadding, _groundLayer);
-		//	bool _bottomRight = Physics.Raycast(transform.position + new Vector3(halfLength, -halfLength + 0.1f, -halfLength), Vector3.down, _rayPadding, _groundLayer);
-		//	bool _bottomLeft = Physics.Raycast(transform.position + new Vector3(-halfLength, -halfLength + 0.1f, -halfLength), Vector3.down, _rayPadding, _groundLayer);
-		//	bool _topLeft = Physics.Raycast(transform.position + new Vector3(-halfLength, -halfLength + 0.1f, halfLength), Vector3.down, _rayPadding, _groundLayer);
-
-		//	if (!_topRight && !_topLeft && !_bottomRight && !_bottomLeft)
-		//	{
-		//		if (_fj != null)
-		//			Destroy(_fj);
-		//		if (_rb.isKinematic == true)
-		//			_rb.isKinematic = false;
-		//	}
-
-		//	if (_topRight || _topLeft || _bottomRight || _bottomLeft)
-		//	{
-		//		if (_fj == null)
-		//			_fj = gameObject.AddComponent<FixedJoint>();
-		//		if (_rb.isKinematic == false)
-		//			_rb.isKinematic = true;
-		//	}
-		//}
-
-
-
-
-		//If the block has nothing underneath it, it will stop all interaction and fall 
-		//if (!_onSurface)
-		//	_isInteracted = false; 
-
 
 	}
 

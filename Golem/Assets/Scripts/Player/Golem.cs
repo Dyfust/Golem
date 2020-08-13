@@ -214,7 +214,7 @@ public class Golem : MonoBehaviour, IRequireInput
 
 	public void Lift()
 	{
-		_blockRigidbody.position = _handJoint.position;
+		_block.transform.position = _handJoint.position;
 	}
 
 	public void StopLifting()
