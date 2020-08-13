@@ -116,6 +116,7 @@ public class CharacterController : IMovementController
         _groundNormal = Vector3.zero;
         // Grounded if atleast 1 surface is facing upwards.
         _contacts = collision.contacts; // collision.GetContacts() seems to be bugged. Sometimes it doesn't reset the array when collisions change.
+
         for (int i = 0; i < _contacts.Length; i++)
         {
             if (_contacts[i].normal.y > 0f)
