@@ -29,7 +29,7 @@ namespace OrbStates
 
         public override void UpdatePhysics()
         {
-            
+            _orb.UpdateController();
         }
     }
 
@@ -59,6 +59,7 @@ namespace OrbStates
 
         public override void UpdatePhysics()
         {
+            _orb.UpdateController();
             _orb.Orientate();
         }
     }
