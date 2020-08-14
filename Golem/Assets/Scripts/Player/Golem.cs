@@ -164,7 +164,7 @@ public class Golem : MonoBehaviour, IRequireInput
 		if (Physics.Raycast(_thisTransform.position + Vector3.up * 0.5f, _forwardRelativeToCamera, out hit, _blockInteractionDistance, _blockLayer))
 		{
 			_block = hit.collider.GetComponent<InteractableCube>();
-			_block.BeginPushing(_rb);
+
 			_blockNormal = hit.normal;
 
 			Vector3 newGolemPos = _block.transform.position + (_blockNormal * _distFromBlock);
@@ -172,6 +172,7 @@ public class Golem : MonoBehaviour, IRequireInput
 
 			_thisTransform.position = newGolemPos;
 			_thisTransform.rotation = Quaternion.LookRotation(-_blockNormal);
+			_block.BeginPushing(_rb);
 			return true;
 		}
 
