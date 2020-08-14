@@ -101,6 +101,7 @@ public class CharacterController : IMovementController
         }
 
         // Reset buffered values.
+        //Debug.Log(_isGrounded); 
         _isGrounded = false;
         _groundNormal = Vector3.zero;
         _bufferedAcceleration = Vector3.zero;
@@ -114,7 +115,7 @@ public class CharacterController : IMovementController
     {
         int amountOfGroundNormals = 0;
         _groundNormal = Vector3.zero;
-        // Grounded if atleast 1 surface is facing upwards.
+        // Grounded if at least 1 surface is facing upwards.
         _contacts = collision.contacts; // collision.GetContacts() seems to be bugged. Sometimes it doesn't reset the array when collisions change.
 
         for (int i = 0; i < _contacts.Length; i++)
