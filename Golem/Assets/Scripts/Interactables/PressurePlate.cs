@@ -25,17 +25,17 @@ public class PressurePlate : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision col)
+    private void OnTriggerEnter(Collider other)
     {
-        if (col.gameObject.CompareTag(_targetTag))
+        if (other.gameObject.CompareTag(_targetTag))
         {
             ToggleInteractions();
         }
     }
 
-    private void OnCollisionExit(Collision col)
+    private void OnTriggerExit(Collider other)
     {
-        if (col.gameObject.CompareTag(_targetTag))
+        if (other.gameObject.CompareTag(_targetTag))
         {
             ToggleInteractions();
         }

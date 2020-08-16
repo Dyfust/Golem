@@ -7,9 +7,4 @@ public class CharacterControllerSettings : ScriptableObject
     public float timeToMaxSpeed;
     public float friction;
     public float gravity;
-    public float maxIncline;
-    public LayerMask groundLayer;
-
-    public float colliderRadius;
-    public float rayOffset;
 }
