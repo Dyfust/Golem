@@ -32,11 +32,12 @@ public class Orb : MonoBehaviour, IRequireInput
 
         _thisTransform = transform;
         _cameraTransform = Camera.main.transform;
+
+        _controller = new CharacterController(_rb, _controllerSettings);
     }
 
     private void Start()
     {
-        _controller = new CharacterController(_rb, _controllerSettings);
         InitialiseFSM();
 
         DebugWindow.AddPrintTask(() => "Orb State: " + _fsm.GetCurrentState().debugName);
@@ -56,7 +57,6 @@ public class Orb : MonoBehaviour, IRequireInput
     private void FixedUpdate()
     {
         _fsm.UpdatePhysics();
-        _controller.FixedUpdate();
     }
 
     private void InitialiseFSM()
@@ -100,6 +100,11 @@ public class Orb : MonoBehaviour, IRequireInput
         _right = Vector3.Cross(Vector3.up, _forward);
 
         _currentHeading = _inputData.normalisedInput.x * _right + _inputData.normalisedInput.y * _forward;
+    }
+
+    public void UpdateController()
+    {
+        _controller.FixedUpdate();
     }
 
     public void Orientate()
