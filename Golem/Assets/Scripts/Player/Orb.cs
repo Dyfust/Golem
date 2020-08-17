@@ -131,9 +131,9 @@ public class Orb : MonoBehaviour, IRequireInput
 
     public bool EnterGolem()
     {
-        _currentGolem = _sceneGolem;
         _rb.useGravity = false;
-        GetComponent<Collider>().enabled = false;
+        _rb.velocity = Vector3.zero;
+        _currentGolem = _sceneGolem;
         _currentGolem.Enter();
         return true;
     }
@@ -145,7 +145,6 @@ public class Orb : MonoBehaviour, IRequireInput
 
     public void ExitGolem()
     {
-        GetComponent<Collider>().enabled = true;
         _rb.useGravity = true;
         _currentGolem.Exit();
         _currentGolem = null;
@@ -164,6 +163,6 @@ public class Orb : MonoBehaviour, IRequireInput
 
     private void OnCollisionStay(Collision collision)
     {
-        _controller.OnCollisionEnter(collision);
+        _controller.OnCollisionStay(collision);
     }
 }
