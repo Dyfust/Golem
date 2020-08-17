@@ -41,7 +41,9 @@ public class InteractableCube : MonoBehaviour
 	{
 		_fj = GetComponent<FixedJoint>();
 		_rb = GetComponent<Rigidbody>();
-		_coll = GetComponent<BoxCollider>(); 
+		_coll = GetComponent<BoxCollider>();
+
+		transform.position += Vector3.up * 0.25f;
 	}
 
 	private void OnDrawGizmos()
