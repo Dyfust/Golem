@@ -6,30 +6,28 @@ public class Golem : MonoBehaviour, IRequireInput
 {
 	[SerializeField] private float _angularSpeed = 0;
 	[SerializeField] private CharacterControllerSettings _controllerSettings;
-	private IMovementController _controller;
 
 	private InputData _inputData;
 
 	private Vector3 _forwardRelativeToCamera;
 	private Vector3 _rightRelativeToCamera;
 	private Vector3 _heading;
-
-	private FSM.FSM _fsm;
+	private Quaternion _targetRotation;
 
 	[SerializeField] private LayerMask _blockLayer;
 	[SerializeField] private float _blockInteractionDistance;
 	[SerializeField] private float _distFromBlock;
 	[SerializeField] private Transform _handJoint;
 	private InteractableCube _block;
-	private Rigidbody _blockRigidbody;
-	private FixedJoint _blockJoint;
 	private Vector3 _blockNormal;
-	private Vector3 _blockInitialPos;
+
+	private FSM.FSM _fsm;
 
 	private bool _dormant = true;
 
-	private Rigidbody _rb;
 	[SerializeField] private Animator _anim;
+	private Rigidbody _rb;
+	private IMovementController _controller;
 
 	private Transform _thisTransform;
 	private Transform _cameraTransform;
@@ -60,8 +58,8 @@ public class Golem : MonoBehaviour, IRequireInput
 	{
 		ComputeAxes();
 
-		_fsm.UpdateLogic();
 		_fsm.HandleTransitions();
+		_fsm.UpdateLogic();
 
 		_anim.SetFloat("Speed", _rb.velocity.sqrMagnitude);
 	}
@@ -70,6 +68,11 @@ public class Golem : MonoBehaviour, IRequireInput
 	{
 		_fsm.UpdatePhysics();
 		_controller.FixedUpdate();
+	}
+
+	private void OnCollisionStay(Collision collision)
+	{
+		_controller.OnCollisionStay(collision);
 	}
 
 	private void InitaliseFSM()
@@ -83,9 +86,11 @@ public class Golem : MonoBehaviour, IRequireInput
 		State liftingState = new LiftingState(this);
 
 		_fsm.AddTransition(dormantState, idleState, () => { return !_dormant; });
-		_fsm.AddTransition(idleState, dormantState, () => { return _dormant; });
 
+		_fsm.AddTransition(idleState, dormantState, () => { return _dormant; });
 		_fsm.AddTransition(idleState, walkingState, () => { return _heading != Vector3.zero; });
+
+		_fsm.AddTransition(walkingState, dormantState, () => _dormant);
 		_fsm.AddTransition(walkingState, idleState, () =>
 		{
 			Vector3 vel = _rb.velocity;
@@ -104,7 +109,10 @@ public class Golem : MonoBehaviour, IRequireInput
 
 		_fsm.AddTransition(pushingState, idleState, () =>
 		{
-			return Input.GetKeyDown(KeyCode.E);
+			if (Input.GetKeyDown(KeyCode.E))
+				StopPushing();
+
+			return _block == null;
 		});
 
 		// Lifting
@@ -133,6 +141,19 @@ public class Golem : MonoBehaviour, IRequireInput
 		_heading = _inputData.normalisedInput.x * _rightRelativeToCamera + _inputData.normalisedInput.y * _forwardRelativeToCamera;
 	}
 
+	public void Move()
+	{
+		_controller.Move(_heading);
+	}
+
+	public void Orientate()
+	{
+		if (_heading != Vector3.zero)
+			_targetRotation = Quaternion.LookRotation(_heading, Vector3.up);
+
+		_thisTransform.rotation = Quaternion.Slerp(_thisTransform.rotation, _targetRotation, _angularSpeed * Time.fixedDeltaTime);
+	}
+
 	public void Enter()
 	{
 		VirtualCameraManager.instance.ToggleVCam(_CMVirtualCamera);
@@ -144,20 +165,7 @@ public class Golem : MonoBehaviour, IRequireInput
 		_dormant = true;
 	}
 
-	public void Move()
-	{
-		_controller.Move(_heading);
-	}
-
-	Quaternion targetRotation = Quaternion.identity;
-	public void Orientate()
-	{
-		if (_heading != Vector3.zero)
-			targetRotation = Quaternion.LookRotation(_heading, Vector3.up);
-
-		_thisTransform.rotation = Quaternion.Slerp(_thisTransform.rotation, targetRotation, _angularSpeed * Time.fixedDeltaTime);
-	}
-
+	#region Pushing
 	public bool BeginPushing()
 	{
 		RaycastHit hit;
@@ -179,7 +187,7 @@ public class Golem : MonoBehaviour, IRequireInput
 		return false;
 	}
 
-	public void Push()
+    public void Push()
 	{
 		_controller.Move(_inputData.input.y * -_blockNormal / _block.mass);
 	}
@@ -189,8 +197,10 @@ public class Golem : MonoBehaviour, IRequireInput
 		_block.StopPushing();
 		_block = null;
 	}
+    #endregion
 
-	public bool BeginLifting()
+    #region Lifting
+    public bool BeginLifting()
 	{
 		RaycastHit hit;
 		if (Physics.Raycast(_thisTransform.position + Vector3.up * 0.5f, _forwardRelativeToCamera, out hit, _blockInteractionDistance, _blockLayer))
@@ -222,26 +232,15 @@ public class Golem : MonoBehaviour, IRequireInput
 	{
 		_block.StopLifing(); 
 	}
-
-	public void ResetState()
-	{
-		_controller.Move(Vector3.zero);
-		//_rb.velocity = Vector3.zero;
-	}
+    #endregion
 
 	public void SetAnimatorBool(string name, bool value)
 	{
 		_anim.SetBool(name, value);
 	}
 
-	// Interfaces
 	public void SetInputData(InputData data)
 	{
 		_inputData = data;
-	}
-
-	private void OnCollisionStay(Collision collision)
-	{
-		_controller.OnCollisionEnter(collision);
 	}
 }
