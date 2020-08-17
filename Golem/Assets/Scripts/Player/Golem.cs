@@ -86,9 +86,11 @@ public class Golem : MonoBehaviour, IRequireInput
 		State liftingState = new LiftingState(this);
 
 		_fsm.AddTransition(dormantState, idleState, () => { return !_dormant; });
-		_fsm.AddTransition(idleState, dormantState, () => { return _dormant; });
 
+		_fsm.AddTransition(idleState, dormantState, () => { return _dormant; });
 		_fsm.AddTransition(idleState, walkingState, () => { return _heading != Vector3.zero; });
+
+		_fsm.AddTransition(walkingState, dormantState, () => _dormant);
 		_fsm.AddTransition(walkingState, idleState, () =>
 		{
 			Vector3 vel = _rb.velocity;

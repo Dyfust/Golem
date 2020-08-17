@@ -131,9 +131,10 @@ public class Orb : MonoBehaviour, IRequireInput
 
     public bool EnterGolem()
     {
-        _currentGolem = _sceneGolem;
-        _rb.useGravity = false;
         GetComponent<Collider>().enabled = false;
+        _rb.useGravity = false;
+        _rb.velocity = Vector3.zero;
+        _currentGolem = _sceneGolem;
         _currentGolem.Enter();
         return true;
     }
