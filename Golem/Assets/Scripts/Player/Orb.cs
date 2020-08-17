@@ -164,6 +164,6 @@ public class Orb : MonoBehaviour, IRequireInput
 
     private void OnCollisionStay(Collision collision)
     {
-        _controller.OnCollisionEnter(collision);
+        _controller.OnCollisionStay(collision);
     }
 }

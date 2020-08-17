@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using TMPro;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Class interactions:
@@ -24,15 +21,16 @@ public class InteractableCube : MonoBehaviour
 	}
 	[SerializeField] private float _mass; public float mass => _mass;
 	[SerializeField] private LayerMask _groundLayer;
-	[SerializeField] private GameObject _mesh; 
+	[SerializeField] private GameObject _mesh;
+
+	private Golem _golem;
 
 	private STATE _currentState = STATE.FREE;
 
 	private FixedJoint _fj;
 	private Rigidbody _rb;
-	private Collider _coll; 
+	private BoxCollider _coll; 
 
-	private ContactPoint[] _contacts;
 	private bool _isGrounded = false;
 
 	private RaycastHit _hit;
@@ -43,12 +41,7 @@ public class InteractableCube : MonoBehaviour
 	{
 		_fj = GetComponent<FixedJoint>();
 		_rb = GetComponent<Rigidbody>();
-		_coll = GetComponent<Collider>(); 
-	}
-
-	void Update()
-	{
-
+		_coll = GetComponent<BoxCollider>(); 
 	}
 
 	private void OnDrawGizmos()
@@ -60,29 +53,32 @@ public class InteractableCube : MonoBehaviour
 	}
 	private void FixedUpdate()
 	{
-		_isGrounded = Physics.BoxCast(transform.position, (transform.localScale * 0.5f), Vector3.down, out _hit, Quaternion.identity, 0.1f);
-		_mesh.transform.position = this.transform.position + Vector3.down * _hit.distance; 
-
-		//Debug.Log(_hit.distance);
+		_isGrounded = Physics.BoxCast(transform.position, _coll.bounds.size * 0.5f, Vector3.down, out _hit, Quaternion.identity, 0.1f);
+		_mesh.transform.position = this.transform.position + Vector3.down * _hit.distance;
 
 
 		UpdateState();
-		//Debug.Log(_isGrounded);
-		_isGrounded = false;
 	}
 
 	public void BeginPushing(Rigidbody golemRb)
 	{
 		if (_fj == null)
 			_fj = gameObject.AddComponent<FixedJoint>();
+
+		_golem = golemRb.GetComponent<Golem>();
 		_fj.connectedBody = golemRb;
 		_currentState = STATE.PUSH; 
 	}
 
 	public void StopPushing()
 	{
+		_rb.velocity = Vector3.zero;
 		if (_fj != null)
 			Destroy(_fj);
+
+		_rb.velocity = Vector3.zero;
+
+		_golem = null;
 		_currentState = STATE.FREE; 
 	}
 
@@ -123,7 +119,7 @@ public class InteractableCube : MonoBehaviour
 					}
 					else
 					{
-						StopPushing(); 
+						_golem.StopPushing();
 					}
 					break; 
 				}
