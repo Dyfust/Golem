@@ -111,7 +111,7 @@ public class CharacterController : IMovementController
 
     private Vector3 _groundNormal;
     private ContactPoint[] _contacts;
-    public void OnCollisionEnter(Collision collision)
+    public void OnCollisionStay(Collision collision)
     {
         int amountOfGroundNormals = 0;
         _groundNormal = Vector3.zero;

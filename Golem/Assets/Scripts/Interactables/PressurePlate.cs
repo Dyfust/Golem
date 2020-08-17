@@ -30,6 +30,7 @@ public class PressurePlate : MonoBehaviour
         if (other.gameObject.CompareTag(_targetTag))
         {
             ToggleInteractions();
+            Debug.Log("Enter");
         }
     }
 
@@ -38,6 +39,7 @@ public class PressurePlate : MonoBehaviour
         if (other.gameObject.CompareTag(_targetTag))
         {
             ToggleInteractions();
+            Debug.Log("Exit");
         }
     }
 }
