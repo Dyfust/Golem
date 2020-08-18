@@ -55,9 +55,10 @@ public class InteractableCube : MonoBehaviour
 	}
 	private void FixedUpdate()
 	{
-		_isGrounded = Physics.BoxCast(transform.position, _coll.bounds.size * 0.5f, Vector3.down, out _hit, Quaternion.identity, 0.1f);
-		_mesh.transform.position = this.transform.position + Vector3.down * _hit.distance;
+		_isGrounded = Physics.BoxCast(transform.position, _coll.bounds.size * 0.5f, Vector3.down, out _hit, Quaternion.identity, 0.1f, int.MaxValue, QueryTriggerInteraction.Ignore);
 
+		
+		_mesh.transform.position = this.transform.position + Vector3.down * _hit.distance;
 
 		UpdateState();
 	}
