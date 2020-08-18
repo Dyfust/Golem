@@ -7,6 +7,7 @@ TagManager:
   - VCam
   - Orb
   - Golem
+  - Block
   layers:
   - Default
   - TransparentFX
