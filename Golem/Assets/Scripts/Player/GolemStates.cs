@@ -143,12 +143,11 @@ namespace GolemStates
 
 		public override void UpdateLogic()
 		{
-			_golem.Push();
 		}
 
 		public override void UpdatePhysics()
 		{
-			
+			_golem.Push();
 		}
 	}
 }
