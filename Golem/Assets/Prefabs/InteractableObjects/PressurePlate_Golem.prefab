@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 8611235625379197952}
   - component: {fileID: 2602751793799155882}
   - component: {fileID: 8611235625379198014}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PressurePlate_Golem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8611235625379497009}
   - component: {fileID: 8611235625379497008}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,6 +239,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 33bbf69d582fe764aaec8b05ae5020dc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33bbf69d582fe764aaec8b05ae5020dc, type: 3}

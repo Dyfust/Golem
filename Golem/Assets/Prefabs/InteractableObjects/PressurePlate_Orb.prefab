@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1890311995736127936}
   - component: {fileID: 1890311995736127939}
   - component: {fileID: 1890311995736127937}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PressurePlate_Orb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1890311996187426511}
   - component: {fileID: 1890311996187426510}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,6 +254,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: aa5b55ad4660f904e9904136efd26b02,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa5b55ad4660f904e9904136efd26b02, type: 3}
