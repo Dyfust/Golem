@@ -17,11 +17,11 @@ TagManager:
   - UI
   - 
   - 
-  - Ground
-  - Block
+  - Golem
+  - Orb
   - Interactable
-  - 
-  - 
+  - Ground
+  - PressurePlate
   - 
   - 
   - 

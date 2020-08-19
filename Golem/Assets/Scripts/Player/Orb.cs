@@ -15,7 +15,9 @@ public class Orb : MonoBehaviour, IRequireInput
     private Vector3 _right;
     private Vector3 _currentHeading; public Vector3 currentHeading => _currentHeading;
 
-    [SerializeField] private Golem _sceneGolem;
+
+    [SerializeField] private LayerMask _golemLayer;
+    [SerializeField] private float _interactionRadius;
     [SerializeField] private Vector3 _attachmentOffset;
     private Golem _currentGolem;
 
@@ -128,14 +130,42 @@ public class Orb : MonoBehaviour, IRequireInput
     {
         _rb.velocity = Vector3.zero;
     }
+    
+    private bool FindGolem()
+    {
+        Collider[] golems = Physics.OverlapSphere(_thisTransform.position, _interactionRadius, _golemLayer);
+
+        for (int i = 0; i < golems.Length; i++)
+        {
+            Vector3 thisToGolem = (golems[i].transform.position + Vector3.up * 0.5f) - _thisTransform.position;
+            if (Physics.Raycast(_thisTransform.position, thisToGolem.normalized, out RaycastHit hit, _interactionRadius, ~(LayerMap.orbLayer | LayerMap.pressurePlateLayer)))
+            {
+                Debug.Log("Yes");
+                if (hit.collider.GetComponent<Golem>())
+                {
+                    Debug.Log("Yes");
+                    _currentGolem = golems[i].GetComponent<Golem>();
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 
     public bool EnterGolem()
     {
-        _rb.useGravity = false;
-        _rb.velocity = Vector3.zero;
-        _currentGolem = _sceneGolem;
-        _currentGolem.Enter();
-        return true;
+        if (FindGolem())
+        {
+            _rb.useGravity = false;
+            _rb.velocity = Vector3.zero;
+
+            _currentGolem.Enter();
+
+            return true;
+        }
+
+        return false;
     }
 
     public void StickToGolem()
@@ -145,9 +175,9 @@ public class Orb : MonoBehaviour, IRequireInput
 
     public void ExitGolem()
     {
-        _rb.useGravity = true;
         _currentGolem.Exit();
         _currentGolem = null;
+        _rb.useGravity = true;
 
         VirtualCameraManager.instance.ToggleVCam(_CMVirtualCamera);
     }
