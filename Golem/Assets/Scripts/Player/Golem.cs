@@ -18,7 +18,7 @@ public class Golem : MonoBehaviour, IRequireInput
 	[SerializeField] private float _blockInteractionDistance;
 	[SerializeField] private float _distFromBlock;
 	[SerializeField] private Transform _handJoint;
-	private InteractableCube _block;
+	private Block _block;
 	private Vector3 _blockNormal;
 
 	private FSM.FSM _fsm;
@@ -27,7 +27,7 @@ public class Golem : MonoBehaviour, IRequireInput
 
 	[SerializeField] private Animator _anim;
 	private Rigidbody _rb;
-	private IMovementController _controller;
+	private CharacterController _controller;
 
 	private Transform _thisTransform;
 	private Transform _cameraTransform;
@@ -66,8 +66,8 @@ public class Golem : MonoBehaviour, IRequireInput
 
 	private void FixedUpdate()
 	{
-		_fsm.UpdatePhysics();
 		_controller.FixedUpdate();
+		_fsm.UpdatePhysics();
 	}
 
 	private void OnCollisionStay(Collision collision)
@@ -171,7 +171,7 @@ public class Golem : MonoBehaviour, IRequireInput
 		RaycastHit hit;
 		if (Physics.Raycast(_thisTransform.position + Vector3.up * 0.5f, _forwardRelativeToCamera, out hit, _blockInteractionDistance, _blockLayer))
 		{
-			_block = hit.collider.GetComponent<InteractableCube>();
+			_block = hit.collider.GetComponent<Block>();
 
 			_blockNormal = hit.normal;
 
@@ -180,7 +180,6 @@ public class Golem : MonoBehaviour, IRequireInput
 
 			_thisTransform.position = newGolemPos;
 			_thisTransform.rotation = Quaternion.LookRotation(-_blockNormal);
-			_block.BeginPushing(_rb);
 			return true;
 		}
 
@@ -190,11 +189,11 @@ public class Golem : MonoBehaviour, IRequireInput
     public void Push()
 	{
 		_controller.Move(_inputData.input.y * -_blockNormal / _block.mass);
+		_block.Move(_controller.GetVelocity() * Time.fixedDeltaTime); 
 	}
 
 	public void StopPushing()
 	{
-		_block.StopPushing();
 		_block = null;
 	}
     #endregion
@@ -205,7 +204,7 @@ public class Golem : MonoBehaviour, IRequireInput
 		RaycastHit hit;
 		if (Physics.Raycast(_thisTransform.position + Vector3.up * 0.5f, _forwardRelativeToCamera, out hit, _blockInteractionDistance, _blockLayer))
 		{
-			_block = hit.collider.GetComponent<InteractableCube>(); 
+			//_block = hit.collider.GetComponent<InteractableCube>(); 
 			_blockNormal = hit.normal;
 
 			//Vector3 newGolemPos = _blockRigidbody.position + (_blockNormal * _distFromBlock);
@@ -216,7 +215,7 @@ public class Golem : MonoBehaviour, IRequireInput
 
 			//_blockRigidbody.position = _thisTransform.position + new Vector3(0, 2.5f, 0);
 
-			_block.BeginLifting();
+			//_block.BeginLifting();
 			return true;
 		}
 
@@ -230,7 +229,7 @@ public class Golem : MonoBehaviour, IRequireInput
 
 	public void StopLifting()
 	{
-		_block.StopLifing(); 
+		//_block.StopLifing(); 
 	}
     #endregion
 
