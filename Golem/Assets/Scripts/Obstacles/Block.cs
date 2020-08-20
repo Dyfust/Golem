@@ -27,14 +27,14 @@ public class Block : MonoBehaviour
 
 	private void Update()
 	{
-		if (_connectedGolem != null)
-		{
-			if (Vector3.Distance(this.transform.position, _connectedGolem.transform.position) > 3f)
-			{
-				_isConnected = false;
-				Disconnect(); 
-			}
-		}
+		//if (_connectedGolem != null)
+		//{
+		//	if (Vector3.Distance(this.transform.position, _connectedGolem.transform.position) > 3f)
+		//	{
+		//		_isConnected = false;
+		//		Disconnect(); 
+		//	}
+		//}
 	}
 
 	private void FixedUpdate()

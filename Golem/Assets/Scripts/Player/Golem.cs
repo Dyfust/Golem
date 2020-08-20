@@ -191,6 +191,12 @@ public class Golem : MonoBehaviour, IRequireInput
 	{
 		_controller.Move(_inputData.input.y * -_blockNormal / _block.mass);
 		_block.Move(_controller.GetVelocity() * Time.fixedDeltaTime, this); 
+
+		if (Vector3.Distance(this.transform.position, _block.transform.position) > 3.0f)
+		{
+			StopPushing(); 
+		}
+
 	}
 
 	public void StopPushing()
