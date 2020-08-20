@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using GolemStates;
 using FSM;
+using System.Collections.Concurrent;
 
 public class Golem : MonoBehaviour, IRequireInput
 {
@@ -189,11 +190,12 @@ public class Golem : MonoBehaviour, IRequireInput
     public void Push()
 	{
 		_controller.Move(_inputData.input.y * -_blockNormal / _block.mass);
-		_block.Move(_controller.GetVelocity() * Time.fixedDeltaTime); 
+		_block.Move(_controller.GetVelocity() * Time.fixedDeltaTime, this); 
 	}
 
 	public void StopPushing()
 	{
+		_block.StopPushing(); 
 		_block = null;
 	}
     #endregion
@@ -205,17 +207,20 @@ public class Golem : MonoBehaviour, IRequireInput
 		if (Physics.Raycast(_thisTransform.position + Vector3.up * 0.5f, _forwardRelativeToCamera, out hit, _blockInteractionDistance, _blockLayer))
 		{
 			//_block = hit.collider.GetComponent<InteractableCube>(); 
+			_block = hit.collider.GetComponent<Block>(); 
+			_block.BeginLift();
 			_blockNormal = hit.normal;
 
-			//Vector3 newGolemPos = _blockRigidbody.position + (_blockNormal * _distFromBlock);
-			//newGolemPos.y = _thisTransform.position.y;
+			_block.transform.position = this.transform.position + new Vector3(0, 3.2f, 0); 
 
+			//Vector3 newGolemPos = _block.transform.position + (_blockNormal * _distFromBlock);
+			//newGolemPos.y = _thisTransform.position.y;
+			//
 			//_thisTransform.position = newGolemPos;
 			//_thisTransform.rotation = Quaternion.LookRotation(-_blockNormal);
+			//
+			//_block.transform.position = _thisTransform.position + new Vector3(0, 2.5f, 0);
 
-			//_blockRigidbody.position = _thisTransform.position + new Vector3(0, 2.5f, 0);
-
-			//_block.BeginLifting();
 			return true;
 		}
 
@@ -224,12 +229,12 @@ public class Golem : MonoBehaviour, IRequireInput
 
 	public void Lift()
 	{
-		_block.transform.position = _handJoint.position;
+		//_block.transform.position = _handJoint.position;
 	}
 
 	public void StopLifting()
 	{
-		//_block.StopLifing(); 
+		_block.StopLift(); 
 	}
     #endregion
 
