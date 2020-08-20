@@ -8,6 +8,7 @@ TagManager:
   - Orb
   - Golem
   - Block
+  - PressurePlate
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Interactable
   - Ground
   - PressurePlate
-  - 
+  - Block
   - 
   - 
   - 

@@ -80,6 +80,10 @@ MonoBehaviour:
   _controllerSettings: {fileID: 11400000, guid: 909af9a64c71d0a4483feca2e676051f,
     type: 2}
   _angularSpeed: 6
+  _golemLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  _interactionRadius: 5
   _attachmentOffset: {x: 0, y: 2, z: 0}
   _CMVirtualCamera: {fileID: 0}
 --- !u!114 &1323688339277252294
