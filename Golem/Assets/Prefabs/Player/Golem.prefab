@@ -162,7 +162,7 @@ MonoBehaviour:
     type: 2}
   _blockLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 8192
   _blockInteractionDistance: 2
   _distFromBlock: 1.75
   _handJoint: {fileID: 2223126616050924588}
