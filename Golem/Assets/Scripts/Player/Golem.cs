@@ -2,6 +2,7 @@
 using GolemStates;
 using FSM;
 using System.Collections.Concurrent;
+using UnityEditor.Experimental.GraphView;
 
 public class Golem : MonoBehaviour, IRequireInput
 {
@@ -170,7 +171,7 @@ public class Golem : MonoBehaviour, IRequireInput
 	public bool BeginPushing()
 	{
 		RaycastHit hit;
-		if (Physics.Raycast(_thisTransform.position + Vector3.up * 0.5f, _forwardRelativeToCamera, out hit, _blockInteractionDistance, _blockLayer))
+		if (Physics.Raycast(_thisTransform.position + Vector3.up * 0.5f, _forwardRelativeToCamera, out hit, _blockInteractionDistance, LayerMap.block))
 		{
 			_block = hit.collider.GetComponent<Block>();
 
@@ -189,14 +190,17 @@ public class Golem : MonoBehaviour, IRequireInput
 
     public void Push()
 	{
-		_controller.Move(_inputData.input.y * -_blockNormal / _block.mass);
-		_block.Move(_controller.GetVelocity() * Time.fixedDeltaTime, this); 
 
-		if (Vector3.Distance(this.transform.position, _block.transform.position) > 3.0f)
+		bool _blockCentered = Physics.Raycast(transform.position + Vector3.up * 0.85f, transform.forward, 15.0f, _blockLayer);
+
+		if (_blockCentered == false)
 		{
-			StopPushing(); 
+			StopPushing();
+			return; 
 		}
 
+		_controller.Move(_inputData.input.y * -_blockNormal / _block.mass);
+		_block.Move(_controller.GetVelocity() * Time.fixedDeltaTime, this);
 	}
 
 	public void StopPushing()

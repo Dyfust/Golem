@@ -40,8 +40,14 @@ public class Block : MonoBehaviour
 	private void FixedUpdate()
 	{
 		_isGrounded = Physics.BoxCast(transform.position, _coll.bounds.size * 0.5f, Vector3.down, out _hit, Quaternion.identity, 0.1f, int.MaxValue, QueryTriggerInteraction.Ignore);
+		//Debug.Log(_hit.distance); 
+		//Debug.Log(_cc.isGrounded ? "Grounded" : "Not Grounded");
 
-		Debug.Log(_isGrounded ? "Connected" : "Not Connected");
+		//float halfLength = transform.localScale.x / 2;
+		//bool _topRight = Physics.Raycast(transform.position + new Vector3(halfLength, -halfLength, halfLength), Vector3.down, _rayPadding, _groundLayer);
+		//bool _bottomRight = Physics.Raycast(transform.position + new Vector3(halfLength, -halfLength, -halfLength), Vector3.down, _rayPadding, _groundLayer);
+		//bool _bottomLeft = Physics.Raycast(transform.position + new Vector3(-halfLength, -halfLength, -halfLength), Vector3.down, _rayPadding, _groundLayer);
+		//bool _topLeft = Physics.Raycast(transform.position + new Vector3(-halfLength, -halfLength, halfLength), Vector3.down, _rayPadding, _groundLayer);
 
 		//Applying gravity only if the block is not on the ground or not being lifted! 
 		if (_isGrounded == false && _isLifted == false)
@@ -71,10 +77,5 @@ public class Block : MonoBehaviour
 	{
 		transform.position = _initialPos;
 		_isLifted = false;
-	}
-
-	public void Disconnect()
-	{
-		_connectedGolem.StopPushing(); 
 	}
 }
