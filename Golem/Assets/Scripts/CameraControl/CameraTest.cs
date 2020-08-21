@@ -27,7 +27,6 @@ public class CameraTest : MonoBehaviour
 
 	private void OnTriggerExit(Collider other)
 	{
-		Debug.Log("CUNT");
 		VirtualCameraManager.instance.ToggleVCam(_currentVCamera); 
 	}
 }
