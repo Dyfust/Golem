@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using GolemStates;
 using FSM;
-using System.Collections.Concurrent;
-using UnityEditor.Experimental.GraphView;
 
 public class Golem : MonoBehaviour, IRequireInput
 {
+	public delegate void GolemEventHandler(Golem golem);
+	public static event GolemEventHandler OnGolemActive;
+
 	[SerializeField] private float _angularSpeed = 0;
 	[SerializeField] private CharacterControllerSettings _controllerSettings;
 
@@ -33,7 +34,6 @@ public class Golem : MonoBehaviour, IRequireInput
 
 	private Transform _thisTransform;
 	private Transform _cameraTransform;
-	[SerializeField] private GameObject _CMVirtualCamera;
 
 	private void Awake()
 	{
@@ -158,7 +158,7 @@ public class Golem : MonoBehaviour, IRequireInput
 
 	public void Enter()
 	{
-		VirtualCameraManager.instance.ToggleVCam(_CMVirtualCamera);
+		OnGolemActive?.Invoke(this);
 		_dormant = false;
 	}
 
