@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!64 &2896037208449561860
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333455742544307508}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5706606594802034058, guid: 33bbf69d582fe764aaec8b05ae5020dc, type: 3}
 --- !u!1 &8611235625379198015
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,9 +23,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8611235625379197952}
-  - component: {fileID: 8611235625379197953}
+  - component: {fileID: 2602751793799155882}
   - component: {fileID: 8611235625379198014}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PressurePlate_Golem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +39,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8611235625379198015}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -11.882, y: 1.8369058, z: -23.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -34,20 +48,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &8611235625379197953
-MeshCollider:
+--- !u!65 &2602751793799155882
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8611235625379198015}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.5, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &8611235625379198014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,7 +74,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
-  _interactions: []
+  _interactions:
+  - {fileID: 0}
 --- !u!1 &8611235625379497006
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,12 +86,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8611235625379497009}
   - component: {fileID: 8611235625379497008}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8611235625379497009
 Transform:
@@ -111,7 +125,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 1
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -144,7 +158,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -221,8 +235,24 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mesh
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 33bbf69d582fe764aaec8b05ae5020dc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 33bbf69d582fe764aaec8b05ae5020dc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33bbf69d582fe764aaec8b05ae5020dc, type: 3}
+--- !u!1 &333455742544307508 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 33bbf69d582fe764aaec8b05ae5020dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 8611235625190145085}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3673800279666202407 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 33bbf69d582fe764aaec8b05ae5020dc,

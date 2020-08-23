@@ -1,6 +1,6 @@
-name: CI
+name: Automated Build
 on:
-    push: { branches: [Rey] }
+    push: { branches: [master] }
     
 env:
     UNITY_LICENSE: ${{secrets.UNITY_LICENSE_KEY}}

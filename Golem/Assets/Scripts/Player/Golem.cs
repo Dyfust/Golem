@@ -1,259 +1,260 @@
 ﻿using UnityEngine;
 using GolemStates;
 using FSM;
+using System.Collections.Concurrent;
+using UnityEditor.Experimental.GraphView;
 
 public class Golem : MonoBehaviour, IRequireInput
 {
-    [SerializeField] private float _angularSpeed = 0;
-    [SerializeField] private CharacterControllerSettings _controllerSettings;
-    private IMovementController _controller;
+	[SerializeField] private float _angularSpeed = 0;
+	[SerializeField] private CharacterControllerSettings _controllerSettings;
 
-    private InputData _inputData;
+	private InputData _inputData;
 
-    private Vector3 _forwardRelativeToCamera;
-    private Vector3 _rightRelativeToCamera;
-    private Vector3 _heading;
+	private Vector3 _forwardRelativeToCamera;
+	private Vector3 _rightRelativeToCamera;
+	private Vector3 _heading;
+	private Quaternion _targetRotation;
 
-    private FSM.FSM _fsm;
+	[SerializeField] private LayerMask _blockLayer;
+	[SerializeField] private float _blockInteractionDistance;
+	[SerializeField] private float _distFromBlock;
+	[SerializeField] private Transform _handJoint;
+	private Block _block;
+	private Vector3 _blockNormal;
 
-    [SerializeField] private LayerMask _blockLayer;
-    [SerializeField] private float _blockInteractionDistance;
-    [SerializeField] private float _distFromBlock;
-    [SerializeField] private Transform _handJoint;
-    private InteractableCube _block;
-    private Rigidbody _blockRigidbody;
-    private FixedJoint _blockJoint;
-    private Vector3 _blockNormal;
-    private Vector3 _blockInitialPos;
+	private FSM.FSM _fsm;
 
-    private bool _dormant = true;
+	private bool _dormant = true;
 
-    private Rigidbody _rb;
-    [SerializeField] private Animator _anim;
+	[SerializeField] private Animator _anim;
+	private Rigidbody _rb;
+	private CharacterController _controller;
 
-    private Transform _thisTransform;
-    private Transform _cameraTransform;
-    [SerializeField] private GameObject _CMVirtualCamera;
+	private Transform _thisTransform;
+	private Transform _cameraTransform;
+	[SerializeField] private GameObject _CMVirtualCamera;
 
-    private void Awake()
-    {
-        _rb = GetComponent<Rigidbody>();
+	private void Awake()
+	{
+		_rb = GetComponent<Rigidbody>();
 
-        _thisTransform = transform;
-        _cameraTransform = Camera.main.transform;
+		_thisTransform = transform;
+		_cameraTransform = Camera.main.transform;
 
-        InitaliseFSM();
-    }
+		_controller = new CharacterController(_rb, _controllerSettings);
+	}
 
-    private void Start()
-    {
-        _controller = new CharacterController(_rb, _controllerSettings);
-        InitaliseFSM();
+	private void Start()
+	{
+		InitaliseFSM();
 
-        DebugWindow.AddPrintTask(() => { return "Golem State: " + _fsm.GetCurrentState().debugName; });
-        DebugWindow.AddPrintTask(() => { return "Golem Heading: " + _heading.ToString(); });
-        DebugWindow.AddPrintTask(() => { return "Golem Speed: " + _rb.velocity.magnitude.ToString(); });
-        DebugWindow.AddPrintTask(() => { return "Golem Velocity: " + _rb.velocity.ToString(); });
-    }
+		DebugWindow.AddPrintTask(() => { return "Golem State: " + _fsm.GetCurrentState().debugName; });
+		DebugWindow.AddPrintTask(() => { return "Golem Heading: " + _heading.ToString(); });
+		DebugWindow.AddPrintTask(() => { return "Golem Speed: " + _rb.velocity.magnitude.ToString(); });
+		DebugWindow.AddPrintTask(() => { return "Golem Velocity: " + _rb.velocity.ToString(); });
+		DebugWindow.AddPrintTask(() => { return "Orb Grounded: " + _controller.IsGrounded().ToString(); });
+	}
 
-    private void Update()
-    {
-        ComputeAxes();
+	private void Update()
+	{
+		ComputeAxes();
 
-        _fsm.UpdateLogic();
-        _fsm.HandleTransitions();
+		_fsm.HandleTransitions();
+		_fsm.UpdateLogic();
 
-        _anim.SetFloat("Speed", _rb.velocity.sqrMagnitude);
-    }
+		_anim.SetFloat("Speed", _rb.velocity.sqrMagnitude);
+	}
 
-    private void FixedUpdate()
-    {
-        _fsm.UpdatePhysics();
-        _controller.FixedUpdate();
-    }
+	private void FixedUpdate()
+	{
+		_controller.FixedUpdate();
+		_fsm.UpdatePhysics();
+	}
 
-    private void InitaliseFSM()
-    {
-        _fsm = new FSM.FSM();
+	private void OnCollisionStay(Collision collision)
+	{
+		_controller.OnCollisionStay(collision);
+	}
 
-        State dormantState = new DormantState(this);
-        State idleState = new IdleState(this);
-        State walkingState = new WalkingState(this);
-        State pushingState = new PushingState(this);
-        State liftingState = new LiftingState(this);
+	private void InitaliseFSM()
+	{
+		_fsm = new FSM.FSM();
 
-        _fsm.AddTransition(dormantState, idleState, () => { return !_dormant; });
-        _fsm.AddTransition(idleState, dormantState, () => { return _dormant; });
+		State dormantState = new DormantState(this);
+		State idleState = new IdleState(this);
+		State walkingState = new WalkingState(this);
+		State pushingState = new PushingState(this);
+		State liftingState = new LiftingState(this);
 
-        _fsm.AddTransition(idleState, walkingState, () => { return _heading != Vector3.zero; });
-        _fsm.AddTransition(walkingState, idleState, () => 
-        {
-            Vector3 vel = _rb.velocity;
-            vel.y = 0f;
-            return _heading == Vector3.zero && vel == Vector3.zero; 
-        });
+		_fsm.AddTransition(dormantState, idleState, () => { return !_dormant; });
 
-        // Pushing
-        _fsm.AddTransition(idleState, pushingState, () =>
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-                return BeginPushing();
+		_fsm.AddTransition(idleState, dormantState, () => { return _dormant; });
+		_fsm.AddTransition(idleState, walkingState, () => { return _heading != Vector3.zero; });
 
-            return false;
-        });
+		_fsm.AddTransition(walkingState, dormantState, () => _dormant);
+		_fsm.AddTransition(walkingState, idleState, () =>
+		{
+			Vector3 vel = _rb.velocity;
+			vel.y = 0f;
+			return _heading == Vector3.zero && vel == Vector3.zero;
+		});
 
-        _fsm.AddTransition(pushingState, idleState, () =>
-        {
-            return Input.GetKeyDown(KeyCode.E);
-        });
+		// Pushing
+		_fsm.AddTransition(idleState, pushingState, () =>
+		{
+			if (Input.GetKeyDown(KeyCode.E))
+				return BeginPushing();
 
-        // Lifting
-        _fsm.AddTransition(idleState, liftingState, () =>
-        {
-            if (Input.GetKeyDown(KeyCode.Q))
-                return BeginLifting();
+			return false;
+		});
 
-            return false;
-        });
+		_fsm.AddTransition(pushingState, idleState, () =>
+		{
+			if (Input.GetKeyDown(KeyCode.E))
+				StopPushing();
 
-        _fsm.AddTransition(liftingState, idleState, () =>
-        {
-            return Input.GetKeyDown(KeyCode.Q);
-        });
+			return _block == null;
+		});
 
-        _fsm.SetDefaultState(idleState);
-    }
+		// Lifting
+		_fsm.AddTransition(idleState, liftingState, () =>
+		{
+			if (Input.GetKeyDown(KeyCode.Q))
+				return BeginLifting();
 
-    private void ComputeAxes()
-    {
-        float _angle = _cameraTransform.rotation.eulerAngles.y;
-        _forwardRelativeToCamera = Quaternion.AngleAxis(_angle, Vector3.up) * Vector3.forward;
-        _rightRelativeToCamera = Vector3.Cross(Vector3.up, _forwardRelativeToCamera);
+			return false;
+		});
 
-        _heading = _inputData.normalisedInput.x * _rightRelativeToCamera + _inputData.normalisedInput.y * _forwardRelativeToCamera;
-    }
+		_fsm.AddTransition(liftingState, idleState, () =>
+		{
+			return Input.GetKeyDown(KeyCode.Q);
+		});
 
-    public void Enter()
-    {
-        VirtualCameraManager.instance.ToggleVCam(_CMVirtualCamera);
-        _dormant = false;
-    }
+		_fsm.SetDefaultState(idleState);
+	}
 
-    public void Exit()
-    {
-        _dormant = true;
-    }
+	private void ComputeAxes()
+	{
+		float _angle = _cameraTransform.rotation.eulerAngles.y;
+		_forwardRelativeToCamera = Quaternion.AngleAxis(_angle, Vector3.up) * Vector3.forward;
+		_rightRelativeToCamera = Vector3.Cross(Vector3.up, _forwardRelativeToCamera);
 
-    public void Move()
-    {
-        _controller.Move(_heading);
-    }
+		_heading = _inputData.normalisedInput.x * _rightRelativeToCamera + _inputData.normalisedInput.y * _forwardRelativeToCamera;
+	}
 
-    Quaternion targetRotation = Quaternion.identity;
-    public void Orientate()
-    {
-        if (_heading != Vector3.zero)
-            targetRotation = Quaternion.LookRotation(_heading, Vector3.up);
+	public void Move()
+	{
+		_controller.Move(_heading);
+	}
 
-        _thisTransform.rotation = Quaternion.Slerp(_thisTransform.rotation, targetRotation, _angularSpeed * Time.fixedDeltaTime);
-    }
+	public void Orientate()
+	{
+		if (_heading != Vector3.zero)
+			_targetRotation = Quaternion.LookRotation(_heading, Vector3.up);
 
-    public bool BeginPushing()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(_thisTransform.position + Vector3.up * 0.5f, _forwardRelativeToCamera, out hit, _blockInteractionDistance, _blockLayer))
-        {
-            _block = hit.collider.GetComponent<InteractableCube>();
-            _blockRigidbody = hit.collider.GetComponent<Rigidbody>();
-            _blockJoint = hit.collider.GetComponent<FixedJoint>();
+		_thisTransform.rotation = Quaternion.Slerp(_thisTransform.rotation, _targetRotation, _angularSpeed * Time.fixedDeltaTime);
+	}
 
-            _blockRigidbody.isKinematic = false;
-            _blockNormal = hit.normal;
+	public void Enter()
+	{
+		VirtualCameraManager.instance.ToggleVCam(_CMVirtualCamera);
+		_dormant = false;
+	}
 
-            Vector3 newGolemPos = _blockRigidbody.position + (_blockNormal * _distFromBlock);
-            newGolemPos.y = _thisTransform.position.y;
+	public void Exit()
+	{
+		_dormant = true;
+	}
 
-            _thisTransform.position = newGolemPos;
-            _thisTransform.rotation = Quaternion.LookRotation(-_blockNormal);
+	#region Pushing
+	public bool BeginPushing()
+	{
+		RaycastHit hit;
+		if (Physics.Raycast(_thisTransform.position + Vector3.up * 0.5f, _forwardRelativeToCamera, out hit, _blockInteractionDistance, LayerMap.block))
+		{
+			_block = hit.collider.GetComponent<Block>();
 
-            _blockJoint.connectedBody = _rb;
-            _block.SetIsInteractable(true);
-            return true;
-        }
+			_blockNormal = hit.normal;
 
-        return false;
-    }
+			Vector3 newGolemPos = _block.transform.position + (_blockNormal * _distFromBlock);
+			newGolemPos.y = _thisTransform.position.y;
+
+			_thisTransform.position = newGolemPos;
+			_thisTransform.rotation = Quaternion.LookRotation(-_blockNormal);
+			return true;
+		}
+
+		return false;
+	}
 
     public void Push()
-    {
-        _controller.Move(_inputData.input.y * -_blockNormal / _block.mass);
-    }
+	{
 
-    public void StopPushing()
-    {
-        _block.SetIsInteractable(false);
-        _blockJoint.connectedBody = null;
-        _blockRigidbody.isKinematic = true;
-        _block = null;
-        _blockRigidbody = null;
-        _blockJoint = null;
-    }
+		bool _blockCentered = Physics.Raycast(transform.position + Vector3.up * 0.85f, transform.forward, 15.0f, _blockLayer);
 
+		if (_blockCentered == false)
+		{
+			StopPushing();
+			return; 
+		}
+
+		_controller.Move(_inputData.input.y * -_blockNormal / _block.mass);
+		_block.Move(_controller.GetVelocity() * Time.fixedDeltaTime, this);
+	}
+
+	public void StopPushing()
+	{
+		_block.StopPushing(); 
+		_block = null;
+	}
+    #endregion
+
+    #region Lifting
     public bool BeginLifting()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(_thisTransform.position + Vector3.up * 0.5f, _forwardRelativeToCamera, out hit, _blockInteractionDistance, _blockLayer))
-        {
-            _blockRigidbody = hit.collider.GetComponent<Rigidbody>();
-            _blockInitialPos = _blockRigidbody.position;
-            _blockRigidbody.GetComponent<Collider>().enabled = false;
+	{
+		RaycastHit hit;
+		if (Physics.Raycast(_thisTransform.position + Vector3.up * 0.5f, _forwardRelativeToCamera, out hit, _blockInteractionDistance, _blockLayer))
+		{
+			//_block = hit.collider.GetComponent<InteractableCube>(); 
+			_block = hit.collider.GetComponent<Block>(); 
+			_block.BeginLift();
+			_blockNormal = hit.normal;
 
-            _blockNormal = hit.normal;
+			_block.transform.position = this.transform.position + new Vector3(0, 3.2f, 0); 
 
-            //Vector3 newGolemPos = _blockRigidbody.position + (_blockNormal * _distFromBlock);
-            //newGolemPos.y = _thisTransform.position.y;
+			//Vector3 newGolemPos = _block.transform.position + (_blockNormal * _distFromBlock);
+			//newGolemPos.y = _thisTransform.position.y;
+			//
+			//_thisTransform.position = newGolemPos;
+			//_thisTransform.rotation = Quaternion.LookRotation(-_blockNormal);
+			//
+			//_block.transform.position = _thisTransform.position + new Vector3(0, 2.5f, 0);
 
-            //_thisTransform.position = newGolemPos;
-            //_thisTransform.rotation = Quaternion.LookRotation(-_blockNormal);
+			return true;
+		}
 
-            //_blockRigidbody.position = _thisTransform.position + new Vector3(0, 2.5f, 0);
+		return false;
+	}
 
-            return true;
-        }
+	public void Lift()
+	{
+		//_block.transform.position = _handJoint.position;
+	}
 
-        return false;
-    }
+	public void StopLifting()
+	{
+		_block.StopLift(); 
+	}
+    #endregion
 
-    public void Lift()
-    {
-        _blockRigidbody.position = _handJoint.position;
-    }
+	public void SetAnimatorBool(string name, bool value)
+	{
+		_anim.SetBool(name, value);
+	}
 
-    public void StopLifting()
-    {
-        _blockRigidbody.position = _blockInitialPos;
-        _blockRigidbody.GetComponent<Collider>().enabled = true;
-    }    
-
-    public void ResetState()
-    {
-        _controller.Move(Vector3.zero);
-        //_rb.velocity = Vector3.zero;
-    }
-
-    public void SetAnimatorBool(string name, bool value)
-    {
-        _anim.SetBool(name, value);
-    }
-
-    // Interfaces
-    public void SetInputData(InputData data)
-    {
-        _inputData = data;
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        _controller.OnCollisionEnter(collision);
-    }
+	public void SetInputData(InputData data)
+	{
+		_inputData = data;
+	}
 }
