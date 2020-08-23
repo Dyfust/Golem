@@ -4,6 +4,9 @@ using FSM;
 
 public class Orb : MonoBehaviour, IRequireInput
 {
+    public delegate void OrbEventHandler();
+    public static event OrbEventHandler OnOrbActive;
+
     [SerializeField] private CharacterControllerSettings _controllerSettings;
     [SerializeField] private float _angularSpeed;
     private IMovementController _controller;
@@ -15,8 +18,6 @@ public class Orb : MonoBehaviour, IRequireInput
     private Vector3 _right;
     private Vector3 _currentHeading; public Vector3 currentHeading => _currentHeading;
 
-
-    [SerializeField] private LayerMask _golemLayer;
     [SerializeField] private float _interactionRadius;
     [SerializeField] private Vector3 _attachmentOffset;
     private Golem _currentGolem;
@@ -24,7 +25,6 @@ public class Orb : MonoBehaviour, IRequireInput
     private Rigidbody _rb;
     private Transform _thisTransform;
     private Transform _cameraTransform;
-    [SerializeField] private GameObject _CMVirtualCamera;
 
     private FSM.FSM _fsm;
 
@@ -87,6 +87,14 @@ public class Orb : MonoBehaviour, IRequireInput
             return false;
         });
 
+        _fsm.AddTransition(rollingState, mountedState, () =>
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+                return EnterGolem();
+
+            return false;
+        });
+
         _fsm.AddTransition(mountedState, idleState, () => 
         {
             return Input.GetKeyDown(KeyCode.F);
@@ -133,18 +141,16 @@ public class Orb : MonoBehaviour, IRequireInput
     
     private bool FindGolem()
     {
-        Collider[] golems = Physics.OverlapSphere(_thisTransform.position, _interactionRadius, _golemLayer);
+        Collider[] golems = Physics.OverlapSphere(_thisTransform.position, _interactionRadius, LayerMap.golemLayer);
 
         for (int i = 0; i < golems.Length; i++)
         {
             Vector3 thisToGolem = (golems[i].transform.position + Vector3.up * 0.5f) - _thisTransform.position;
             if (Physics.Raycast(_thisTransform.position, thisToGolem.normalized, out RaycastHit hit, _interactionRadius, ~(LayerMap.orbLayer | LayerMap.pressurePlateLayer)))
             {
-                Debug.Log("Yes");
-                if (hit.collider.GetComponent<Golem>())
+                if (hit.collider.CompareTag("Golem"))
                 {
-                    Debug.Log("Yes");
-                    _currentGolem = golems[i].GetComponent<Golem>();
+                    _currentGolem = hit.collider.GetComponent<Golem>();
                     return true;
                 }
             }
@@ -179,7 +185,7 @@ public class Orb : MonoBehaviour, IRequireInput
         _currentGolem = null;
         _rb.useGravity = true;
 
-        VirtualCameraManager.instance.ToggleVCam(_CMVirtualCamera);
+        OnOrbActive?.Invoke();
     }
 
     // Interfaces
