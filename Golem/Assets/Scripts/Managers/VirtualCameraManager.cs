@@ -11,14 +11,14 @@ public class VirtualCameraManager : MonoBehaviour
     private const string _identifierTag = "VCam";
 
     // 1.) Limited to one active VCAM.
-    [SerializeField] private GameObject _defaultVirtualCamera;
+    [SerializeField] private VirtualCamera _defaultVirtualCamera;
     [SerializeField] private CinemachineFreeLook _orbVirtualCamera;
     [SerializeField] private CinemachineFreeLook _golemVirtualCamera;
 
 
-    private GameObject _currentVirtualCamera;
-    private GameObject _previousPlayerCamera;
-    private GameObject[] _virtualCameras;
+    private VirtualCamera _currentVirtualCamera;
+    private VirtualCamera _previousPlayerCamera;
+    private VirtualCamera[] _virtualCameras;
 
     private void Awake()
     {
@@ -27,7 +27,7 @@ public class VirtualCameraManager : MonoBehaviour
         else
             Debug.LogWarning("Multiple VCAM managers present!");
 
-        _virtualCameras = GameObject.FindGameObjectsWithTag(_identifierTag);
+        _virtualCameras = VirtualCamera.FindGameObjectsWithTag(_identifierTag);
 
         ToggleVCam(_defaultVirtualCamera);
     }
@@ -56,7 +56,7 @@ public class VirtualCameraManager : MonoBehaviour
         ToggleVCam(_golemVirtualCamera.gameObject);
     }
 
-    public void ToggleVCam(GameObject vcam)
+    public void ToggleVCam(VirtualCamera vcam)
     {
         if (_currentVirtualCamera == _golemVirtualCamera.gameObject || _currentVirtualCamera == _orbVirtualCamera.gameObject)
             _previousPlayerCamera = _currentVirtualCamera;
