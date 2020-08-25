@@ -11,14 +11,16 @@ public class VirtualCameraManager : MonoBehaviour
     private const string _identifierTag = "VCam";
 
     // 1.) Limited to one active VCAM.
-    [SerializeField] private GameObject _defaultVirtualCamera;
-    [SerializeField] private CinemachineFreeLook _orbVirtualCamera;
-    [SerializeField] private CinemachineFreeLook _golemVirtualCamera;
+    [SerializeField] private VirtualCamera _defaultVirtualCamera;
 
+    [SerializeField] private CinemachineFreeLook _orbFreeLookCM;
+    [SerializeField] private CinemachineFreeLook _golemFreeLookCM;
+    private VirtualCamera _orbVirtualCamera;
+    private VirtualCamera _golemVirtualCamera;
 
-    private GameObject _currentVirtualCamera;
-    private GameObject _previousPlayerCamera;
-    private GameObject[] _virtualCameras;
+    private VirtualCamera _currentVirtualCamera;
+    private VirtualCamera _cachedPlayerCamera;
+    private VirtualCamera[] _virtualCameras;
 
     private void Awake()
     {
@@ -27,7 +29,15 @@ public class VirtualCameraManager : MonoBehaviour
         else
             Debug.LogWarning("Multiple VCAM managers present!");
 
-        _virtualCameras = GameObject.FindGameObjectsWithTag(_identifierTag);
+        _orbVirtualCamera = _orbFreeLookCM.GetComponent<VirtualCamera>();
+        _golemVirtualCamera = _golemFreeLookCM.GetComponent<VirtualCamera>();
+
+        GameObject[] vcamGOs = GameObject.FindGameObjectsWithTag(_identifierTag);
+        _virtualCameras = new VirtualCamera[vcamGOs.Length];
+        for (int i = 0; i < vcamGOs.Length; i++)
+        {
+            _virtualCameras[i] = vcamGOs[i].GetComponent<VirtualCamera>();
+        }
 
         ToggleVCam(_defaultVirtualCamera);
     }
@@ -46,33 +56,49 @@ public class VirtualCameraManager : MonoBehaviour
 
     private void ToggleOrbCamera()
     {
-        ToggleVCam(_orbVirtualCamera.gameObject);
+        ToggleVCam(_orbVirtualCamera);
     }
 
     private void ToggleGolemCamera(Golem golem)
     {
-        _golemVirtualCamera.Follow = golem.transform;
-        _golemVirtualCamera.LookAt = golem.transform;
-        ToggleVCam(_golemVirtualCamera.gameObject);
+        _golemFreeLookCM.Follow = golem.transform;
+        _golemFreeLookCM.LookAt = golem.transform;
+        ToggleVCam(_golemVirtualCamera);
     }
 
-    public void ToggleVCam(GameObject vcam)
+    private void ToggleVCam(VirtualCamera cam)
     {
-        if (_currentVirtualCamera == _golemVirtualCamera.gameObject || _currentVirtualCamera == _orbVirtualCamera.gameObject)
-            _previousPlayerCamera = _currentVirtualCamera;
+        CachePlayerCamera(cam);
 
-        _currentVirtualCamera = vcam;
-
-        vcam.SetActive(true);
+        _currentVirtualCamera = cam;
+        _currentVirtualCamera.gameObject.SetActive(true);
         for (int i = 0; i < _virtualCameras.Length; i++)
         {
-            if (_virtualCameras[i] != vcam)
-                _virtualCameras[i].SetActive(false);
+            if (_virtualCameras[i] != _currentVirtualCamera)
+                _virtualCameras[i].gameObject.SetActive(false);
         }
     }
 
-    public void TogglePreviousPlayerCamera()
+    public void ToggleCamera(VirtualCamera cam)
     {
-        ToggleVCam(_previousPlayerCamera);
+        if (cam.GetCameraPriority() >= _currentVirtualCamera.GetCameraPriority())
+        {
+            ToggleVCam(cam);
+        }
+        else
+        {
+            CachePlayerCamera(cam);
+        }
+    }
+
+    private void CachePlayerCamera(VirtualCamera cam)
+    {
+        if (cam == _golemVirtualCamera || cam == _orbVirtualCamera)
+            _cachedPlayerCamera = cam;
+    }
+
+    public void TogglePlayerCamera()
+    {
+        ToggleVCam(_cachedPlayerCamera);
     }
 }

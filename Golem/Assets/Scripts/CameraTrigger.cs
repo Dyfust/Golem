@@ -5,7 +5,7 @@ public class CameraTrigger : MonoBehaviour
     enum Target { ORB, GOLEM }
 
     [SerializeField] private Target _target;
-    [SerializeField] private GameObject _virtualCamera;
+    [SerializeField] private VirtualCamera _virtualCamera;
     private string _targetTag;
 
     private void Awake()
@@ -26,7 +26,7 @@ public class CameraTrigger : MonoBehaviour
     {
         if (other.CompareTag(_targetTag))
         {
-            VirtualCameraManager.instance.ToggleVCam(_virtualCamera);
+            VirtualCameraManager.instance.ToggleCamera(_virtualCamera);
             Debug.Log("OKAY");
         }
     }
@@ -34,6 +34,6 @@ public class CameraTrigger : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag(_targetTag))
-            VirtualCameraManager.instance.TogglePreviousPlayerCamera();
+            VirtualCameraManager.instance.TogglePlayerCamera();
     }
 }

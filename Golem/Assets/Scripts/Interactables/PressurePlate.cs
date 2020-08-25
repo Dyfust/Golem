@@ -9,7 +9,8 @@ public class PressurePlate : MonoBehaviour
 
 	private string _targetTag;
 
-    [SerializeField] private bool _toggle = false;
+	[Tooltip("If set to false, what ever the pressure plate activates will deactivate when the player leaves the trigger. If true then the pressure plate will stay active forever")]
+	[SerializeField] private bool _functionToggle = false; 
 
 	private void Awake()
 	{
@@ -58,15 +59,13 @@ public class PressurePlate : MonoBehaviour
 
 	private void OnTriggerExit(Collider other)
 	{
-        if (_toggle == false)
-        {
-            if (other.gameObject.CompareTag(_targetTag))
-            {
-                ToggleInteractions();
-                Debug.Log("Exit");
-            }
-        }
-
-
+		if (_functionToggle == false)
+		{
+			if (other.gameObject.CompareTag(_targetTag))
+			{
+				ToggleInteractions();
+				Debug.Log("Exit");
+			}
+		}
 	}
 }
