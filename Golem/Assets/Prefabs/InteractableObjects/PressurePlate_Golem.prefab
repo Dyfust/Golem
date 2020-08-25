@@ -76,6 +76,7 @@ MonoBehaviour:
   _type: 1
   _interactions:
   - {fileID: 0}
+  _functionToggle: 0
 --- !u!1 &8611235625379497006
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +231,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 33bbf69d582fe764aaec8b05ae5020dc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0664d92cd20a8f644b42e7067559de8e, type: 2}
     - target: {fileID: -927199367670048503, guid: 33bbf69d582fe764aaec8b05ae5020dc,
         type: 3}
       propertyPath: m_Name
