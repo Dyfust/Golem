@@ -87,7 +87,7 @@ namespace GolemStates
 
 		public override void UpdatePhysics()
 		{
-			_golem.Orientate();
+			_golem.OrientateToCamera();
 		}
 	}
 
