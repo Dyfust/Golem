@@ -9,6 +9,8 @@ public class PressurePlate : MonoBehaviour
 
 	private string _targetTag;
 
+    [SerializeField] private bool _toggle = false;
+
 	private void Awake()
 	{
 		//if (_type == PressurePlateType.ORB)
@@ -56,10 +58,15 @@ public class PressurePlate : MonoBehaviour
 
 	private void OnTriggerExit(Collider other)
 	{
-		if (other.gameObject.CompareTag(_targetTag))
-		{
-			ToggleInteractions();
-			Debug.Log("Exit");
-		}
+        if (_toggle == false)
+        {
+            if (other.gameObject.CompareTag(_targetTag))
+            {
+                ToggleInteractions();
+                Debug.Log("Exit");
+            }
+        }
+
+
 	}
 }
