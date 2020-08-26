@@ -117,6 +117,14 @@ public class Golem : MonoBehaviour, IRequireInput
             return _block == null;
         });
 
+        _fsm.AddTransition(pushingState, idleState, () =>
+        {
+            if (_dormant)
+                StopPushing();
+
+            return _block == null;
+        });
+
         // Lifting
         _fsm.AddTransition(idleState, liftingState, () =>
         {
@@ -155,14 +163,20 @@ public class Golem : MonoBehaviour, IRequireInput
 
     public void OrientateToCamera()
     {
-        _targetRotation = Quaternion.LookRotation(_heading, Vector3.up);
-        Orientate(_targetRotation);
+        if (_heading != Vector3.zero)
+        {
+            _targetRotation = Quaternion.LookRotation(_heading, Vector3.up);
+            Orientate(_targetRotation);
+        }
     }
 
     public void OrientateToGolem()
     {
-        _targetRotation = Quaternion.LookRotation(_heading, Vector3.up);
-        Orientate(_targetRotation);
+        if (_heading != Vector3.zero)
+        {
+            _targetRotation = Quaternion.LookRotation(_heading, Vector3.up);
+            Orientate(_targetRotation);
+        }
     }
 
     public void Enter()
