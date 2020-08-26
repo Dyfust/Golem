@@ -4,7 +4,7 @@ using FSM;
 
 public class Orb : MonoBehaviour, IRequireInput
 {
-    public delegate void OrbEventHandler();
+    public delegate void OrbEventHandler(Orb orb, Quaternion orientation);
     public static event OrbEventHandler OnOrbActive;
 
     [SerializeField] private CharacterControllerSettings _controllerSettings;
@@ -17,6 +17,7 @@ public class Orb : MonoBehaviour, IRequireInput
     private Vector3 _forward;
     private Vector3 _right;
     private Vector3 _currentHeading; public Vector3 currentHeading => _currentHeading;
+    private Quaternion _targetRotation;
 
     [SerializeField] private float _interactionRadius;
     [SerializeField] private Vector3 _attachmentOffset;
@@ -69,7 +70,7 @@ public class Orb : MonoBehaviour, IRequireInput
         State rollingState = new RollingState(this);
         State mountedState = new MountedState(this);
 
-        _fsm.AddTransition(idleState, rollingState, () => 
+        _fsm.AddTransition(idleState, rollingState, () =>
         {
             return _currentHeading != Vector3.zero;
         });
@@ -79,8 +80,8 @@ public class Orb : MonoBehaviour, IRequireInput
             return _currentHeading == Vector3.zero;
         });
 
-        _fsm.AddTransition(idleState, mountedState, () => 
-        { 
+        _fsm.AddTransition(idleState, mountedState, () =>
+        {
             if (Input.GetKeyDown(KeyCode.F))
                 return EnterGolem();
 
@@ -95,7 +96,7 @@ public class Orb : MonoBehaviour, IRequireInput
             return false;
         });
 
-        _fsm.AddTransition(mountedState, idleState, () => 
+        _fsm.AddTransition(mountedState, idleState, () =>
         {
             return Input.GetKeyDown(KeyCode.F);
         });
@@ -117,10 +118,24 @@ public class Orb : MonoBehaviour, IRequireInput
         _controller.FixedUpdate();
     }
 
-    public void Orientate()
+    private void Orientate(Quaternion targetRotation)
     {
-        Quaternion targetRotation = Quaternion.LookRotation(_forward, Vector3.up);
-        _thisTransform.rotation = Quaternion.Slerp(_thisTransform.rotation, targetRotation, _angularSpeed * Time.fixedDeltaTime);
+        _thisTransform.rotation = Quaternion.Slerp(_thisTransform.rotation, _targetRotation, _angularSpeed * Time.fixedDeltaTime);
+    }
+
+    public void OrientateToCamera()
+    {
+        if (_currentHeading != Vector3.zero)
+        {
+            _targetRotation = Quaternion.LookRotation(_currentHeading, Vector3.up);
+            Orientate(_targetRotation);
+        }
+    }
+
+    public void OrientateToGolem()
+    {
+        _targetRotation = Quaternion.LookRotation(_currentGolem.transform.forward, Vector3.up);
+        Orientate(_targetRotation);
     }
 
     public void Move()
@@ -138,7 +153,7 @@ public class Orb : MonoBehaviour, IRequireInput
     {
         _rb.velocity = Vector3.zero;
     }
-    
+
     private bool FindGolem()
     {
         Collider[] golems = Physics.OverlapSphere(_thisTransform.position, _interactionRadius, LayerMap.golemLayer);
@@ -185,7 +200,7 @@ public class Orb : MonoBehaviour, IRequireInput
         _currentGolem = null;
         _rb.useGravity = true;
 
-        OnOrbActive?.Invoke();
+        OnOrbActive?.Invoke(this, transform.rotation);
     }
 
     // Interfaces

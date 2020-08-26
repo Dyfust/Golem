@@ -4,7 +4,7 @@ using FSM;
 
 public class Golem : MonoBehaviour, IRequireInput
 {
-    public delegate void GolemEventHandler(Golem golem);
+    public delegate void GolemEventHandler(Golem golem, Quaternion orientation);
     public static event GolemEventHandler OnGolemActive;
 
     [SerializeField] private float _angularSpeed = 0;
@@ -14,7 +14,7 @@ public class Golem : MonoBehaviour, IRequireInput
 
     private Vector3 _forwardRelativeToCamera;
     private Vector3 _rightRelativeToCamera;
-    private Vector3 _heading;
+    private Vector3 _heading; public Vector3 heading => _heading;
     private Quaternion _targetRotation;
 
     [SerializeField] private LayerMask _blockLayer;
@@ -117,6 +117,14 @@ public class Golem : MonoBehaviour, IRequireInput
             return _block == null;
         });
 
+        _fsm.AddTransition(pushingState, idleState, () =>
+        {
+            if (_dormant)
+                StopPushing();
+
+            return _block == null;
+        });
+
         // Lifting
         _fsm.AddTransition(idleState, liftingState, () =>
         {
@@ -155,19 +163,16 @@ public class Golem : MonoBehaviour, IRequireInput
 
     public void OrientateToCamera()
     {
-        _targetRotation = Quaternion.LookRotation(_heading, Vector3.up);
-        Orientate(_targetRotation);
-    }
-
-    public void OrientateToGolem()
-    {
-        _targetRotation = Quaternion.LookRotation(_heading, Vector3.up);
-        Orientate(_targetRotation);
+        if (_heading != Vector3.zero)
+        {
+            _targetRotation = Quaternion.LookRotation(_heading, Vector3.up);
+            Orientate(_targetRotation);
+        }
     }
 
     public void Enter()
     {
-        OnGolemActive?.Invoke(this);
+        OnGolemActive?.Invoke(this, transform.rotation);
         _dormant = false;
     }
 
