@@ -35,6 +35,7 @@ public class VirtualCameraManager : MonoBehaviour
         GameObject[] vcamGOs = GameObject.FindGameObjectsWithTag(_identifierTag);
         _virtualCameras = new VirtualCamera[vcamGOs.Length];
         Debug.Log(_virtualCameras.Length);
+
         for (int i = 0; i < vcamGOs.Length; i++)
         {
             _virtualCameras[i] = vcamGOs[i].GetComponent<VirtualCamera>();
@@ -55,15 +56,19 @@ public class VirtualCameraManager : MonoBehaviour
         Golem.OnGolemActive -= ToggleGolemCamera;
     }
 
-    private void ToggleOrbCamera()
+    private void ToggleOrbCamera(Orb orb, Quaternion orientation)
     {
+        _orbFreeLookCM.Follow = orb.transform;
+        _orbFreeLookCM.LookAt = orb.transform;
+        _orbFreeLookCM.m_XAxis.Value = orientation.eulerAngles.y;
         ToggleVCam(_orbVirtualCamera);
     }
 
-    private void ToggleGolemCamera(Golem golem)
+    private void ToggleGolemCamera(Golem golem, Quaternion orientation)
     {
         _golemFreeLookCM.Follow = golem.transform;
         _golemFreeLookCM.LookAt = golem.transform;
+        _golemFreeLookCM.m_XAxis.Value = orientation.eulerAngles.y;
         ToggleVCam(_golemVirtualCamera);
     }
 
