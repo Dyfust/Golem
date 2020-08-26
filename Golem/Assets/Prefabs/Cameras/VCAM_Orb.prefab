@@ -610,8 +610,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8840084849057420562}
   - component: {fileID: 7303648437547722993}
-  - component: {fileID: 8309295104801003322}
   - component: {fileID: 1369424797777132433}
+  - component: {fileID: 6852682825240888761}
   m_Layer: 0
   m_Name: VCAM_Orb
   m_TagString: VCam
@@ -737,7 +737,20 @@ MonoBehaviour:
   - {fileID: 8173040246578748652}
   - {fileID: 5071421577498131795}
   - {fileID: 263999727770525093}
---- !u!114 &8309295104801003322
+--- !u!114 &1369424797777132433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8309295104801003321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf9eb672a6875445984afa7c624d6db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraPriority: 0
+--- !u!114 &6852682825240888761
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -767,16 +780,3 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 0
---- !u!114 &1369424797777132433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8309295104801003321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adf9eb672a6875445984afa7c624d6db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cameraPriority: 0
