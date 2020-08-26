@@ -35,6 +35,7 @@ public class VirtualCameraManager : MonoBehaviour
         GameObject[] vcamGOs = GameObject.FindGameObjectsWithTag(_identifierTag);
         _virtualCameras = new VirtualCamera[vcamGOs.Length];
         Debug.Log(_virtualCameras.Length);
+
         for (int i = 0; i < vcamGOs.Length; i++)
         {
             _virtualCameras[i] = vcamGOs[i].GetComponent<VirtualCamera>();
