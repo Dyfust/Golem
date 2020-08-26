@@ -1,5 +1,4 @@
 using FSM;
-using UnityEngine;
 
 namespace OrbStates
 {
@@ -60,7 +59,7 @@ namespace OrbStates
         public override void UpdatePhysics()
         {
             _orb.UpdateController();
-            _orb.Orientate();
+            _orb.OrientateToCamera();
         }
     }
 
@@ -87,7 +86,7 @@ namespace OrbStates
 
         public override void UpdateLogic()
         {
-
+            _orb.OrientateToGolem();
         }
 
         public override void UpdatePhysics()
