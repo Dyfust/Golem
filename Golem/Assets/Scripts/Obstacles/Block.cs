@@ -27,27 +27,12 @@ public class Block : MonoBehaviour
 
 	private void Update()
 	{
-		//if (_connectedGolem != null)
-		//{
-		//	if (Vector3.Distance(this.transform.position, _connectedGolem.transform.position) > 3f)
-		//	{
-		//		_isConnected = false;
-		//		Disconnect(); 
-		//	}
-		//}
 	}
 
 	private void FixedUpdate()
 	{
-		_isGrounded = Physics.BoxCast(transform.position, _coll.bounds.size * 0.5f, Vector3.down, out _hit, Quaternion.identity, 0.1f, int.MaxValue, QueryTriggerInteraction.Ignore);
-		//Debug.Log(_hit.distance); 
-		//Debug.Log(_cc.isGrounded ? "Grounded" : "Not Grounded");
+		_isGrounded = Physics.BoxCast(transform.position + Vector3.up * _coll.bounds.size.y * 0.5f, _coll.bounds.size * 0.5f, Vector3.down, out _hit, Quaternion.identity, 0.1f, int.MaxValue, QueryTriggerInteraction.Ignore);
 
-		//float halfLength = transform.localScale.x / 2;
-		//bool _topRight = Physics.Raycast(transform.position + new Vector3(halfLength, -halfLength, halfLength), Vector3.down, _rayPadding, _groundLayer);
-		//bool _bottomRight = Physics.Raycast(transform.position + new Vector3(halfLength, -halfLength, -halfLength), Vector3.down, _rayPadding, _groundLayer);
-		//bool _bottomLeft = Physics.Raycast(transform.position + new Vector3(-halfLength, -halfLength, -halfLength), Vector3.down, _rayPadding, _groundLayer);
-		//bool _topLeft = Physics.Raycast(transform.position + new Vector3(-halfLength, -halfLength, halfLength), Vector3.down, _rayPadding, _groundLayer);
 
 		//Applying gravity only if the block is not on the ground or not being lifted! 
 		if (_isGrounded == false && _isLifted == false)
