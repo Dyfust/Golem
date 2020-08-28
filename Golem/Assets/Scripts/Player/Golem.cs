@@ -48,12 +48,6 @@ public class Golem : MonoBehaviour, IRequireInput
     private void Start()
     {
         InitaliseFSM();
-
-        DebugWindow.AddPrintTask(() => { return "Golem State: " + _fsm.GetCurrentState().debugName; });
-        DebugWindow.AddPrintTask(() => { return "Golem Heading: " + _heading.ToString(); });
-        DebugWindow.AddPrintTask(() => { return "Golem Speed: " + _rb.velocity.magnitude.ToString(); });
-        DebugWindow.AddPrintTask(() => { return "Golem Velocity: " + _rb.velocity.ToString(); });
-        DebugWindow.AddPrintTask(() => { return "Orb Grounded: " + _controller.IsGrounded().ToString(); });
     }
 
     private void Update()
@@ -102,6 +96,14 @@ public class Golem : MonoBehaviour, IRequireInput
 
         // Pushing
         _fsm.AddTransition(idleState, pushingState, () =>
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+                return BeginPushing();
+
+            return false;
+        });
+
+        _fsm.AddTransition(walkingState, pushingState, () =>
         {
             if (Input.GetKeyDown(KeyCode.E))
                 return BeginPushing();

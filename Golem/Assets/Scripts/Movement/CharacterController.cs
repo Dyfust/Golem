@@ -55,35 +55,35 @@ public class CharacterController : IMovementController
         }
 
         // Apply gravity only when grounded.
-        if (!_isGrounded)
+        if (_isGrounded == false)
             _velocity += Vector3.down * _settings.gravity * Time.fixedDeltaTime;
 
-        if (_isGrounded)
-        {
-            // Apply friction. INTERFERES WITH GRAVITY.FIX THIS!
-            // Solution: Apply friction to only X & Z axes when falling.
-            Vector3 postFrictionVelocity = _velocity + -_velocity.normalized * _settings.friction * Time.fixedDeltaTime;
-            if (Vector3.Dot(_velocity.normalized, postFrictionVelocity.normalized) > 0f)
-                _velocity += -_velocity.normalized * _settings.friction * Time.fixedDeltaTime;
-            else
-                _velocity = Vector3.zero;
-        }
-        else
-        {
-            Vector3 preFrictionVelocityXZ = _velocity;
-            preFrictionVelocityXZ.y = 0f;
+        //if (_isGrounded)
+        //{
+        //    // Apply friction. INTERFERES WITH GRAVITY.FIX THIS!
+        //    // Solution: Apply friction to only X & Z axes when falling.
+        //    Vector3 postFrictionVelocity = _velocity + -_velocity.normalized * _settings.friction * Time.fixedDeltaTime;
+        //    if (Vector3.Dot(_velocity.normalized, postFrictionVelocity.normalized) > 0f)
+        //        _velocity += -_velocity.normalized * _settings.friction * Time.fixedDeltaTime;
+        //    else
+        //        _velocity = Vector3.zero;
+        //}
+        //else
+        //{
+        //    Vector3 preFrictionVelocityXZ = _velocity;
+        //    preFrictionVelocityXZ.y = 0f;
 
-            Vector3 postFrictionVelocity = preFrictionVelocityXZ + -preFrictionVelocityXZ.normalized * _settings.friction * Time.fixedDeltaTime;
-            if (Vector3.Dot(preFrictionVelocityXZ.normalized, postFrictionVelocity.normalized) > 0f)
-            {
-                _velocity += -preFrictionVelocityXZ.normalized * _settings.friction * Time.fixedDeltaTime;
-            }
-            else
-            {
-                _velocity.x = 0f;
-                _velocity.z = 0f;
-            }
-        }
+        //    Vector3 postFrictionVelocity = preFrictionVelocityXZ + -preFrictionVelocityXZ.normalized * _settings.friction * Time.fixedDeltaTime;
+        //    if (Vector3.Dot(preFrictionVelocityXZ.normalized, postFrictionVelocity.normalized) > 0f)
+        //    {
+        //        _velocity += -preFrictionVelocityXZ.normalized * _settings.friction * Time.fixedDeltaTime;
+        //    }
+        //    else
+        //    {
+        //        _velocity.x = 0f;
+        //        _velocity.z = 0f;
+        //    }
+        //}
 
         // Clamp velocity to prevent exceeding max speed.
         if (_velocity.magnitude > _settings.maxSpeed)
@@ -122,6 +122,7 @@ public class CharacterController : IMovementController
     public void OnCollisionStay(Collision collision)
     {
         int amountOfGroundNormals = 0;
+        _isGrounded = false;
         _groundNormal = Vector3.zero;
         // Grounded if at least 1 surface is facing upwards.
         _contacts = collision.contacts; // collision.GetContacts() seems to be bugged. Sometimes it doesn't reset the array when collisions change.
