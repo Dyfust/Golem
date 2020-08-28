@@ -205,7 +205,7 @@ public class Golem : MonoBehaviour, IRequireInput
     public void Push()
     {
 
-        bool _blockCentered = Physics.Raycast(transform.position + Vector3.up * 0.85f, transform.forward, 15.0f, _blockLayer);
+		bool _blockCentered = Physics.Raycast(transform.position + Vector3.up * 0.85f, transform.forward, 2.0f, _blockLayer);
 
         if (_blockCentered == false)
         {
