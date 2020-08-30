@@ -1,37 +1,37 @@
 ﻿//using System.Runtime.Remoting.Messaging;
+using System;
 using UnityEngine;
 
+[Serializable]
 public class CharacterController : IMovementController
 {
     /// This class is responsible for handling all aspects of motion including slope handling & ground detection.
 
     private CharacterControllerSettings _settings;
 
+    private bool _isGrounded;
+
     private float _acceleration;
     private Vector3 _bufferedAcceleration;
-    private Vector3 _accelerationThisFrame;
-    private Vector3 _velocity; 
-    private bool _isGrounded;
+    private Vector3 _velocity;
     private Rigidbody _rb;
 
     public CharacterController(Rigidbody rb, CharacterControllerSettings settings)
     {
         _rb = rb;
         _settings = settings;
-
-        DebugWindow.AddPrintTask(() => { return "Golem Surface Normal: " + _groundNormal.ToString(); });
+        _acceleration = (_settings.maxSpeed / _settings.timeToMaxSpeed) + _settings.friction;
     }
 
     public void FixedUpdate()
     {
         // Workflow optimization.
-        _acceleration = _settings.maxSpeed / _settings.timeToMaxSpeed + _settings.friction;
 
         _velocity = _rb.velocity;
-        Vector3 previousVelocity = _velocity; 
-        Vector3 acceleration = _bufferedAcceleration * Time.fixedDeltaTime;
+        Vector3 acceleration = _bufferedAcceleration;
+        _bufferedAcceleration = Vector3.zero;
 
-        // This raycast is responsible for detecting a slope in front of the character.
+        //This raycast is responsible for detecting a slope in front of the character.
         if (_isGrounded)
         {
             // Transform the direction we're accelerating to be parallel to the slope.
@@ -54,20 +54,17 @@ public class CharacterController : IMovementController
             _velocity += acceleration;
         }
 
-        // Apply gravity only when grounded.
-        if (_isGrounded == false)
-            _velocity += Vector3.down * _settings.gravity * Time.fixedDeltaTime;
-
-        //if (_isGrounded)
-        //{
-        //    // Apply friction. INTERFERES WITH GRAVITY.FIX THIS!
-        //    // Solution: Apply friction to only X & Z axes when falling.
-        //    Vector3 postFrictionVelocity = _velocity + -_velocity.normalized * _settings.friction * Time.fixedDeltaTime;
-        //    if (Vector3.Dot(_velocity.normalized, postFrictionVelocity.normalized) > 0f)
-        //        _velocity += -_velocity.normalized * _settings.friction * Time.fixedDeltaTime;
-        //    else
-        //        _velocity = Vector3.zero;
-        //}
+        if (_isGrounded)
+        {
+            //Apply friction. INTERFERES WITH GRAVITY.FIX THIS!
+            //Solution: Apply friction to only X & Z axes when falling.
+            Vector3 friction = -_velocity.normalized * _settings.friction * Time.fixedDeltaTime;
+            Vector3 postFrictionVelocity = _velocity + friction;
+            if (Vector3.Dot(_velocity.normalized, postFrictionVelocity.normalized) > 0f)
+                _velocity += friction;
+            else
+                _velocity = Vector3.zero;
+        }
         //else
         //{
         //    Vector3 preFrictionVelocityXZ = _velocity;
@@ -85,8 +82,12 @@ public class CharacterController : IMovementController
         //    }
         //}
 
-        // Clamp velocity to prevent exceeding max speed.
-        if (_velocity.magnitude > _settings.maxSpeed)
+        // Apply gravity only when grounded.
+        if (_isGrounded == false)
+            _velocity += Vector3.down * _settings.gravity * Time.fixedDeltaTime;
+
+        //Clamp velocity to prevent exceeding max speed.
+        if (_rb.velocity.magnitude > _settings.maxSpeed)
         {
             if (_isGrounded)
             {
@@ -94,8 +95,8 @@ public class CharacterController : IMovementController
             }
             else
             {
-                // Ensure velocity is only clamped on the X & Z axes when falling.
-                Vector3 velocityXZ = _velocity;
+                //Ensure velocity is only clamped on the X & Z axes when falling.
+                Vector3 velocityXZ = _rb.velocity;
                 velocityXZ.y = 0f;
 
                 velocityXZ = Vector3.ClampMagnitude(velocityXZ, _settings.maxSpeed);
@@ -105,16 +106,13 @@ public class CharacterController : IMovementController
         }
 
         // Reset buffered values.
-        //Debug.Log(_isGrounded); 
         _isGrounded = false;
         _groundNormal = Vector3.zero;
-        _bufferedAcceleration = Vector3.zero;
 
         _rb.velocity = _velocity;
-        _accelerationThisFrame = _velocity - previousVelocity; 
     }
 
-    public Vector3 GetVelocity() => _velocity; 
+    public Vector3 GetVelocity() => _velocity;
 
 
     private Vector3 _groundNormal;
@@ -152,7 +150,7 @@ public class CharacterController : IMovementController
 
     public void Move(Vector3 dir)
     {
-        _bufferedAcceleration = dir * _acceleration;
+        _bufferedAcceleration += dir * _acceleration * Time.fixedDeltaTime;
     }
 
     public bool IsGrounded() => _isGrounded;

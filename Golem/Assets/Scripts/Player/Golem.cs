@@ -48,6 +48,8 @@ public class Golem : MonoBehaviour, IRequireInput
     private void Start()
     {
         InitaliseFSM();
+
+        DebugWindow.AddPrintTask(() => "Orb Grounded: " + _controller.IsGrounded().ToString());
     }
 
     private void Update()
@@ -62,8 +64,8 @@ public class Golem : MonoBehaviour, IRequireInput
 
     private void FixedUpdate()
     {
-        _controller.FixedUpdate();
         _fsm.UpdatePhysics();
+        _controller.FixedUpdate();
     }
 
     private void OnCollisionStay(Collision collision)
