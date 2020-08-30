@@ -49,11 +49,7 @@ public class Golem : MonoBehaviour, IRequireInput
     {
         InitaliseFSM();
 
-        DebugWindow.AddPrintTask(() => { return "Golem State: " + _fsm.GetCurrentState().debugName; });
-        DebugWindow.AddPrintTask(() => { return "Golem Heading: " + _heading.ToString(); });
-        DebugWindow.AddPrintTask(() => { return "Golem Speed: " + _rb.velocity.magnitude.ToString(); });
-        DebugWindow.AddPrintTask(() => { return "Golem Velocity: " + _rb.velocity.ToString(); });
-        DebugWindow.AddPrintTask(() => { return "Orb Grounded: " + _controller.IsGrounded().ToString(); });
+        DebugWindow.AddPrintTask(() => "Orb Grounded: " + _controller.IsGrounded().ToString());
     }
 
     private void Update()
@@ -68,8 +64,8 @@ public class Golem : MonoBehaviour, IRequireInput
 
     private void FixedUpdate()
     {
-        _controller.FixedUpdate();
         _fsm.UpdatePhysics();
+        _controller.FixedUpdate();
     }
 
     private void OnCollisionStay(Collision collision)
@@ -102,6 +98,14 @@ public class Golem : MonoBehaviour, IRequireInput
 
         // Pushing
         _fsm.AddTransition(idleState, pushingState, () =>
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+                return BeginPushing();
+
+            return false;
+        });
+
+        _fsm.AddTransition(walkingState, pushingState, () =>
         {
             if (Input.GetKeyDown(KeyCode.E))
                 return BeginPushing();
@@ -205,7 +209,7 @@ public class Golem : MonoBehaviour, IRequireInput
     public void Push()
     {
 
-        bool _blockCentered = Physics.Raycast(transform.position + Vector3.up * 0.85f, transform.forward, 15.0f, _blockLayer);
+		bool _blockCentered = Physics.Raycast(transform.position + Vector3.up * 0.85f, transform.forward, 2.0f, _blockLayer);
 
         if (_blockCentered == false)
         {

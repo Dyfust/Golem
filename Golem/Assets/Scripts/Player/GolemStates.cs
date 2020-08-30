@@ -82,11 +82,11 @@ namespace GolemStates
 
 		public override void UpdateLogic()
 		{
-			_golem.Move();
 		}
 
 		public override void UpdatePhysics()
 		{
+			_golem.Move();
 			_golem.OrientateToCamera();
 		}
 	}
