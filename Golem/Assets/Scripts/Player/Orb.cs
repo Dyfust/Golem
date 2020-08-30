@@ -4,6 +4,9 @@ using FSM;
 
 public class Orb : MonoBehaviour, IRequireInput
 {
+    public delegate void OrbEventHandler(Orb orb, Quaternion orientation);
+    public static event OrbEventHandler OnOrbActive;
+
     [SerializeField] private CharacterControllerSettings _controllerSettings;
     [SerializeField] private float _angularSpeed;
     private IMovementController _controller;
@@ -14,15 +17,15 @@ public class Orb : MonoBehaviour, IRequireInput
     private Vector3 _forward;
     private Vector3 _right;
     private Vector3 _currentHeading; public Vector3 currentHeading => _currentHeading;
+    private Quaternion _targetRotation;
 
-    [SerializeField] private Golem _sceneGolem;
+    [SerializeField] private float _interactionRadius;
     [SerializeField] private Vector3 _attachmentOffset;
     private Golem _currentGolem;
 
     private Rigidbody _rb;
     private Transform _thisTransform;
     private Transform _cameraTransform;
-    [SerializeField] private GameObject _CMVirtualCamera;
 
     private FSM.FSM _fsm;
 
@@ -67,7 +70,7 @@ public class Orb : MonoBehaviour, IRequireInput
         State rollingState = new RollingState(this);
         State mountedState = new MountedState(this);
 
-        _fsm.AddTransition(idleState, rollingState, () => 
+        _fsm.AddTransition(idleState, rollingState, () =>
         {
             return _currentHeading != Vector3.zero;
         });
@@ -77,15 +80,23 @@ public class Orb : MonoBehaviour, IRequireInput
             return _currentHeading == Vector3.zero;
         });
 
-        _fsm.AddTransition(idleState, mountedState, () => 
-        { 
+        _fsm.AddTransition(idleState, mountedState, () =>
+        {
             if (Input.GetKeyDown(KeyCode.F))
                 return EnterGolem();
 
             return false;
         });
 
-        _fsm.AddTransition(mountedState, idleState, () => 
+        _fsm.AddTransition(rollingState, mountedState, () =>
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+                return EnterGolem();
+
+            return false;
+        });
+
+        _fsm.AddTransition(mountedState, idleState, () =>
         {
             return Input.GetKeyDown(KeyCode.F);
         });
@@ -107,10 +118,24 @@ public class Orb : MonoBehaviour, IRequireInput
         _controller.FixedUpdate();
     }
 
-    public void Orientate()
+    private void Orientate(Quaternion targetRotation)
     {
-        Quaternion targetRotation = Quaternion.LookRotation(_forward, Vector3.up);
-        _thisTransform.rotation = Quaternion.Slerp(_thisTransform.rotation, targetRotation, _angularSpeed * Time.fixedDeltaTime);
+        _thisTransform.rotation = Quaternion.Slerp(_thisTransform.rotation, _targetRotation, _angularSpeed * Time.fixedDeltaTime);
+    }
+
+    public void OrientateToCamera()
+    {
+        if (_currentHeading != Vector3.zero)
+        {
+            _targetRotation = Quaternion.LookRotation(_currentHeading, Vector3.up);
+            Orientate(_targetRotation);
+        }
+    }
+
+    public void OrientateToGolem()
+    {
+        _targetRotation = Quaternion.LookRotation(_currentGolem.transform.forward, Vector3.up);
+        Orientate(_targetRotation);
     }
 
     public void Move()
@@ -129,13 +154,39 @@ public class Orb : MonoBehaviour, IRequireInput
         _rb.velocity = Vector3.zero;
     }
 
+    private bool FindGolem()
+    {
+        Collider[] golems = Physics.OverlapSphere(_thisTransform.position, _interactionRadius, LayerMap.golemLayer);
+
+        for (int i = 0; i < golems.Length; i++)
+        {
+            Vector3 thisToGolem = (golems[i].transform.position + Vector3.up * 0.5f) - _thisTransform.position;
+            if (Physics.Raycast(_thisTransform.position, thisToGolem.normalized, out RaycastHit hit, _interactionRadius, ~(LayerMap.orbLayer | LayerMap.pressurePlateLayer)))
+            {
+                if (hit.collider.CompareTag("Golem"))
+                {
+                    _currentGolem = hit.collider.GetComponent<Golem>();
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public bool EnterGolem()
     {
-        _rb.useGravity = false;
-        _rb.velocity = Vector3.zero;
-        _currentGolem = _sceneGolem;
-        _currentGolem.Enter();
-        return true;
+        if (FindGolem())
+        {
+            _rb.useGravity = false;
+            _rb.velocity = Vector3.zero;
+
+            _currentGolem.Enter();
+
+            return true;
+        }
+
+        return false;
     }
 
     public void StickToGolem()
@@ -145,11 +196,11 @@ public class Orb : MonoBehaviour, IRequireInput
 
     public void ExitGolem()
     {
-        _rb.useGravity = true;
         _currentGolem.Exit();
         _currentGolem = null;
+        _rb.useGravity = true;
 
-        VirtualCameraManager.instance.ToggleVCam(_CMVirtualCamera);
+        OnOrbActive?.Invoke(this, transform.rotation);
     }
 
     // Interfaces
