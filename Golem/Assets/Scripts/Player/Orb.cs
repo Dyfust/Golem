@@ -9,7 +9,7 @@ public class Orb : MonoBehaviour, IRequireInput
 
     [SerializeField] private CharacterControllerSettings _controllerSettings;
     [SerializeField] private float _angularSpeed;
-    private IMovementController _controller;
+    private CharacterController _controller;
 
     private InputData _inputData;
 
@@ -181,6 +181,8 @@ public class Orb : MonoBehaviour, IRequireInput
             _rb.useGravity = false;
             _rb.velocity = Vector3.zero;
 
+            GetComponent<Collider>().enabled = false;
+
             _currentGolem.Enter();
 
             return true;
@@ -198,6 +200,8 @@ public class Orb : MonoBehaviour, IRequireInput
     {
         _currentGolem.Exit();
         _currentGolem = null;
+
+        GetComponent<Collider>().enabled = true;
         _rb.useGravity = true;
 
         OnOrbActive?.Invoke(this, transform.rotation);
