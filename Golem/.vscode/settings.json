@@ -1,0 +1,34 @@
+﻿{
+    "files.exclude":
+    {
+        "**/.vscode": true,
+        "**/*.*.meta": true,
+        "**/*.cubemap": true,
+        "**/*.fbx": true,
+        "**/*.FBX": true,
+        "**/*.mat": true,
+        "**/*.meta": true,
+        "**/*.prefab": true,
+        "**/*.tga": true,
+        "**/*.unity": true,
+        "**/*.unityproj": true,
+        "**/Art": true,
+        "**/Blockouts": true,
+        "**/Library": true,
+        "**/Materials": true,
+        "**/obj": true,
+        "**/Packages": true,
+        "**/PhysicsMaterials": true,
+        "**/Post Process": true,
+        "**/Prefabs": true,
+        "**/Presets": true,
+        "**/ProBuilder Data": true,
+        "**/ProjectSettings": true,
+        "**/Scenes": true,
+        "**/Settings": true,
+        "**/Sounds": true,
+        "**/Temp": true,
+        "**/TextMesh Pro": true,
+        "**/Textures": true
+    }
+}

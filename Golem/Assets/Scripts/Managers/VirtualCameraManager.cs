@@ -11,6 +11,7 @@ public class VirtualCameraManager : MonoBehaviour
     private const string _identifierTag = "VCam";
 
     // 1.) Limited to one active VCAM.
+    [SerializeField] private Camera _brain; 
     [SerializeField] private VirtualCamera _defaultVirtualCamera;
 
     [SerializeField] private CinemachineFreeLook _orbFreeLookCM;
@@ -41,7 +42,7 @@ public class VirtualCameraManager : MonoBehaviour
             _virtualCameras[i] = vcamGOs[i].GetComponent<VirtualCamera>();
         }
 
-        ToggleVCam(_defaultVirtualCamera);
+        ForceToggleCam(_defaultVirtualCamera);
     }
 
     private void OnEnable()
@@ -61,7 +62,7 @@ public class VirtualCameraManager : MonoBehaviour
         _orbFreeLookCM.Follow = orb.transform;
         _orbFreeLookCM.LookAt = orb.transform;
         _orbFreeLookCM.m_XAxis.Value = orientation.eulerAngles.y;
-        ToggleVCam(_orbVirtualCamera);
+        ForceToggleCam(_orbVirtualCamera);
     }
 
     private void ToggleGolemCamera(Golem golem, Quaternion orientation)
@@ -69,13 +70,13 @@ public class VirtualCameraManager : MonoBehaviour
         _golemFreeLookCM.Follow = golem.transform;
         _golemFreeLookCM.LookAt = golem.transform;
         _golemFreeLookCM.m_XAxis.Value = orientation.eulerAngles.y;
-        ToggleVCam(_golemVirtualCamera);
+        ForceToggleCam(_golemVirtualCamera);
     }
 
-    private void ToggleVCam(VirtualCamera cam)
+    private void ForceToggleCam(VirtualCamera cam)
     {
         CachePlayerCamera(cam);
-
+        _brain.cullingMask = ~cam.GetCullLayer(); 
         _currentVirtualCamera = cam;
         _currentVirtualCamera.gameObject.SetActive(true);
         for (int i = 0; i < _virtualCameras.Length; i++)
@@ -89,7 +90,7 @@ public class VirtualCameraManager : MonoBehaviour
     {
         if (cam.GetCameraPriority() >= _currentVirtualCamera.GetCameraPriority())
         {
-            ToggleVCam(cam);
+            ForceToggleCam(cam);
         }
         else
         {
@@ -105,6 +106,6 @@ public class VirtualCameraManager : MonoBehaviour
 
     public void TogglePlayerCamera()
     {
-        ToggleVCam(_cachedPlayerCamera);
+        ForceToggleCam(_cachedPlayerCamera);
     }
 }
