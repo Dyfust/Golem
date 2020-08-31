@@ -20,6 +20,7 @@ public class Golem : MonoBehaviour, IRequireInput
     [SerializeField] private LayerMask _blockLayer;
     [SerializeField] private float _blockInteractionDistance;
     [SerializeField] private float _distFromBlock;
+    [SerializeField] private float _liftOffset;
     [SerializeField] private Transform _handJoint;
     private Block _block;
     private Vector3 _blockNormal;
@@ -239,7 +240,7 @@ public class Golem : MonoBehaviour, IRequireInput
             _block.BeginLift();
             _blockNormal = hit.normal;
 
-            _block.transform.position = this.transform.position + new Vector3(0, 3.2f, 0);
+            _block.transform.position = this.transform.position + new Vector3(0, _liftOffset, 0);
 
             //Vector3 newGolemPos = _block.transform.position + (_blockNormal * _distFromBlock);
             //newGolemPos.y = _thisTransform.position.y;
