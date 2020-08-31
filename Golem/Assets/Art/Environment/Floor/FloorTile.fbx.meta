@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a19790f098c58f94e90fadd5d3a709a7
+guid: 16a9028501cf3944daea94a032b37c3d
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
@@ -7,13 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: WallVines_MAT
-    second: {fileID: 2100000, guid: 54960a5e7a985244f848703dd9e8eddf, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: pasted__lambert3
-    second: {fileID: 2100000, guid: 54960a5e7a985244f848703dd9e8eddf, type: 2}
+      name: Floor_MAT
+    second: {fileID: 2100000, guid: 65c63d20a7ffa6847b5a1330a0583846, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
