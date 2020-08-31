@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Block : MonoBehaviour
+public class Block : MonoBehaviour, IReset
 {
     [SerializeField] private float _mass; public float mass => _mass;
 
@@ -9,7 +9,8 @@ public class Block : MonoBehaviour
 
 	private float _gravity = 10;
 
-	private Vector3 _initialPos;
+	private Vector3 _preLiftPos;
+	private Vector3 _startPos; 
 
 	private bool _isGrounded = false;
 	private bool _isConnected = false;
@@ -22,7 +23,8 @@ public class Block : MonoBehaviour
 	private void Start()
 	{
 		_cc = GetComponent<UnityEngine.CharacterController>();
-		_coll = GetComponent<BoxCollider>(); 
+		_coll = GetComponent<BoxCollider>();
+		_startPos = transform.position; 
 	}
 
 	private void Update()
@@ -54,13 +56,27 @@ public class Block : MonoBehaviour
 
 	public void BeginLift()
 	{
-		_initialPos = transform.position; 
+		_preLiftPos = transform.position; 
 		_isLifted = true;
 	}
 
 	public void StopLift()
 	{
-		transform.position = _initialPos;
+		transform.position = _preLiftPos;
 		_isLifted = false;
+	}
+
+	void IReset.Reset()
+	{
+		_cc.enabled = false;
+		transform.position = _startPos; 
+		_isConnected = false;
+		_isLifted = false;
+		_cc.enabled = true;
+	}
+
+	void IReset.OnEnter()
+	{
+		_startPos = transform.position; 
 	}
 }
