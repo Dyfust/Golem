@@ -65,22 +65,22 @@ public class CharacterController : IMovementController
             else
                 _velocity = Vector3.zero;
         }
-        //else
-        //{
-        //    Vector3 preFrictionVelocityXZ = _velocity;
-        //    preFrictionVelocityXZ.y = 0f;
+        else
+        {
+            Vector3 preFrictionVelocityXZ = _velocity;
+            preFrictionVelocityXZ.y = 0f;
 
-        //    Vector3 postFrictionVelocity = preFrictionVelocityXZ + -preFrictionVelocityXZ.normalized * _settings.friction * Time.fixedDeltaTime;
-        //    if (Vector3.Dot(preFrictionVelocityXZ.normalized, postFrictionVelocity.normalized) > 0f)
-        //    {
-        //        _velocity += -preFrictionVelocityXZ.normalized * _settings.friction * Time.fixedDeltaTime;
-        //    }
-        //    else
-        //    {
-        //        _velocity.x = 0f;
-        //        _velocity.z = 0f;
-        //    }
-        //}
+            Vector3 postFrictionVelocity = preFrictionVelocityXZ + -preFrictionVelocityXZ.normalized * _settings.friction * Time.fixedDeltaTime;
+            if (Vector3.Dot(preFrictionVelocityXZ.normalized, postFrictionVelocity.normalized) > 0f)
+            {
+                _velocity += -preFrictionVelocityXZ.normalized * _settings.friction * Time.fixedDeltaTime;
+            }
+            else
+            {
+                _velocity.x = 0f;
+                _velocity.z = 0f;
+            }
+        }
 
         // Apply gravity only when grounded.
         if (_isGrounded == false)
