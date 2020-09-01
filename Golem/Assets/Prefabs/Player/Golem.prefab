@@ -134,6 +134,7 @@ MonoBehaviour:
     m_Bits: 8192
   _blockInteractionDistance: 2
   _distFromBlock: 1.75
+  _liftOffset: 2.75
   _handJoint: {fileID: 2223126616050924588}
   _anim: {fileID: 588577935}
 --- !u!114 &1158216224225001138
