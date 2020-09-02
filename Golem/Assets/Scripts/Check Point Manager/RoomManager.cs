@@ -20,7 +20,7 @@ public class RoomManager : MonoBehaviour
 		for (int i = 0; i < _roomObjects.Length; i++)
 		{
 			_resetableObjectsReset[i] = _roomObjects[i].GetComponent<IReset>();
-			_resetableObjectsReset[i].OnEnter(); 
+			_resetableObjectsReset[i].OnEnter();
 		}
 	}
 
