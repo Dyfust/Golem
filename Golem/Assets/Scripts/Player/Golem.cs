@@ -201,6 +201,7 @@ public class Golem : MonoBehaviour, IRequireInput
 
             _thisTransform.position = newGolemPos;
             _thisTransform.rotation = Quaternion.LookRotation(-_blockNormal);
+            _block.BeginPushing(this, _blockNormal, _controllerSettings.maxSpeed); 
             return true;
         }
 
@@ -219,7 +220,7 @@ public class Golem : MonoBehaviour, IRequireInput
         }
 
         _controller.Move(_inputData.input.y * -_blockNormal / _block.mass);
-        _block.Move(_controller.GetVelocity() * Time.fixedDeltaTime, this);
+        _block.Move(_controller.GetVelocity() * Time.fixedDeltaTime, _inputData.input.y);
     }
 
     public void StopPushing()
