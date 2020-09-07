@@ -14,12 +14,6 @@ public class PressurePlate : MonoBehaviour
 
 	private void Awake()
 	{
-		//if (_type == PressurePlateType.ORB)
-		//    _targetTag = "Orb";
-		//else if (_type == PressurePlateType.GOLEM)
-		//    _targetTag = "Golem";
-		//else 
-
 		switch (_type)
 		{
 			case PressurePlateType.ORB:
