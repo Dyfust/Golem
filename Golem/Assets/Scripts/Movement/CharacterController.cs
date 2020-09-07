@@ -14,6 +14,10 @@ public class CharacterController : IMovementController
     private float _acceleration;
     private Vector3 _bufferedAcceleration;
     private Vector3 _velocity;
+
+    private Vector3 _groundNormal;
+    private ContactPoint[] _contacts;
+
     private Rigidbody _rb;
 
     public CharacterController(Rigidbody rb, CharacterControllerSettings settings)
@@ -34,20 +38,7 @@ public class CharacterController : IMovementController
         //This raycast is responsible for detecting a slope in front of the character.
         if (_isGrounded)
         {
-            // Transform the direction we're accelerating to be parallel to the slope.
-            Vector3 slope = Vector3.Cross(_rb.transform.right, _groundNormal).normalized;
-            Vector3 accelerationDir = Vector3.ProjectOnPlane(acceleration.normalized, _groundNormal).normalized;
-            float accelerationMag = acceleration.magnitude;
-            _velocity += accelerationDir * accelerationMag;
-
-            // Transform the direction we're moving to be parallel to the slope.
-            Vector3 velocityDir = Vector3.ProjectOnPlane(_velocity.normalized, _groundNormal).normalized;
-            float velocityMag = _velocity.magnitude;
-            _velocity = velocityDir * velocityMag;
-
-            // for angle constraints later on.
-            Vector3 flat = slope;
-            flat.y = 0f;
+            _velocity = HandleSlope(_velocity, acceleration, _groundNormal);
         }
         else
         {
@@ -112,11 +103,21 @@ public class CharacterController : IMovementController
         _rb.velocity = _velocity;
     }
 
-    public Vector3 GetVelocity() => _velocity;
+    private Vector3 HandleSlope(Vector3 velocity, Vector3 acceleration, Vector3 groundNormal)
+    {
+        // Transform the direction we're accelerating to be parallel to the slope.
+        Vector3 accelerationDir = Vector3.ProjectOnPlane(acceleration.normalized, groundNormal).normalized;
+        float accelerationMag = acceleration.magnitude;
+        velocity += accelerationDir * accelerationMag;
 
+        // Transform the direction we're moving to be parallel to the slope.
+        Vector3 velocityDir = Vector3.ProjectOnPlane(velocity.normalized, groundNormal).normalized;
+        float velocityMag = velocity.magnitude;
+        velocity = velocityDir * velocityMag;
 
-    private Vector3 _groundNormal;
-    private ContactPoint[] _contacts;
+        return velocity;
+    }
+
     public void OnCollisionStay(Collision collision)
     {
         int amountOfGroundNormals = 0;
@@ -138,20 +139,11 @@ public class CharacterController : IMovementController
         _groundNormal = (_groundNormal / amountOfGroundNormals).normalized;
     }
 
-    public void AddExternalForce(Vector3 force)
-    {
-
-    }
-
-    public void AddForce(Vector3 force)
-    {
-
-    }
-
     public void Move(Vector3 dir)
     {
         _bufferedAcceleration += dir * _acceleration * Time.fixedDeltaTime;
     }
 
+    public Vector3 GetVelocity() => _velocity;
     public bool IsGrounded() => _isGrounded;
 }
