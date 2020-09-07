@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bed493e56cc29ab4a9bc7b2a07a0681d, type: 3}
   m_Name: OrbCharacterControllerSettings
   m_EditorClassIdentifier: 
-  maxSpeed: 8
+  maxSpeed: 7.5
   timeToMaxSpeed: 0.75
-  friction: 12
+  friction: 7.5
   gravity: 19.64
