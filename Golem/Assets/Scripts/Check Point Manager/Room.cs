@@ -5,7 +5,7 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
 	[SerializeField] private Collider _roomColldier;
-	[SerializeField] private LayerMask _resetableObjectsLayer;	
+	[SerializeField] private LayerMask _resetableObjectsLayer;
 	[SerializeField] private Transform _playerSpawn;
 
 	private RoomManager _roomManagerRef;
