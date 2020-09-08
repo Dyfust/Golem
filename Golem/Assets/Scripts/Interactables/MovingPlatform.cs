@@ -1,13 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-// This is a hold interactable, held state and not held state. Interact to alternate between.
-public class Door : MonoBehaviour, IInteractable, IReset
+public class MovingPlatform : MonoBehaviour, IInteractable
 {
 	enum DoorType { VERTICAL, HORIZONTAL }
 
 	[SerializeField] private Vector3 _openedOffset;
 	[SerializeField] private Vector3 _closedOffset;
 	[SerializeField] private float _time;
+
+	private GameObject _defaultParent;
 
 	private Vector3 _closedPos;
 	private Vector3 _openedPos;
@@ -19,9 +22,11 @@ public class Door : MonoBehaviour, IInteractable, IReset
 	private float _dist;
 	private float _speed;
 
-	private bool _startState; 
+	private bool _startState;
 
-	private void Start()
+
+	// Start is called before the first frame update
+	void Start()
 	{
 		// Initialising positions of the pressure plate.
 		_startPos = transform.position;
@@ -49,8 +54,8 @@ public class Door : MonoBehaviour, IInteractable, IReset
 			Interact();
 	}
 
-    public void Interact()
-    {
+	public void Interact()
+	{
 		_open = !_open;
 		Vector3 targetPos;
 		if (_open)
@@ -63,10 +68,10 @@ public class Door : MonoBehaviour, IInteractable, IReset
 
 		_dist = Vector3.Distance(_currentPos, targetPos);
 		_time = _dist / _speed;
-    }
+	}
 
-    private void OnDrawGizmosSelected()
-    {
+	private void OnDrawGizmosSelected()
+	{
 		Gizmos.matrix = transform.localToWorldMatrix;
 		Gizmos.color = Color.green;
 		Gizmos.DrawCube(new Vector3(_openedOffset.x / transform.localScale.x, _openedOffset.y / transform.localScale.y, _openedOffset.z / transform.localScale.z), Vector3.one);
@@ -75,15 +80,21 @@ public class Door : MonoBehaviour, IInteractable, IReset
 		Gizmos.DrawCube(new Vector3(_closedOffset.x / transform.localScale.x, _closedOffset.y / transform.localScale.y, _closedOffset.z / transform.localScale.z), Vector3.one);
 	}
 
-	void IReset.OnEnter()
+	private void OnTriggerEnter(Collider other)
 	{
-		_startState = _open;
-		_startPos = transform.position; 
+		if (other.gameObject.tag.Equals("Orb") || other.gameObject.tag.Equals("Golem") || other.gameObject.tag.Equals("Block"))
+		{
+			other.gameObject.transform.SetParent(transform);
+		}
 	}
 
-	void IReset.Reset()
+	private void OnTriggerExit(Collider other)
 	{
-		_open = _startState;
-		_currentPos = _startPos; 
+		if (other.gameObject.tag.Equals("Orb") || other.gameObject.tag.Equals("Golem") || other.gameObject.tag.Equals("Block"))
+		{
+			other.gameObject.transform.SetParent(null);
+		}
 	}
+
+
 }
