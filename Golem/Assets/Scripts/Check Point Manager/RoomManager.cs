@@ -2,37 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class RoomManager : MonoBehaviour
 {
-	[SerializeField] private Collider _roomColldier;
-	[SerializeField] private LayerMask _resetableObjectsLayer; 
-	
-	private Collider[] _roomObjects;
-	private IReset[] _resetableObjectsReset;
+	[SerializeField] private Room _startRoom; 
 
-	// Start is called before the first frame update
-	void Start()
+	private static RoomManager _instance;
+	public static RoomManager instance => _instance;
+
+	private const string _identifierTag = "Room"; 
+
+	private Room _currentRoom;
+	private Room[] _rooms;
+
+	private void Awake()
 	{
-		_roomObjects = Physics.OverlapBox(_roomColldier.bounds.center, _roomColldier.bounds.extents, Quaternion.identity, _resetableObjectsLayer);
-		
-		_resetableObjectsReset = new IReset[_roomObjects.Length];
+		if (_instance == null)
+			_instance = this;
+		else
+			Debug.LogWarning("Multiple Room Managers Present!");
 
-		for (int i = 0; i < _roomObjects.Length; i++)
+		GameObject[] roomGOs = GameObject.FindGameObjectsWithTag(_identifierTag);
+		_rooms = new Room[roomGOs.Length];
+
+		for (int i = 0; i < _rooms.Length; i++)
 		{
-			_resetableObjectsReset[i] = _roomObjects[i].GetComponent<IReset>();
-			_resetableObjectsReset[i].OnEnter();
+			_rooms[i] = roomGOs[i].GetComponent<Room>(); 
 		}
+
+		_currentRoom = _startRoom; 
 	}
 
-	// Update is called once per frame
-	void Update()
+	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.R))
 		{
-			for (int i = 0; i < _resetableObjectsReset.Length; i++)
-			{
-				_resetableObjectsReset[i].Reset(); 
-			}
+			_currentRoom.Reset(); 
 		}
 	}
+
+	public void SetCurrentRoom(Room currentRoom)=> _currentRoom = currentRoom;
+
+	public Room GetCurrentRoom() { return _currentRoom; }
+
 }
