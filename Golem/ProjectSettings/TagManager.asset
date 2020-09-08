@@ -9,6 +9,7 @@ TagManager:
   - Golem
   - Block
   - PressurePlate
+  - Room
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - Block
   - ToCull
   - Particles
-  - 
+  - Door
   - 
   - 
   - 
