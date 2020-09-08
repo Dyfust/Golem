@@ -1,12 +1,10 @@
-﻿//using System.Runtime.Remoting.Messaging;
-using System;
+﻿using System;
 using UnityEngine;
 
 [Serializable]
 public class CharacterController : IMovementController
 {
     /// This class is responsible for handling all aspects of motion including slope handling & ground detection.
-
     private CharacterControllerSettings _settings;
 
     private bool _isGrounded;
@@ -17,6 +15,7 @@ public class CharacterController : IMovementController
 
     private Vector3 _groundNormal;
     private ContactPoint[] _contacts;
+    private bool _onRamp;
 
     private Rigidbody _rb;
 
@@ -99,6 +98,7 @@ public class CharacterController : IMovementController
         // Reset buffered values.
         _isGrounded = false;
         _groundNormal = Vector3.zero;
+        _onRamp = false;
 
         _rb.velocity = _velocity;
     }
@@ -133,6 +133,12 @@ public class CharacterController : IMovementController
                 _isGrounded = true;
                 _groundNormal += _contacts[i].normal;
                 amountOfGroundNormals++;
+            }
+
+            if (_contacts[i].otherCollider.CompareTag("Ramp"))
+            {
+                _onRamp = true;
+                Debug.Log("On a ramp!");
             }
         }
 

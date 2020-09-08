@@ -1,58 +1,44 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EmmisiveAnimation : MonoBehaviour
 {
-	[SerializeField] private Texture[] _emissive;
-	[SerializeField] private MeshRenderer _presurePlateRen;
+	[SerializeField] private MeshRenderer _renderer;
+	[SerializeField] private float _duration;
 
-	private Material _pressurePlateMat;
-	// Start is called before the first frame update
-	void Start()
-	{
-		_pressurePlateMat = _presurePlateRen.material;
+	private float _current = 0f;
+	private Material _material;
 
+    private void Awake()
+    {
+		_material = _renderer.material;
+    }
 
+	public void OnActivate()
+    {
+		StopAllCoroutines();
+		StartCoroutine(PlayCoroutine(0f, 1f));
 	}
 
-	// Update is called once per frame
-	void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.P))
-		{
-			StartCoroutine("AnimateEmissiveOut"); 
-		}
-		if (Input.GetKeyDown(KeyCode.L))
-		{
-			StartCoroutine("AnimateEmissiveIn"); 
-		}
+	public void OnDeactivate()
+    {
+		StopAllCoroutines();
+		StartCoroutine(PlayCoroutine(_current, 0f));
 	}
 
-	private void OnCollisionEnter(Collision collision)
-	{
-		if (collision.gameObject.tag.Equals("Orb"))
-		{
-			StartCoroutine("AnimateEmissiveOut"); 
-		}
-	}
+    IEnumerator PlayCoroutine(float start, float end)
+    {
+		float elapsedTime = 0f;
+		float t = 0f;
 
-	IEnumerator AnimateEmissiveOut()
-	{
-		for (int i = 0; i < _emissive.Length; i++)
-		{
-			_pressurePlateMat.SetTexture("_EmissionMap", _emissive[i]);
-			yield return new WaitForSeconds(0.1f); 
-		}
-	}
+		while(t < 1f)
+        {
+			elapsedTime += Time.deltaTime;
+			t = elapsedTime / _duration;
 
-	IEnumerator AnimateEmissiveIn()
-	{
-		for (int i = _emissive.Length - 1; i > -1; i--)
-		{
-			_pressurePlateMat.SetTexture("_EmissionMap", _emissive[i]);
-			yield return new WaitForSeconds(0.1f);
+			_current = Mathf.Lerp(start, end, t);
+			_material.SetFloat("Vector1_3AC368C7", _current);
+			yield return null;
 		}
-	}
-
+    }
 }

@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 5728897336168458157}
   m_Layer: 0
   m_Name: Ramp
-  m_TagString: Untagged
+  m_TagString: Ramp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,6 +131,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ramp_Mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: eb11947acd7b3954ea6c0bc8cd283631,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ramp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb11947acd7b3954ea6c0bc8cd283631, type: 3}
