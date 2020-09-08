@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 // This is a hold interactable, held state and not held state. Interact to alternate between.
-public class Door : MonoBehaviour, IInteractable
+public class Door : MonoBehaviour, IInteractable, IReset
 {
 	enum DoorType { VERTICAL, HORIZONTAL }
 
@@ -18,6 +18,8 @@ public class Door : MonoBehaviour, IInteractable
 	private float _startTime;
 	private float _dist;
 	private float _speed;
+
+	private bool _startState; 
 
 	private void Start()
 	{
@@ -71,5 +73,17 @@ public class Door : MonoBehaviour, IInteractable
 
 		Gizmos.color = Color.red;
 		Gizmos.DrawCube(new Vector3(_closedOffset.x / transform.localScale.x, _closedOffset.y / transform.localScale.y, _closedOffset.z / transform.localScale.z), Vector3.one);
+	}
+
+	void IReset.OnEnter()
+	{
+		_startState = _open;
+		_startPos = transform.position; 
+	}
+
+	void IReset.Reset()
+	{
+		_open = _startState;
+		_currentPos = _startPos; 
 	}
 }
