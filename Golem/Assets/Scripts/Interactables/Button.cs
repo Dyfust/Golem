@@ -8,6 +8,9 @@ public class Button : MonoBehaviour
 
 	[SerializeField] private ButtonType _type;
 	[SerializeField] private GameObject[] _interactions;
+	[SerializeField] private bool _oneTimeActivate;
+
+	private bool _activated; 
 
 	private string _targetTag;
 
@@ -45,8 +48,17 @@ public class Button : MonoBehaviour
 	{
 		if (other.gameObject.CompareTag(_targetTag))
 		{
-			ToggleInteractions();
-			Debug.Log("Enter");
+			if (_oneTimeActivate == true && _activated == false)
+			{
+				ToggleInteractions();
+				Debug.Log("Enter");
+				_activated = true; 
+			}
+			else if (_oneTimeActivate == false)
+			{
+				ToggleInteractions();
+				Debug.Log("Enter");
+			}
 		}
 	}
 
