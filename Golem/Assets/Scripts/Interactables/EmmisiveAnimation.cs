@@ -37,7 +37,7 @@ public class EmmisiveAnimation : MonoBehaviour
 			t = elapsedTime / _duration;
 
 			_current = Mathf.Lerp(start, end, t);
-			_material.SetFloat("Vector1_3AC368C7", _current);
+			_material.SetFloat("Vector1_1A79052A", _current);
 			yield return null;
 		}
     }
