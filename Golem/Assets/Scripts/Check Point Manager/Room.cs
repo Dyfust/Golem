@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-	[SerializeField] private Collider _roomColldier;
+	[SerializeField] private Collider _roomCollider;
 	[SerializeField] private LayerMask _resetableObjectsLayer;
 	[SerializeField] private Transform _playerSpawn;
 
@@ -18,7 +18,7 @@ public class Room : MonoBehaviour
 	{
 		_roomManagerRef = RoomManager.instance; 
 
-		_roomObjects = Physics.OverlapBox(_roomColldier.bounds.center, _roomColldier.bounds.extents, Quaternion.identity, _resetableObjectsLayer);
+		_roomObjects = Physics.OverlapBox(transform.position, _roomCollider.bounds.extents, Quaternion.identity, _resetableObjectsLayer);
 
 		_resetableObjectsReset = new IReset[_roomObjects.Length];
 
@@ -28,7 +28,6 @@ public class Room : MonoBehaviour
 			_resetableObjectsReset[i].OnEnter();
 		}
 	}
-
 
 	public void Reset()
 	{
@@ -43,4 +42,14 @@ public class Room : MonoBehaviour
 		if (other.gameObject.tag.Equals("Orb") || other.gameObject.tag.Equals("Golem"))
 			_roomManagerRef.SetCurrentRoom(this);
 	}
+
+    private void OnDrawGizmos()
+    {
+		Color color = Color.cyan;
+		color.a = 0.15f;
+
+		Gizmos.color = color;
+
+		Gizmos.DrawCube(transform.position, _roomCollider.bounds.extents * 2f);
+    }
 }
