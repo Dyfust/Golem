@@ -116,7 +116,7 @@ public class Block : MonoBehaviour, IReset
 		_cc.enabled = true;
 	}
 
-	void IReset.OnEnter()
+	void IReset.OnEnter(Vector3 checkpointPos)
 	{
 		_startPos = transform.position; 
 	}

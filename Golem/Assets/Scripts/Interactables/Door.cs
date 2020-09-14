@@ -75,7 +75,7 @@ public class Door : MonoBehaviour, IInteractable, IReset
 		Gizmos.DrawCube(new Vector3(_closedOffset.x / transform.localScale.x, _closedOffset.y / transform.localScale.y, _closedOffset.z / transform.localScale.z), Vector3.one);
 	}
 
-	void IReset.OnEnter()
+	void IReset.OnEnter(Vector3 checkpointPos)
 	{
 		_startState = _open;
 		_startPos = transform.position; 
