@@ -9,8 +9,7 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 	[SerializeField] private Vector3 _openedOffset;
 	[SerializeField] private Vector3 _closedOffset;
 	[SerializeField] private float _time;
-
-	private GameObject _defaultParent;
+	[SerializeField] private GameObject _camTrigger;
 
 	private Vector3 _closedPos;
 	private Vector3 _openedPos;
@@ -23,6 +22,8 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 	private float _speed;
 
 	private bool _startState;
+
+	private VirtualCameraManager _vCamRef;
 
 
 	// Start is called before the first frame update
@@ -47,8 +48,8 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 
 		if (_open)
 			transform.position = Vector3.Lerp(_currentPos, _openedPos, fractionOfJourney);
-		else
-			transform.position = Vector3.Lerp(_currentPos, _closedPos, fractionOfJourney);
+		else		
+			transform.position = Vector3.Lerp(_currentPos, _closedPos, fractionOfJourney);		
 
 		if (Input.GetKeyDown(KeyCode.G))
 			Interact();
@@ -96,5 +97,15 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 		}
 	}
 
+	private void Moving()
+	{
+		Debug.Log("MOVING TRIGGERED");
+		_camTrigger.SetActive(true);
+	}
 
+	private void Stationary()
+	{
+		Debug.Log("STATIONARY TRIGGERED"); 
+		_camTrigger.SetActive(false);
+	}
 }
