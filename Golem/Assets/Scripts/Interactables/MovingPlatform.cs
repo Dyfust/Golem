@@ -24,6 +24,8 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 
 	private bool _startState;
 
+	private VirtualCameraManager _vCamRef; 
+
 
 	// Start is called before the first frame update
 	void Start()

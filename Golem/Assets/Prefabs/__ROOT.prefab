@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f23dedc67077a4c9815ca723eaa18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _brain: {fileID: 4805705447324771228}
+  _mainCamera: {fileID: 4805705447324771228}
   _defaultVirtualCamera: {fileID: 3597110891723050297}
   _orbFreeLookCM: {fileID: 5166024990047657561}
   _golemFreeLookCM: {fileID: 4689539135156158446}
