@@ -14,8 +14,13 @@ public class Button : MonoBehaviour
 
 	private string _targetTag;
 
+	private EmmisiveAnimation _emmisiveAnim;
+	private bool _emmisiveActivated; 
+
 	private void Awake()
 	{
+		_emmisiveAnim = GetComponent<EmmisiveAnimation>(); 
+
 		switch (_type)
 		{
 			case ButtonType.ORB:
@@ -52,12 +57,28 @@ public class Button : MonoBehaviour
 			{
 				ToggleInteractions();
 				Debug.Log("Enter");
-				_activated = true; 
+				_activated = true;
+
+				if (_emmisiveAnim != null)
+					_emmisiveAnim.OnActivate(); 
 			}
 			else if (_oneTimeActivate == false)
 			{
 				ToggleInteractions();
 				Debug.Log("Enter");
+
+				if (_emmisiveActivated == true)
+				{
+					if (_emmisiveAnim != null)
+						_emmisiveAnim.OnDeactivate();
+					_emmisiveActivated = false;
+				}
+				else
+				{
+					if (_emmisiveAnim != null)
+						_emmisiveAnim.OnActivate();
+					_emmisiveActivated = true; 
+				}
 			}
 		}
 	}
