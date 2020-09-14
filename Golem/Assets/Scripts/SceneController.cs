@@ -7,7 +7,6 @@ public class SceneController : MonoBehaviour
     {
         AsyncOperation op = SceneManager.LoadSceneAsync(scene.buildIndex);
 
-        op.allowSceneActivation = false;
-        
+        op.allowSceneActivation = false;  
     }
 }
