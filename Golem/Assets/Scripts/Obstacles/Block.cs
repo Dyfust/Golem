@@ -5,7 +5,6 @@ public class Block : MonoBehaviour, IReset
 {
     [SerializeField] private float _mass; public float mass => _mass;
 	[SerializeField] ParticleSystem _pebbles;
-	[SerializeField] ParticleSystem _dust; 
 
 	private float _maxEmissionRate; 
 	private float _maxSpeed = 0;
@@ -36,12 +35,10 @@ public class Block : MonoBehaviour, IReset
 		_coll = GetComponent<BoxCollider>();
 		_startPos = transform.position;
 		_pebbles.transform.position = this.transform.position;
-		_dust.transform.position = this.transform.position; 
 		_emissionCurve = _pebbles.emission.rateOverTime; 
 		_maxEmissionRate = _pebbles.emission.rateOverTime.constant;
 		_emissionModule = _pebbles.emission;
 		_pebbles.Stop();
-		_dust.Stop(); 
 	}
 
 	private void Update()
@@ -65,7 +62,6 @@ public class Block : MonoBehaviour, IReset
 
 		_maxSpeed = maxSpeed; 
 		_pebbles.Play();
-		_dust.Play(); 
 		_pushingNormal = blockNormal; 
 	}
 
@@ -77,9 +73,6 @@ public class Block : MonoBehaviour, IReset
 		{
 			_pebbles.transform.rotation = Quaternion.LookRotation(_pushingNormal * direction, Vector3.up);
 			_pebbles.transform.position = (this.transform.position + _coll.bounds.extents.x * (_pushingNormal * direction));
-
-			_dust.transform.rotation = Quaternion.LookRotation(_pushingNormal * direction, Vector3.up);
-			_dust.transform.position = (this.transform.position + _coll.bounds.extents.x * (_pushingNormal * direction));
 		}
 
 
@@ -92,7 +85,6 @@ public class Block : MonoBehaviour, IReset
 		_isConnected = false;
 		_connectedGolem = null;
 		_pebbles.Stop();
-		_dust.Stop(); 
 	}
 
 	public void BeginLift()
