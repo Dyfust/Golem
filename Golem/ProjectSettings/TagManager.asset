@@ -11,6 +11,7 @@ TagManager:
   - PressurePlate
   - Room
   - Ramp
+  - AudioSource
   layers:
   - Default
   - TransparentFX
