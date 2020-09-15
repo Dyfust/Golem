@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public interface IReset
 {
 	void Reset();
-
-	void OnEnter(); 
+	void OnEnter(Vector3 checkpointPos); 
 }
