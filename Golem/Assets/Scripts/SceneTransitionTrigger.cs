@@ -3,11 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneTransitionTrigger : MonoBehaviour
 {
-    [SerializeField] private Scene _scene;
+    [SerializeField] private string _sceneName;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Golem") || other.CompareTag("Orb"))
-            SceneManager.LoadScene(_scene.buildIndex);
+            SceneManager.LoadScene(_sceneName);
     }
 }

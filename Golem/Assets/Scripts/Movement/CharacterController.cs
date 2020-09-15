@@ -134,12 +134,6 @@ public class CharacterController : IMovementController
                 _groundNormal += _contacts[i].normal;
                 amountOfGroundNormals++;
             }
-
-            if (_contacts[i].otherCollider.CompareTag("Ramp"))
-            {
-                _onRamp = true;
-                Debug.Log("On a ramp!");
-            }
         }
 
         _groundNormal = (_groundNormal / amountOfGroundNormals).normalized;

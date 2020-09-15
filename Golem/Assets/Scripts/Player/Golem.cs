@@ -2,7 +2,7 @@
 using GolemStates;
 using FSM;
 
-public class Golem : MonoBehaviour, IRequireInput
+public class Golem : MonoBehaviour, IRequireInput, IReset
 {
     public delegate void GolemEventHandler(Golem golem, Quaternion orientation);
     public static event GolemEventHandler OnGolemActive;
@@ -49,6 +49,7 @@ public class Golem : MonoBehaviour, IRequireInput
     private void Start()
     {
         InitaliseFSM();
+        _initPos = _thisTransform.position;
 
         DebugWindow.AddPrintTask(() => "Orb Grounded: " + _controller.IsGrounded().ToString());
     }
@@ -74,11 +75,14 @@ public class Golem : MonoBehaviour, IRequireInput
         _controller.OnCollisionStay(collision);
     }
 
+    State _dormantState;
+
     private void InitaliseFSM()
     {
         _fsm = new FSM.FSM();
 
         State dormantState = new DormantState(this);
+        _dormantState = dormantState;
         State idleState = new IdleState(this);
         State walkingState = new WalkingState(this);
         State pushingState = new PushingState(this);
@@ -276,5 +280,19 @@ public class Golem : MonoBehaviour, IRequireInput
     public void SetInputData(InputData data)
     {
         _inputData = data;
+    }
+
+    private Vector3 _initPos;
+
+    void IReset.Reset()
+    {
+        _fsm.MoveTo(_dormantState);
+
+        _thisTransform.position = new Vector3(_initPos.x, _initPos.y, _initPos.z);
+    }
+
+    void IReset.OnEnter(Vector3 checkpointPos)
+    {
+        
     }
 }
