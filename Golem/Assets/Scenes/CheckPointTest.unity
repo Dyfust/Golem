@@ -1324,6 +1324,11 @@ PrefabInstance:
       propertyPath: _resetableObjectsLayer.m_Bits
       value: 73984
       objectReference: {fileID: 0}
+    - target: {fileID: 5206218790049551747, guid: 6fbeef4bb8e5fee4a9048a544460cf39,
+        type: 3}
+      propertyPath: _roomCollider
+      value: 
+      objectReference: {fileID: 1555700061}
     - target: {fileID: 5206218790049551772, guid: 6fbeef4bb8e5fee4a9048a544460cf39,
         type: 3}
       propertyPath: m_Name
@@ -1331,6 +1336,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fbeef4bb8e5fee4a9048a544460cf39, type: 3}
+--- !u!65 &1555700061 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 5206218790049551746, guid: 6fbeef4bb8e5fee4a9048a544460cf39,
+    type: 3}
+  m_PrefabInstance: {fileID: 1555700060}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1692787651
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1504,17 +1515,17 @@ PrefabInstance:
     - target: {fileID: 2971236529997976087, guid: 94b05b13afb5af94a99b00306673ba46,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.17065133
+      value: 0.1706513
       objectReference: {fileID: 0}
     - target: {fileID: 2971236529997976087, guid: 94b05b13afb5af94a99b00306673ba46,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.015476858
+      value: 0.015476897
       objectReference: {fileID: 0}
     - target: {fileID: 2971236529997976087, guid: 94b05b13afb5af94a99b00306673ba46,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.002680805
+      value: -0.0026808116
       objectReference: {fileID: 0}
     - target: {fileID: 2971236529997976087, guid: 94b05b13afb5af94a99b00306673ba46,
         type: 3}
@@ -1569,17 +1580,17 @@ PrefabInstance:
     - target: {fileID: 5674564952690688589, guid: 94b05b13afb5af94a99b00306673ba46,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.17065127
+      value: 0.17065124
       objectReference: {fileID: 0}
     - target: {fileID: 5674564952690688589, guid: 94b05b13afb5af94a99b00306673ba46,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.015476858
+      value: 0.015476897
       objectReference: {fileID: 0}
     - target: {fileID: 5674564952690688589, guid: 94b05b13afb5af94a99b00306673ba46,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.002680804
+      value: -0.0026808109
       objectReference: {fileID: 0}
     - target: {fileID: 5674564952690688589, guid: 94b05b13afb5af94a99b00306673ba46,
         type: 3}
@@ -1684,12 +1695,12 @@ PrefabInstance:
     - target: {fileID: 8161591368318551362, guid: 94b05b13afb5af94a99b00306673ba46,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000017196031
+      value: -0.000000017195156
       objectReference: {fileID: 0}
     - target: {fileID: 8161591368318551362, guid: 94b05b13afb5af94a99b00306673ba46,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -6.1336236e-10
+      value: 6.1333166e-10
       objectReference: {fileID: 0}
     - target: {fileID: 8161591368318551362, guid: 94b05b13afb5af94a99b00306673ba46,
         type: 3}
@@ -1904,6 +1915,11 @@ PrefabInstance:
       propertyPath: _resetableObjectsLayer.m_Bits
       value: 73984
       objectReference: {fileID: 0}
+    - target: {fileID: 5206218790049551747, guid: 6fbeef4bb8e5fee4a9048a544460cf39,
+        type: 3}
+      propertyPath: _roomCollider
+      value: 
+      objectReference: {fileID: 5206218790145831956}
     - target: {fileID: 5206218790049551772, guid: 6fbeef4bb8e5fee4a9048a544460cf39,
         type: 3}
       propertyPath: m_Name
@@ -1911,3 +1927,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fbeef4bb8e5fee4a9048a544460cf39, type: 3}
+--- !u!65 &5206218790145831956 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 5206218790049551746, guid: 6fbeef4bb8e5fee4a9048a544460cf39,
+    type: 3}
+  m_PrefabInstance: {fileID: 5206218790145831955}
+  m_PrefabAsset: {fileID: 0}
