@@ -229,7 +229,8 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
     public void StopPushing()
     {
-        _block.StopPushing();
+        if (_block != null)
+            _block.StopPushing();
         _block = null;
     }
     #endregion
