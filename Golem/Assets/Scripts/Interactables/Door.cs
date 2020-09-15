@@ -1,13 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 // This is a hold interactable, held state and not held state. Interact to alternate between.
-public class Door : MonoBehaviour, IInteractable, IReset
+public class Door : MonoBehaviour, IInteractable, IReset, IPlayAudio
 {
 	enum DoorType { VERTICAL, HORIZONTAL }
 
 	[SerializeField] private Vector3 _openedOffset;
 	[SerializeField] private Vector3 _closedOffset;
 	[SerializeField] private float _time;
+	[SerializeField] private AudioClip _openingDoor;
+	[SerializeField] private AudioClip _stoneDragging;
 
 	private Vector3 _closedPos;
 	private Vector3 _openedPos;
@@ -19,7 +22,12 @@ public class Door : MonoBehaviour, IInteractable, IReset
 	private float _dist;
 	private float _speed;
 
-	private bool _startState; 
+	private bool _startState;
+	private bool _isMoving;
+
+	public event EventHandler<AudioClip> PlayLoopedAudio;
+	public event EventHandler StopLoopedAudio;
+	public event EventHandler<AudioClip> PlayAudioEffect;
 
 	private void Start()
 	{
@@ -39,6 +47,12 @@ public class Door : MonoBehaviour, IInteractable, IReset
 	{
 		float elapsedTime = (Time.time - _startTime);
 		float fractionOfJourney = elapsedTime / _time;
+
+		if (fractionOfJourney >= 1 && _isMoving == true)
+		{
+			StopLoopedAudio.Invoke(this, null); 
+			_isMoving = false; 
+		}
 
 		if (_open)
 			transform.position = Vector3.Lerp(_currentPos, _openedPos, fractionOfJourney);
@@ -63,7 +77,14 @@ public class Door : MonoBehaviour, IInteractable, IReset
 
 		_dist = Vector3.Distance(_currentPos, targetPos);
 		_time = _dist / _speed;
-    }
+
+		_isMoving = true; 
+
+		if (_open == true)
+			PlayAudioEffect.Invoke(this, _openingDoor);
+
+		PlayLoopedAudio.Invoke(this, _stoneDragging); 
+	}
 
     private void OnDrawGizmosSelected()
     {
@@ -85,5 +106,5 @@ public class Door : MonoBehaviour, IInteractable, IReset
 	{
 		_open = _startState;
 		_currentPos = _startPos; 
-	}
+	}	
 }
