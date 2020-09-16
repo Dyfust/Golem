@@ -51,7 +51,8 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
         InitaliseFSM();
         _initPos = _thisTransform.position;
 
-        DebugWindow.AddPrintTask(() => "Orb Grounded: " + _controller.IsGrounded().ToString());
+        DebugWindow.AddPrintTask(() => "Golem Grounded: " + _controller.IsGrounded().ToString());
+        DebugWindow.AddPrintTask(() => "Golem Ground Normal: " + _controller.GetCollisionNormal().ToString());
     }
 
     private void Update()

@@ -47,6 +47,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         DebugWindow.AddPrintTask(() => "Orb Heading: " + _currentHeading.ToString());
         DebugWindow.AddPrintTask(() => "Orb Velocity: " + _rb.velocity.ToString());
         DebugWindow.AddPrintTask(() => "Orb Grounded: " + _controller.IsGrounded().ToString());
+        DebugWindow.AddPrintTask(() => "Orb Ground Normal: " + _controller.GetCollisionNormal().ToString());
     }
 
     private void Update()
