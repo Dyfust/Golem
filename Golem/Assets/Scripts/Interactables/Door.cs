@@ -50,7 +50,7 @@ public class Door : MonoBehaviour, IInteractable, IReset, IPlayAudio
 
 		if (fractionOfJourney >= 1 && _isMoving == true)
 		{
-			StopLoopedAudio.Invoke(this, null); 
+			StopLoopedAudio.Invoke(this, EventArgs.Empty); 
 			_isMoving = false; 
 		}
 

@@ -16,6 +16,7 @@ public class AudioController : MonoBehaviour
 	{
 		_audioSource = GetComponent<AudioSource>();
 		_audioRef = GetComponent<IPlayAudio>();
+		_audioSource.playOnAwake = false; 
 	}
 
 	private void OnEnable()
@@ -36,7 +37,6 @@ public class AudioController : MonoBehaviour
 	{
 		_audioSource.clip = audioClip;
 		_audioSource.loop = true;
-		_audioSource.playOnAwake = false;
 		_audioSource.Play();
 	}
 
