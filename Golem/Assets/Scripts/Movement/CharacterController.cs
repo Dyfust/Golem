@@ -14,7 +14,7 @@ public class CharacterController : IMovementController
     private Vector3 _velocity;
 
     private Vector3 _groundNormal;
-    private ContactPoint[] _contacts;
+    [SerializeField] private ContactPoint[] _contacts;
     private bool _onRamp;
 
     private Rigidbody _rb;
@@ -24,6 +24,8 @@ public class CharacterController : IMovementController
         _rb = rb;
         _settings = settings;
         _acceleration = (_settings.maxSpeed / _settings.timeToMaxSpeed) + _settings.friction;
+
+        _contacts = new ContactPoint[5];
     }
 
     public void FixedUpdate()
@@ -124,11 +126,18 @@ public class CharacterController : IMovementController
         _isGrounded = false;
         _groundNormal = Vector3.zero;
         // Grounded if at least 1 surface is facing upwards.
-        _contacts = collision.contacts; // collision.GetContacts() seems to be bugged. Sometimes it doesn't reset the array when collisions change.
+
+        //for (int i = 0; i < _contacts.Length; i++)
+        //{
+        //    _contacts[i] = Vector3.zero;
+        //}
+
+        //collision.GetContacts(_contacts); // collision.GetContacts() seems to be bugged. Sometimes it doesn't reset the array when collisions change.
+        _contacts = collision.contacts;
 
         for (int i = 0; i < _contacts.Length; i++)
         {
-            if (_contacts[i].normal.y > 0f)
+            if (_contacts[i].normal.y > 0.1f)
             {
                 _isGrounded = true;
                 _groundNormal += _contacts[i].normal;
@@ -146,4 +155,5 @@ public class CharacterController : IMovementController
 
     public Vector3 GetVelocity() => _velocity;
     public bool IsGrounded() => _isGrounded;
+    public Vector3 GetCollisionNormal() => _groundNormal;
 }
