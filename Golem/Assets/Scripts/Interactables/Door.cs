@@ -81,9 +81,9 @@ public class Door : MonoBehaviour, IInteractable, IReset, IPlayAudio
 		_isMoving = true; 
 
 		if (_open == true)
-			PlayAudioEffect.Invoke(this, _openingDoor);
+			PlayAudioEffect?.Invoke(this, _openingDoor);
 
-		PlayLoopedAudio.Invoke(this, _stoneDragging); 
+		PlayLoopedAudio?.Invoke(this, _stoneDragging); 
 	}
 
     private void OnDrawGizmosSelected()
