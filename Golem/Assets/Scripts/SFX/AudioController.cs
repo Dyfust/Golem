@@ -11,12 +11,13 @@ public class AudioController : MonoBehaviour
 
     private AudioSource _audioSource;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        _audioSource = GetComponent<AudioSource>();
-        _audioRef = GetComponent<IPlayAudio>();
-    }
+	// Start is called before the first frame update
+	void Awake()
+	{
+		_audioSource = GetComponent<AudioSource>();
+		_audioRef = GetComponent<IPlayAudio>();
+		_audioSource.playOnAwake = false; 
+	}
 
     private void OnEnable()
     {
@@ -32,20 +33,12 @@ public class AudioController : MonoBehaviour
         _audioRef.StopLoopedAudio -= StopLoopedAudio;
     }
 
-    void PlayLoopedAudio(object sender, AudioClip audioClip)
-    {
-        if (audioClip != null)
-        {
-            _audioSource.clip = audioClip;
-            _audioSource.loop = true;
-            _audioSource.playOnAwake = false;
-            _audioSource.Play();
-        }
-        else
-        {
-            Debug.LogWarning("Audio clip missing!");
-        }
-    }
+	void PlayLoopedAudio(object sender, AudioClip audioClip)
+	{
+		_audioSource.clip = audioClip;
+		_audioSource.loop = true;
+		_audioSource.Play();
+	}
 
     void StopLoopedAudio(object sender, EventArgs eventArgs)
     {
