@@ -50,7 +50,7 @@ public class Door : MonoBehaviour, IInteractable, IReset, IPlayAudio
 
 		if (fractionOfJourney >= 1 && _isMoving == true)
 		{
-			StopLoopedAudio.Invoke(this, null); 
+			StopLoopedAudio.Invoke(this, EventArgs.Empty); 
 			_isMoving = false; 
 		}
 
@@ -81,9 +81,9 @@ public class Door : MonoBehaviour, IInteractable, IReset, IPlayAudio
 		_isMoving = true; 
 
 		if (_open == true)
-			PlayAudioEffect.Invoke(this, _openingDoor);
+			PlayAudioEffect?.Invoke(this, _openingDoor);
 
-		PlayLoopedAudio.Invoke(this, _stoneDragging); 
+		PlayLoopedAudio?.Invoke(this, _stoneDragging); 
 	}
 
     private void OnDrawGizmosSelected()
