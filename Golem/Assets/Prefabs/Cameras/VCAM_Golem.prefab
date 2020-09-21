@@ -65,8 +65,8 @@ MonoBehaviour:
     Dutch: 0
     LensShift: {x: 0, y: 0}
   m_Transitions:
-    m_BlendHint: 2
-    m_InheritPosition: 0
+    m_BlendHint: 0
+    m_InheritPosition: 1
     m_OnCameraLive:
       m_PersistentCalls:
         m_Calls: []
@@ -180,6 +180,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraPriority: 0
+  _layerToCull:
+    serializedVersion: 2
+    m_Bits: 0
+  _desiredUpdateMethod: 0
 --- !u!1 &2096292189792184408
 GameObject:
   m_ObjectHideFlags: 0
