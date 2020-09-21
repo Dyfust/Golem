@@ -60,19 +60,17 @@ public class VirtualCameraManager : MonoBehaviour
         Golem.OnGolemActive -= ToggleGolemCamera;
     }
 
-    private void ToggleOrbCamera(Orb orb, Quaternion orientation)
+    private void ToggleOrbCamera(Orb orb)
     {
         _orbFreeLookCM.Follow = orb.transform;
         _orbFreeLookCM.LookAt = orb.transform;
-        _orbFreeLookCM.m_XAxis.Value = orientation.eulerAngles.y;
         ForceToggleCam(_orbVirtualCamera);
     }
 
-    private void ToggleGolemCamera(Golem golem, Quaternion orientation)
+    private void ToggleGolemCamera(Golem golem)
     {
         _golemFreeLookCM.Follow = golem.transform;
         _golemFreeLookCM.LookAt = golem.transform;
-        _golemFreeLookCM.m_XAxis.Value = orientation.eulerAngles.y;
         ForceToggleCam(_golemVirtualCamera);
     }
 
