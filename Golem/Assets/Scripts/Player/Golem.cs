@@ -4,7 +4,7 @@ using FSM;
 
 public class Golem : MonoBehaviour, IRequireInput, IReset
 {
-    public delegate void GolemEventHandler(Golem golem, Quaternion orientation);
+    public delegate void GolemEventHandler(Golem golem);
     public static event GolemEventHandler OnGolemActive;
 
     [SerializeField] private float _angularSpeed = 0;
@@ -182,7 +182,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
     public void Enter()
     {
-        OnGolemActive?.Invoke(this, transform.rotation);
+        OnGolemActive?.Invoke(this);
         _dormant = false;
     }
 
@@ -206,7 +206,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
             _thisTransform.position = newGolemPos;
             _thisTransform.rotation = Quaternion.LookRotation(-_blockNormal);
-            _block.BeginPushing(this, _blockNormal, _controllerSettings.maxSpeed); 
+            _block.BeginPushing(this, _blockNormal, _controllerSettings.maxSpeed);
             return true;
         }
 
@@ -216,7 +216,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
     public void Push()
     {
 
-		bool _blockCentered = Physics.Raycast(transform.position + Vector3.up * 0.85f, transform.forward, 2.0f, _blockLayer);
+        bool _blockCentered = Physics.Raycast(transform.position + Vector3.up * 0.85f, transform.forward, 2.0f, _blockLayer);
 
         if (_blockCentered == false)
         {
@@ -295,6 +295,6 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
     void IReset.OnEnter(Vector3 checkpointPos)
     {
-        
+
     }
 }
