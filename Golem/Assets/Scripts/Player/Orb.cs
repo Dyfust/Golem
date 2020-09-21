@@ -4,7 +4,7 @@ using FSM;
 
 public class Orb : MonoBehaviour, IRequireInput, IReset
 {
-    public delegate void OrbEventHandler(Orb orb, Quaternion orientation);
+    public delegate void OrbEventHandler(Orb orb);
     public static event OrbEventHandler OnOrbActive;
 
     [SerializeField] private CharacterControllerSettings _controllerSettings;
@@ -207,7 +207,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         GetComponent<Collider>().enabled = true;
         _rb.useGravity = true;
 
-        OnOrbActive?.Invoke(this, transform.rotation);
+        OnOrbActive?.Invoke(this);
     }
 
     // Interfaces
