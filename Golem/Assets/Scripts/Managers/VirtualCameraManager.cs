@@ -11,7 +11,7 @@ public class VirtualCameraManager : MonoBehaviour
     private const string _identifierTag = "VCam";
 
     // 1.) Limited to one active VCAM.
-    [SerializeField] private Camera _brain; 
+    [SerializeField] private Camera _mainCamera; 
     [SerializeField] private VirtualCamera _defaultVirtualCamera;
 
     [SerializeField] private CinemachineFreeLook _orbFreeLookCM;
@@ -23,8 +23,12 @@ public class VirtualCameraManager : MonoBehaviour
     private VirtualCamera _cachedPlayerCamera;
     private VirtualCamera[] _virtualCameras;
 
+    private Cinemachine.CinemachineBrain _brain;
+
     private void Awake()
     {
+        _brain = _mainCamera.GetComponent<CinemachineBrain>(); 
+
         if (_instance == null)
             _instance = this;
         else
@@ -56,26 +60,25 @@ public class VirtualCameraManager : MonoBehaviour
         Golem.OnGolemActive -= ToggleGolemCamera;
     }
 
-    private void ToggleOrbCamera(Orb orb, Quaternion orientation)
+    private void ToggleOrbCamera(Orb orb)
     {
         _orbFreeLookCM.Follow = orb.transform;
         _orbFreeLookCM.LookAt = orb.transform;
-        _orbFreeLookCM.m_XAxis.Value = orientation.eulerAngles.y;
         ForceToggleCam(_orbVirtualCamera);
     }
 
-    private void ToggleGolemCamera(Golem golem, Quaternion orientation)
+    private void ToggleGolemCamera(Golem golem)
     {
         _golemFreeLookCM.Follow = golem.transform;
         _golemFreeLookCM.LookAt = golem.transform;
-        _golemFreeLookCM.m_XAxis.Value = orientation.eulerAngles.y;
         ForceToggleCam(_golemVirtualCamera);
     }
 
     private void ForceToggleCam(VirtualCamera cam)
     {
         CachePlayerCamera(cam);
-        _brain.cullingMask = ~cam.GetCullLayer(); 
+        _mainCamera.cullingMask = ~cam.GetCullLayer();
+        _brain.m_UpdateMethod = (Cinemachine.CinemachineBrain.UpdateMethod)cam.GetUpdateMethod(); 
         _currentVirtualCamera = cam;
         _currentVirtualCamera.gameObject.SetActive(true);
         for (int i = 0; i < _virtualCameras.Length; i++)

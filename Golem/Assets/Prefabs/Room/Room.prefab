@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8580000496fb962459d6f3420f7f73d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roomColldier: {fileID: 5206218790049551746}
+  _roomCollider: {fileID: 5206218790049551746}
   _resetableObjectsLayer:
     serializedVersion: 2
     m_Bits: 0

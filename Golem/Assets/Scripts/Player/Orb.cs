@@ -2,9 +2,9 @@
 using UnityEngine;
 using FSM;
 
-public class Orb : MonoBehaviour, IRequireInput
+public class Orb : MonoBehaviour, IRequireInput, IReset
 {
-    public delegate void OrbEventHandler(Orb orb, Quaternion orientation);
+    public delegate void OrbEventHandler(Orb orb);
     public static event OrbEventHandler OnOrbActive;
 
     [SerializeField] private CharacterControllerSettings _controllerSettings;
@@ -47,6 +47,7 @@ public class Orb : MonoBehaviour, IRequireInput
         DebugWindow.AddPrintTask(() => "Orb Heading: " + _currentHeading.ToString());
         DebugWindow.AddPrintTask(() => "Orb Velocity: " + _rb.velocity.ToString());
         DebugWindow.AddPrintTask(() => "Orb Grounded: " + _controller.IsGrounded().ToString());
+        DebugWindow.AddPrintTask(() => "Orb Ground Normal: " + _controller.GetCollisionNormal().ToString());
     }
 
     private void Update()
@@ -62,11 +63,14 @@ public class Orb : MonoBehaviour, IRequireInput
         _fsm.UpdatePhysics();
     }
 
+    private State _idleState;
+
     private void InitialiseFSM()
     {
         _fsm = new FSM.FSM();
 
         State idleState = new IdleState(this);
+        _idleState = idleState;
         State rollingState = new RollingState(this);
         State mountedState = new MountedState(this);
 
@@ -146,7 +150,6 @@ public class Orb : MonoBehaviour, IRequireInput
     public void ResetState()
     {
         _controller.Move(Vector3.zero);
-        //_rb.velocity = Vector3.zero;
     }
 
     public void ResetVelocity()
@@ -161,7 +164,7 @@ public class Orb : MonoBehaviour, IRequireInput
         for (int i = 0; i < golems.Length; i++)
         {
             Vector3 thisToGolem = (golems[i].transform.position + Vector3.up * 0.5f) - _thisTransform.position;
-            if (Physics.Raycast(_thisTransform.position, thisToGolem.normalized, out RaycastHit hit, _interactionRadius, ~(LayerMap.orbLayer | LayerMap.pressurePlateLayer)))
+            if (Physics.Raycast(_thisTransform.position, thisToGolem.normalized, out RaycastHit hit, _interactionRadius, ~(LayerMap.orbLayer | LayerMap.pressurePlateLayer | LayerMap.invisRampLayer)))
             {
                 if (hit.collider.CompareTag("Golem"))
                 {
@@ -204,7 +207,7 @@ public class Orb : MonoBehaviour, IRequireInput
         GetComponent<Collider>().enabled = true;
         _rb.useGravity = true;
 
-        OnOrbActive?.Invoke(this, transform.rotation);
+        OnOrbActive?.Invoke(this);
     }
 
     // Interfaces
@@ -219,5 +222,21 @@ public class Orb : MonoBehaviour, IRequireInput
     private void OnCollisionStay(Collision collision)
     {
         _controller.OnCollisionStay(collision);
+    }
+
+    private Vector3 _checkpointPos;
+
+    void IReset.Reset()
+    {
+        _fsm.MoveTo(_idleState);
+
+        ResetVelocity();
+
+        _thisTransform.position = new Vector3(_checkpointPos.x, _checkpointPos.y, _checkpointPos.z);
+    }
+
+    void IReset.OnEnter(Vector3 checkpointPos)
+    {
+        _checkpointPos = checkpointPos;
     }
 }

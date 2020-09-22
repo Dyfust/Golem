@@ -2,9 +2,9 @@
 using GolemStates;
 using FSM;
 
-public class Golem : MonoBehaviour, IRequireInput
+public class Golem : MonoBehaviour, IRequireInput, IReset
 {
-    public delegate void GolemEventHandler(Golem golem, Quaternion orientation);
+    public delegate void GolemEventHandler(Golem golem);
     public static event GolemEventHandler OnGolemActive;
 
     [SerializeField] private float _angularSpeed = 0;
@@ -49,8 +49,10 @@ public class Golem : MonoBehaviour, IRequireInput
     private void Start()
     {
         InitaliseFSM();
+        _initPos = _thisTransform.position;
 
-        DebugWindow.AddPrintTask(() => "Orb Grounded: " + _controller.IsGrounded().ToString());
+        DebugWindow.AddPrintTask(() => "Golem Grounded: " + _controller.IsGrounded().ToString());
+        DebugWindow.AddPrintTask(() => "Golem Ground Normal: " + _controller.GetCollisionNormal().ToString());
     }
 
     private void Update()
@@ -74,11 +76,14 @@ public class Golem : MonoBehaviour, IRequireInput
         _controller.OnCollisionStay(collision);
     }
 
+    State _dormantState;
+
     private void InitaliseFSM()
     {
         _fsm = new FSM.FSM();
 
         State dormantState = new DormantState(this);
+        _dormantState = dormantState;
         State idleState = new IdleState(this);
         State walkingState = new WalkingState(this);
         State pushingState = new PushingState(this);
@@ -177,7 +182,7 @@ public class Golem : MonoBehaviour, IRequireInput
 
     public void Enter()
     {
-        OnGolemActive?.Invoke(this, transform.rotation);
+        OnGolemActive?.Invoke(this);
         _dormant = false;
     }
 
@@ -201,7 +206,7 @@ public class Golem : MonoBehaviour, IRequireInput
 
             _thisTransform.position = newGolemPos;
             _thisTransform.rotation = Quaternion.LookRotation(-_blockNormal);
-            _block.BeginPushing(this, _blockNormal, _controllerSettings.maxSpeed); 
+            _block.BeginPushing(this, _blockNormal, _controllerSettings.maxSpeed);
             return true;
         }
 
@@ -211,7 +216,7 @@ public class Golem : MonoBehaviour, IRequireInput
     public void Push()
     {
 
-		bool _blockCentered = Physics.Raycast(transform.position + Vector3.up * 0.85f, transform.forward, 2.0f, _blockLayer);
+        bool _blockCentered = Physics.Raycast(transform.position + Vector3.up * 0.85f, transform.forward, 2.0f, _blockLayer);
 
         if (_blockCentered == false)
         {
@@ -225,7 +230,8 @@ public class Golem : MonoBehaviour, IRequireInput
 
     public void StopPushing()
     {
-        _block.StopPushing();
+        if (_block != null)
+            _block.StopPushing();
         _block = null;
     }
     #endregion
@@ -276,5 +282,19 @@ public class Golem : MonoBehaviour, IRequireInput
     public void SetInputData(InputData data)
     {
         _inputData = data;
+    }
+
+    private Vector3 _initPos;
+
+    void IReset.Reset()
+    {
+        _fsm.MoveTo(_dormantState);
+
+        _thisTransform.position = new Vector3(_initPos.x, _initPos.y, _initPos.z);
+    }
+
+    void IReset.OnEnter(Vector3 checkpointPos)
+    {
+
     }
 }

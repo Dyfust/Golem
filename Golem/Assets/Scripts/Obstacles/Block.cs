@@ -1,11 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using System.CodeDom.Compiler;
+using UnityEngine;
 using UnityEngine.ProBuilder;
 
-public class Block : MonoBehaviour, IReset
+public class Block : MonoBehaviour, IReset, IPlayAudio
 {
     [SerializeField] private float _mass; public float mass => _mass;
-	[SerializeField] ParticleSystem _pebbles;
-	[SerializeField] ParticleSystem _dust; 
+	[SerializeField] private ParticleSystem _pebbles;
+	[SerializeField] private AudioClip _stoneDragging; 
 
 	private float _maxEmissionRate; 
 	private float _maxSpeed = 0;
@@ -20,15 +22,22 @@ public class Block : MonoBehaviour, IReset
 
 	private Vector3 _preLiftPos;
 	private Vector3 _startPos;
-	private Vector3 _pushingNormal; 
+	private Vector3 _pushingNormal;
+	private Vector3 _prevVelocity; 
+	private Vector3 _velocity; 
 
 	private bool _isGrounded = false;
 	private bool _isConnected = false;
-	private bool _isLifted = false; 
+	private bool _isLifted = false;
+	private bool _isMoving = false; 
 
 	private RaycastHit _hit;
 
-	private Golem _connectedGolem; 
+	private Golem _connectedGolem;
+
+	public event EventHandler<AudioClip> PlayLoopedAudio;
+	public event EventHandler StopLoopedAudio;
+	public event EventHandler<AudioClip> PlayAudioEffect;
 
 	private void Start()
 	{
@@ -36,16 +45,34 @@ public class Block : MonoBehaviour, IReset
 		_coll = GetComponent<BoxCollider>();
 		_startPos = transform.position;
 		_pebbles.transform.position = this.transform.position;
-		_dust.transform.position = this.transform.position; 
 		_emissionCurve = _pebbles.emission.rateOverTime; 
 		_maxEmissionRate = _pebbles.emission.rateOverTime.constant;
 		_emissionModule = _pebbles.emission;
 		_pebbles.Stop();
-		_dust.Stop(); 
+		_prevVelocity = Vector3.zero; 
 	}
 
 	private void Update()
 	{
+		_velocity = _cc.velocity;
+
+		Vector3 temp = _velocity;
+		temp.y = 0; 
+
+
+		if (temp != Vector3.zero && _prevVelocity == Vector3.zero)
+		{
+			StartedMoving();
+			Debug.Log("STARTMOVING");
+		}
+		if (temp == Vector3.zero && _prevVelocity != Vector3.zero)
+		{
+			StoppedMoving();
+			Debug.Log("STOPMOVING");
+		}
+
+		_prevVelocity = _velocity;
+		_prevVelocity.y = 0; 
 	}
 
 	private void FixedUpdate()
@@ -65,26 +92,25 @@ public class Block : MonoBehaviour, IReset
 
 		_maxSpeed = maxSpeed; 
 		_pebbles.Play();
-		_dust.Play(); 
 		_pushingNormal = blockNormal; 
 	}
 
 	public void Move(Vector3 velocity, float direction)
 	{
 		_cc.Move(velocity);
+		
+
 
 		if (direction != 0)
 		{
 			_pebbles.transform.rotation = Quaternion.LookRotation(_pushingNormal * direction, Vector3.up);
 			_pebbles.transform.position = (this.transform.position + _coll.bounds.extents.x * (_pushingNormal * direction));
-
-			_dust.transform.rotation = Quaternion.LookRotation(_pushingNormal * direction, Vector3.up);
-			_dust.transform.position = (this.transform.position + _coll.bounds.extents.x * (_pushingNormal * direction));
 		}
 
 
+
 		_emissionCurve.constant = ((velocity.magnitude/ Time.fixedDeltaTime) / _maxSpeed) * _maxEmissionRate;
-		_emissionModule.rateOverTime = _emissionCurve; 
+		_emissionModule.rateOverTime = _emissionCurve;
 	}
 
 	public void StopPushing()
@@ -92,7 +118,8 @@ public class Block : MonoBehaviour, IReset
 		_isConnected = false;
 		_connectedGolem = null;
 		_pebbles.Stop();
-		_dust.Stop(); 
+
+		StopLoopedAudio?.Invoke(this, EventArgs.Empty); 
 	}
 
 	public void BeginLift()
@@ -116,8 +143,18 @@ public class Block : MonoBehaviour, IReset
 		_cc.enabled = true;
 	}
 
-	void IReset.OnEnter()
+	void IReset.OnEnter(Vector3 checkpointPos)
 	{
 		_startPos = transform.position; 
+	}
+
+	private void StartedMoving()
+	{
+		PlayLoopedAudio?.Invoke(this, _stoneDragging); 
+	}
+
+	private void StoppedMoving()
+	{
+		StopLoopedAudio?.Invoke(this, EventArgs.Empty);
 	}
 }

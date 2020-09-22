@@ -10,6 +10,8 @@ TagManager:
   - Block
   - PressurePlate
   - Room
+  - Ramp
+  - AudioSource
   layers:
   - Default
   - TransparentFX
@@ -28,7 +30,7 @@ TagManager:
   - ToCull
   - Particles
   - Door
-  - 
+  - Invis_Ramp
   - 
   - 
   - 
