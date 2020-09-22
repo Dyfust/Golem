@@ -63,12 +63,10 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 		if (temp != Vector3.zero && _prevVelocity == Vector3.zero)
 		{
 			StartedMoving();
-			Debug.Log("STARTMOVING");
 		}
 		if (temp == Vector3.zero && _prevVelocity != Vector3.zero)
 		{
 			StoppedMoving();
-			Debug.Log("STOPMOVING");
 		}
 
 		_prevVelocity = _velocity;
