@@ -2,19 +2,34 @@
 
 public class InputController : MonoBehaviour
 {
-    private IRequireInput _dest;
-    private InputData _localInputData;
+	private IRequireInput _dest;
+	private InputData _localInputData;
+	private InputMaster controls; 
 
-    private void Awake()
-    {
-        _dest = GetComponent<IRequireInput>();
-    }
+	private void Awake()
+	{
+		_dest = GetComponent<IRequireInput>();
+		controls = new InputMaster();
+	}	
 
-    private void Update()
-    {
-        _localInputData.input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        _localInputData.normalisedInput = _localInputData.input.normalized;
+	private void OnEnable()
+	{
+		controls.Player.Enable();
+	}
 
-        _dest.SetInputData(_localInputData);
-    }
+	private void OnDisable()
+	{
+		controls.Player.Disable(); 
+	}
+
+	private void Update()
+	{
+		_localInputData.movement = controls.Player.Movement.ReadValue<Vector2>();
+		_localInputData.normalisedMovement = _localInputData.movement.normalized;
+		_localInputData.enterButtonPress = controls.Player.EnterExit.triggered;
+		_localInputData.pushButtonPress = controls.Player.PushPull.triggered;
+		_localInputData.liftButtonPress = controls.Player.Lift.triggered;
+
+		_dest.SetInputData(_localInputData);
+	}
 }
