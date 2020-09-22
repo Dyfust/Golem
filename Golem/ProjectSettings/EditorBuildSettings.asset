@@ -20,7 +20,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Sandbox/Johnny.unity
     guid: 80ebbe690da51844280127567738dd54
-  - enabled: 1
-    path: Assets/Scenes/Marcus.unity
-    guid: 1685f333be2535b42ba0650edb2bc354
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 87ffc79499ea0da42b6da6219a6e7eb4,
+      type: 2}

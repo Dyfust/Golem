@@ -56,6 +56,8 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
         _fsm.HandleTransitions();
         _fsm.UpdateLogic();
+
+        _inputData.enterButtonPress = false;
     }
 
     private void FixedUpdate()
@@ -86,7 +88,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(idleState, mountedState, () =>
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (_inputData.enterButtonPress)
                 return EnterGolem();
 
             return false;
@@ -94,7 +96,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(rollingState, mountedState, () =>
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (_inputData.enterButtonPress)
                 return EnterGolem();
 
             return false;
@@ -102,7 +104,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(mountedState, idleState, () =>
         {
-            return Input.GetKeyDown(KeyCode.F);
+            return _inputData.enterButtonPress;
         });
 
         _fsm.SetDefaultState(idleState);
@@ -114,7 +116,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         _forward = Quaternion.AngleAxis(_angle, Vector3.up) * Vector3.forward;
         _right = Vector3.Cross(Vector3.up, _forward);
 
-        _currentHeading = _inputData.normalisedInput.x * _right + _inputData.normalisedInput.y * _forward;
+        _currentHeading = _inputData.normalisedMovement.x * _right + _inputData.normalisedMovement.y * _forward;
     }
 
     public void UpdateController()
@@ -213,10 +215,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
     // Interfaces
     public void SetInputData(InputData data)
     {
-        if (_currentGolem != null)
-            _currentGolem.SetInputData(data);
-        else
-            _inputData = data;
+        _inputData = data;
     }
 
     private void OnCollisionStay(Collision collision)
@@ -238,5 +237,10 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
     void IReset.OnEnter(Vector3 checkpointPos)
     {
         _checkpointPos = checkpointPos;
+    }
+
+    public void EnterthisGolem()
+    {
+        return;
     }
 }
