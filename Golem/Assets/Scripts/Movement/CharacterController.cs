@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -7,15 +8,13 @@ public class CharacterController : IMovementController
     /// This class is responsible for handling all aspects of motion including slope handling & ground detection.
     private CharacterControllerSettings _settings;
 
-    private bool _isGrounded;
-
     private float _acceleration;
     private Vector3 _bufferedAcceleration;
     private Vector3 _velocity;
 
+    private bool _isGrounded;
     private Vector3 _groundNormal;
-    private ContactPoint[] _contacts;
-    private bool _onRamp;
+    private List<Vector3> _collisionNormals = new List<Vector3>();
 
     private Rigidbody _rb;
 
@@ -28,11 +27,11 @@ public class CharacterController : IMovementController
 
     public void FixedUpdate()
     {
-        // Workflow optimization.
-
         _velocity = _rb.velocity;
         Vector3 acceleration = _bufferedAcceleration;
         _bufferedAcceleration = Vector3.zero;
+
+        _isGrounded = DetectGround();
 
         //This raycast is responsible for detecting a slope in front of the character.
         if (_isGrounded)
@@ -95,11 +94,6 @@ public class CharacterController : IMovementController
             }
         }
 
-        // Reset buffered values.
-        _isGrounded = false;
-        _groundNormal = Vector3.zero;
-        _onRamp = false;
-
         _rb.velocity = _velocity;
     }
 
@@ -118,25 +112,36 @@ public class CharacterController : IMovementController
         return velocity;
     }
 
-    public void OnCollisionStay(Collision collision)
+    private bool DetectGround()
     {
+        bool isGrounded = false;
         int amountOfGroundNormals = 0;
-        _isGrounded = false;
-        _groundNormal = Vector3.zero;
-        // Grounded if at least 1 surface is facing upwards.
-        _contacts = collision.contacts; // collision.GetContacts() seems to be bugged. Sometimes it doesn't reset the array when collisions change.
 
-        for (int i = 0; i < _contacts.Length; i++)
+        _groundNormal = Vector3.zero;
+
+        for (int i = 0; i < _collisionNormals.Count; i++)
         {
-            if (_contacts[i].normal.y > 0f)
+            if (_collisionNormals[i].y > 0f)
             {
-                _isGrounded = true;
-                _groundNormal += _contacts[i].normal;
+                _groundNormal += _collisionNormals[i];
                 amountOfGroundNormals++;
+                isGrounded = true;
             }
         }
 
-        _groundNormal = (_groundNormal / amountOfGroundNormals).normalized;
+        if (amountOfGroundNormals > 0)
+            _groundNormal = (_groundNormal / amountOfGroundNormals).normalized;
+
+        _collisionNormals.Clear();
+
+        return isGrounded;
+    }
+
+    public void OnCollisionStay(Collision collision)
+    {
+        Vector3 normal = Vector3.zero;
+        normal = collision.GetContact(0).normal;
+        _collisionNormals.Add(normal);
     }
 
     public void Move(Vector3 dir)
@@ -146,4 +151,5 @@ public class CharacterController : IMovementController
 
     public Vector3 GetVelocity() => _velocity;
     public bool IsGrounded() => _isGrounded;
+    public Vector3 GetCollisionNormal() => _groundNormal;
 }

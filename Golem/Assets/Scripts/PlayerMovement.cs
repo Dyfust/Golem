@@ -13,7 +13,7 @@
 //	[SerializeField] private float _speed = 0;
 //	[SerializeField] private float _angularSpeed = 0;
 //	[SerializeField] private float _rayLength = 0;
-//	[SerializeField] private float _pushOffset = 0; 
+//	[SerializeField] private float _pushOffset = 0;
 
 //	public GameObject handPosition;
 
@@ -24,7 +24,7 @@
 //	private bool _lifting = false;
 
 
-//	private STATE _currentState = STATE.FREE; 
+//	private STATE _currentState = STATE.FREE;
 
 //	private Transform _cameraTransform;
 //	private Vector3 _heading;
@@ -71,23 +71,22 @@
 //		//Pushing 
 //		if (Input.GetKeyDown(KeyCode.E))
 //		{
-//			Push(); 
+//			Push();
 //		}
 
 //		//Lifting 
 //		if (Input.GetKeyDown(KeyCode.Q))
 //		{
-//			Lift(); 
+//			Lift();
 //		}
 
-//		Debug.DrawRay(_rayPos, _forward * _rayLength, Color.red); 
+//		Debug.DrawRay(_rayPos, _forward * _rayLength, Color.red);
 //		if (Input.GetKeyDown(KeyCode.F))
 //		{
-//			RaycastHit hit; 
-
+//			RaycastHit hit;
 //			if (Physics.Raycast(_rayPos, _forward, out hit, _rayLength, _layerMask))
 //				hit.collider.GetComponent<IInteractable>().Interact();
-			
+
 //		}
 
 
@@ -115,7 +114,7 @@
 //		//Animation
 //		_animator.SetFloat("Speed", _rb.velocity.magnitude);
 //		_animator.SetBool("Pushing", _pushing);
-//		_animator.SetBool("Lifting", _lifting); 
+//		_animator.SetBool("Lifting", _lifting);
 //		_animator.SetFloat("Direction", Mathf.RoundToInt(Vector3.Dot(_rb.velocity.normalized, transform.forward)));
 //	}
 
@@ -124,11 +123,11 @@
 //		switch (_currentState)
 //		{
 //			case STATE.FREE:
-//			{
+//				{
 //					Quaternion targetRotation = Quaternion.LookRotation(_forward, Vector3.up);
 //					transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _angularSpeed * Time.fixedDeltaTime);
 //					break;
-//			}
+//				}
 //		}
 //	}
 
@@ -155,7 +154,7 @@
 //					transform.rotation = Quaternion.LookRotation(-_ioNormal);
 //					_interactedObject.GetComponent<FixedJoint>().connectedBody = _rb;
 //					_pushing = true;
-//					_interactedObject.GetComponent<InteractableCube>().SetIsInteractable(true); 
+//					_interactedObject.GetComponent<InteractableCube>().SetIsInteractable(true);
 //					_currentState = STATE.PUSHING;
 //				}
 //			}
@@ -167,7 +166,7 @@
 //				_interactedObject.GetComponent<InteractableCube>().SetIsInteractable(false);
 //				_interactedObject = null;
 //				_ioNormal = Vector3.zero;
-//				_ioStartPosition = Vector3.zero; 
+//				_ioStartPosition = Vector3.zero;
 //				_pushing = false;
 //				_currentState = STATE.FREE;
 //			}
@@ -203,7 +202,7 @@
 //				_interactedObject.GetComponent<Transform>().position = _ioStartPosition;
 //				_interactedObject.GetComponent<InteractableCube>().SetIsInteractable(false);
 //				_interactedObject = null;
-//				_ioStartPosition = Vector3.zero; 
+//				_ioStartPosition = Vector3.zero;
 //				_currentState = STATE.FREE;
 //			}
 //		}

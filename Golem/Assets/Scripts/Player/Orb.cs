@@ -4,7 +4,7 @@ using FSM;
 
 public class Orb : MonoBehaviour, IRequireInput, IReset
 {
-    public delegate void OrbEventHandler(Orb orb, Quaternion orientation);
+    public delegate void OrbEventHandler(Orb orb);
     public static event OrbEventHandler OnOrbActive;
 
     [SerializeField] private CharacterControllerSettings _controllerSettings;
@@ -47,6 +47,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         DebugWindow.AddPrintTask(() => "Orb Heading: " + _currentHeading.ToString());
         DebugWindow.AddPrintTask(() => "Orb Velocity: " + _rb.velocity.ToString());
         DebugWindow.AddPrintTask(() => "Orb Grounded: " + _controller.IsGrounded().ToString());
+        DebugWindow.AddPrintTask(() => "Orb Ground Normal: " + _controller.GetCollisionNormal().ToString());
     }
 
     private void Update()
@@ -55,6 +56,8 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
         _fsm.HandleTransitions();
         _fsm.UpdateLogic();
+
+        _inputData.enterButtonPress = false;
     }
 
     private void FixedUpdate()
@@ -85,7 +88,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(idleState, mountedState, () =>
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (_inputData.enterButtonPress)
                 return EnterGolem();
 
             return false;
@@ -93,7 +96,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(rollingState, mountedState, () =>
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (_inputData.enterButtonPress)
                 return EnterGolem();
 
             return false;
@@ -101,7 +104,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(mountedState, idleState, () =>
         {
-            return Input.GetKeyDown(KeyCode.F);
+            return _inputData.enterButtonPress;
         });
 
         _fsm.SetDefaultState(idleState);
@@ -113,7 +116,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         _forward = Quaternion.AngleAxis(_angle, Vector3.up) * Vector3.forward;
         _right = Vector3.Cross(Vector3.up, _forward);
 
-        _currentHeading = _inputData.normalisedInput.x * _right + _inputData.normalisedInput.y * _forward;
+        _currentHeading = _inputData.normalisedMovement.x * _right + _inputData.normalisedMovement.y * _forward;
     }
 
     public void UpdateController()
@@ -206,16 +209,13 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         GetComponent<Collider>().enabled = true;
         _rb.useGravity = true;
 
-        OnOrbActive?.Invoke(this, transform.rotation);
+        OnOrbActive?.Invoke(this);
     }
 
     // Interfaces
     public void SetInputData(InputData data)
     {
-        if (_currentGolem != null)
-            _currentGolem.SetInputData(data);
-        else
-            _inputData = data;
+        _inputData = data;
     }
 
     private void OnCollisionStay(Collision collision)
@@ -237,5 +237,10 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
     void IReset.OnEnter(Vector3 checkpointPos)
     {
         _checkpointPos = checkpointPos;
+    }
+
+    public void EnterthisGolem()
+    {
+        return;
     }
 }
