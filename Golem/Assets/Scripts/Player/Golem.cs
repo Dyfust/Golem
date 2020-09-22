@@ -105,7 +105,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
         // Pushing
         _fsm.AddTransition(idleState, pushingState, () =>
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (_inputData.pushButtonPress)
                 return BeginPushing();
 
             return false;
@@ -113,7 +113,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(walkingState, pushingState, () =>
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (_inputData.pushButtonPress)
                 return BeginPushing();
 
             return false;
@@ -121,7 +121,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(pushingState, idleState, () =>
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (_inputData.pushButtonPress)
                 StopPushing();
 
             return _block == null;
@@ -138,7 +138,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
         // Lifting
         _fsm.AddTransition(idleState, liftingState, () =>
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (_inputData.liftButtonPress)
                 return BeginLifting();
 
             return false;
@@ -146,7 +146,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(liftingState, idleState, () =>
         {
-            return Input.GetKeyDown(KeyCode.Q);
+            return _inputData.liftButtonPress;
         });
 
         _fsm.SetDefaultState(idleState);
@@ -158,7 +158,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
         _forwardRelativeToCamera = Quaternion.AngleAxis(_angle, Vector3.up) * Vector3.forward;
         _rightRelativeToCamera = Vector3.Cross(Vector3.up, _forwardRelativeToCamera);
 
-        _heading = _inputData.normalisedInput.x * _rightRelativeToCamera + _inputData.normalisedInput.y * _forwardRelativeToCamera;
+        _heading = _inputData.normalisedMovement.x * _rightRelativeToCamera + _inputData.normalisedMovement.y * _forwardRelativeToCamera;
     }
 
     public void Move()
@@ -224,8 +224,8 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
             return;
         }
 
-        _controller.Move(_inputData.input.y * -_blockNormal / _block.mass);
-        _block.Move(_controller.GetVelocity() * Time.fixedDeltaTime, _inputData.input.y);
+        _controller.Move(_inputData.movement.y * -_blockNormal / _block.mass);
+        _block.Move(_controller.GetVelocity() * Time.fixedDeltaTime, _inputData.movement.y);
     }
 
     public void StopPushing()
@@ -297,4 +297,6 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
     {
 
     }
+
+
 }
