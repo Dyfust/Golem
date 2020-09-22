@@ -15,7 +15,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     ""name"": ""InputMaster"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""Gameplay"",
             ""id"": ""c9846cad-ecdc-4b9d-8059-b0e472762578"",
             ""actions"": [
                 {
@@ -43,25 +43,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Reset"",
-                    ""type"": ""Button"",
-                    ""id"": ""ce704c9e-e279-4df7-818a-80d65930b3f3"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""Movement"",
                     ""type"": ""PassThrough"",
                     ""id"": ""00d88d9f-9865-4f01-b084-341463ff3ddf"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Camera"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""e3b94f01-b00b-4009-bfe3-bf9476c8138a"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -201,116 +185,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""bd4c858e-82f8-432f-99ae-19080d13de67"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Camera"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""96b8e8be-3928-4cd4-8099-6158647e7b80"",
-                    ""path"": ""<XInputController>/rightStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Xbox Control Scheme"",
-                    ""action"": ""Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""e3e61b83-2236-46b9-9e40-262969134448"",
-                    ""path"": ""<XInputController>/rightStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Xbox Control Scheme"",
-                    ""action"": ""Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""de1bf9a5-eac8-40cb-856c-f04df7051886"",
-                    ""path"": ""<XInputController>/rightStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Xbox Control Scheme"",
-                    ""action"": ""Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""518096f7-679e-45bd-805c-89d377ca89fa"",
-                    ""path"": ""<XInputController>/rightStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Xbox Control Scheme"",
-                    ""action"": ""Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""f1d54d26-1ec4-4aa0-ad8c-dbbfb11890b5"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Camera"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""b8ccfd49-bb58-4d73-99c5-d4913a30b09f"",
-                    ""path"": ""<Mouse>/delta/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""dafb23c7-e722-4c93-89ac-92204d2715e7"",
-                    ""path"": ""<Mouse>/delta/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""41dea6bb-6d1c-4887-bf7d-c87ec56c1cb0"",
-                    ""path"": ""<Mouse>/delta/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""24a37772-5388-471c-9c17-3408aa5babdf"",
-                    ""path"": ""<Mouse>/delta/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""c7f8b657-779a-40a2-ba3c-dff876dd8a76"",
                     ""path"": ""<XInputController>/buttonNorth"",
@@ -351,28 +225,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Enter/Exit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""de2bcbe4-0775-4048-af0d-ffaac3a841f1"",
-                    ""path"": ""<XInputController>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Xbox Control Scheme"",
-                    ""action"": ""Reset"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7322b47f-4cd3-4356-be72-c1f7940a244f"",
-                    ""path"": ""<Keyboard>/r"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Reset"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -503,6 +355,33 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Menu"",
+            ""id"": ""9d7705a7-2f04-4ea1-a0de-a3346c903c86"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""9c461a36-1ddb-4d58-8f9d-52cb18ff5127"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c4b827d8-4810-4fd6-835b-2a4b809efbde"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -519,17 +398,18 @@ public class @InputMaster : IInputActionCollection, IDisposable
         }
     ]
 }");
-        // Player
-        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_EnterExit = m_Player.FindAction("Enter/Exit", throwIfNotFound: true);
-        m_Player_PushPull = m_Player.FindAction("Push/Pull", throwIfNotFound: true);
-        m_Player_Lift = m_Player.FindAction("Lift", throwIfNotFound: true);
-        m_Player_Reset = m_Player.FindAction("Reset", throwIfNotFound: true);
-        m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
-        m_Player_Camera = m_Player.FindAction("Camera", throwIfNotFound: true);
+        // Gameplay
+        m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
+        m_Gameplay_EnterExit = m_Gameplay.FindAction("Enter/Exit", throwIfNotFound: true);
+        m_Gameplay_PushPull = m_Gameplay.FindAction("Push/Pull", throwIfNotFound: true);
+        m_Gameplay_Lift = m_Gameplay.FindAction("Lift", throwIfNotFound: true);
+        m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_RightJS = m_Camera.FindAction("Right JS", throwIfNotFound: true);
+        // Menu
+        m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
+        m_Menu_Newaction = m_Menu.FindAction("New action", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -576,54 +456,44 @@ public class @InputMaster : IInputActionCollection, IDisposable
         asset.Disable();
     }
 
-    // Player
-    private readonly InputActionMap m_Player;
-    private IPlayerActions m_PlayerActionsCallbackInterface;
-    private readonly InputAction m_Player_EnterExit;
-    private readonly InputAction m_Player_PushPull;
-    private readonly InputAction m_Player_Lift;
-    private readonly InputAction m_Player_Reset;
-    private readonly InputAction m_Player_Movement;
-    private readonly InputAction m_Player_Camera;
-    public struct PlayerActions
+    // Gameplay
+    private readonly InputActionMap m_Gameplay;
+    private IGameplayActions m_GameplayActionsCallbackInterface;
+    private readonly InputAction m_Gameplay_EnterExit;
+    private readonly InputAction m_Gameplay_PushPull;
+    private readonly InputAction m_Gameplay_Lift;
+    private readonly InputAction m_Gameplay_Movement;
+    public struct GameplayActions
     {
         private @InputMaster m_Wrapper;
-        public PlayerActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
-        public InputAction @EnterExit => m_Wrapper.m_Player_EnterExit;
-        public InputAction @PushPull => m_Wrapper.m_Player_PushPull;
-        public InputAction @Lift => m_Wrapper.m_Player_Lift;
-        public InputAction @Reset => m_Wrapper.m_Player_Reset;
-        public InputAction @Movement => m_Wrapper.m_Player_Movement;
-        public InputAction @Camera => m_Wrapper.m_Player_Camera;
-        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public GameplayActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
+        public InputAction @EnterExit => m_Wrapper.m_Gameplay_EnterExit;
+        public InputAction @PushPull => m_Wrapper.m_Gameplay_PushPull;
+        public InputAction @Lift => m_Wrapper.m_Gameplay_Lift;
+        public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
+        public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
-        public void SetCallbacks(IPlayerActions instance)
+        public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
+        public void SetCallbacks(IGameplayActions instance)
         {
-            if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
+            if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
             {
-                @EnterExit.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnterExit;
-                @EnterExit.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnterExit;
-                @EnterExit.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnterExit;
-                @PushPull.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPushPull;
-                @PushPull.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPushPull;
-                @PushPull.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPushPull;
-                @Lift.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLift;
-                @Lift.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLift;
-                @Lift.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLift;
-                @Reset.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReset;
-                @Reset.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReset;
-                @Reset.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReset;
-                @Movement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
-                @Movement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
-                @Movement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
-                @Camera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
-                @Camera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
-                @Camera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
+                @EnterExit.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnterExit;
+                @EnterExit.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnterExit;
+                @EnterExit.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEnterExit;
+                @PushPull.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPushPull;
+                @PushPull.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPushPull;
+                @PushPull.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPushPull;
+                @Lift.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLift;
+                @Lift.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLift;
+                @Lift.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLift;
+                @Movement.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovement;
+                @Movement.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovement;
+                @Movement.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovement;
             }
-            m_Wrapper.m_PlayerActionsCallbackInterface = instance;
+            m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @EnterExit.started += instance.OnEnterExit;
@@ -635,19 +505,13 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Lift.started += instance.OnLift;
                 @Lift.performed += instance.OnLift;
                 @Lift.canceled += instance.OnLift;
-                @Reset.started += instance.OnReset;
-                @Reset.performed += instance.OnReset;
-                @Reset.canceled += instance.OnReset;
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
-                @Camera.started += instance.OnCamera;
-                @Camera.performed += instance.OnCamera;
-                @Camera.canceled += instance.OnCamera;
             }
         }
     }
-    public PlayerActions @Player => new PlayerActions(this);
+    public GameplayActions @Gameplay => new GameplayActions(this);
 
     // Camera
     private readonly InputActionMap m_Camera;
@@ -681,6 +545,39 @@ public class @InputMaster : IInputActionCollection, IDisposable
         }
     }
     public CameraActions @Camera => new CameraActions(this);
+
+    // Menu
+    private readonly InputActionMap m_Menu;
+    private IMenuActions m_MenuActionsCallbackInterface;
+    private readonly InputAction m_Menu_Newaction;
+    public struct MenuActions
+    {
+        private @InputMaster m_Wrapper;
+        public MenuActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Newaction => m_Wrapper.m_Menu_Newaction;
+        public InputActionMap Get() { return m_Wrapper.m_Menu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void SetCallbacks(IMenuActions instance)
+        {
+            if (m_Wrapper.m_MenuActionsCallbackInterface != null)
+            {
+                @Newaction.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
+                @Newaction.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
+                @Newaction.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
+            }
+            m_Wrapper.m_MenuActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Newaction.started += instance.OnNewaction;
+                @Newaction.performed += instance.OnNewaction;
+                @Newaction.canceled += instance.OnNewaction;
+            }
+        }
+    }
+    public MenuActions @Menu => new MenuActions(this);
     private int m_XboxControlSchemeSchemeIndex = -1;
     public InputControlScheme XboxControlSchemeScheme
     {
@@ -690,17 +587,19 @@ public class @InputMaster : IInputActionCollection, IDisposable
             return asset.controlSchemes[m_XboxControlSchemeSchemeIndex];
         }
     }
-    public interface IPlayerActions
+    public interface IGameplayActions
     {
         void OnEnterExit(InputAction.CallbackContext context);
         void OnPushPull(InputAction.CallbackContext context);
         void OnLift(InputAction.CallbackContext context);
-        void OnReset(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
-        void OnCamera(InputAction.CallbackContext context);
     }
     public interface ICameraActions
     {
         void OnRightJS(InputAction.CallbackContext context);
+    }
+    public interface IMenuActions
+    {
+        void OnNewaction(InputAction.CallbackContext context);
     }
 }

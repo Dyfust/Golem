@@ -14,21 +14,21 @@ public class InputController : MonoBehaviour
 
 	private void OnEnable()
 	{
-		controls.Player.Enable();
+		controls.Gameplay.Enable();
 	}
 
 	private void OnDisable()
 	{
-		controls.Player.Disable(); 
+		controls.Gameplay.Disable(); 
 	}
 
 	private void Update()
 	{
-		_localInputData.movement = controls.Player.Movement.ReadValue<Vector2>();
+		_localInputData.movement = controls.Gameplay.Movement.ReadValue<Vector2>();
 		_localInputData.normalisedMovement = _localInputData.movement.normalized;
-		_localInputData.enterButtonPress = controls.Player.EnterExit.triggered;
-		_localInputData.pushButtonPress = controls.Player.PushPull.triggered;
-		_localInputData.liftButtonPress = controls.Player.Lift.triggered;
+		_localInputData.enterButtonPress = controls.Gameplay.EnterExit.triggered;
+		_localInputData.pushButtonPress = controls.Gameplay.PushPull.triggered;
+		_localInputData.liftButtonPress = controls.Gameplay.Lift.triggered;
 
 		_dest.SetInputData(_localInputData);
 	}
