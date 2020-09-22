@@ -58,9 +58,6 @@ public class Door : MonoBehaviour, IInteractable, IReset, IPlayAudio
 			transform.position = Vector3.Lerp(_currentPos, _openedPos, fractionOfJourney);
 		else
 			transform.position = Vector3.Lerp(_currentPos, _closedPos, fractionOfJourney);
-
-		if (Input.GetKeyDown(KeyCode.G))
-			Interact();
 	}
 
     public void Interact()
@@ -86,8 +83,8 @@ public class Door : MonoBehaviour, IInteractable, IReset, IPlayAudio
 		PlayLoopedAudio?.Invoke(this, _stoneDragging); 
 	}
 
-    private void OnDrawGizmosSelected()
-    {
+	private void OnDrawGizmosSelected()
+	{
 		Gizmos.matrix = transform.localToWorldMatrix;
 		Gizmos.color = Color.green;
 		Gizmos.DrawCube(new Vector3(_openedOffset.x / transform.localScale.x, _openedOffset.y / transform.localScale.y, _openedOffset.z / transform.localScale.z), Vector3.one);
