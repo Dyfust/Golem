@@ -297,6 +297,4 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
     {
 
     }
-
-
 }
