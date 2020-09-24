@@ -7,27 +7,30 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
     public delegate void OrbEventHandler(Orb orb);
     public static event OrbEventHandler OnOrbActive;
 
+    // --------------------------------------------------------------
+    [CustomHeader("Movement")]
     [SerializeField] private CharacterControllerSettings _controllerSettings;
     [SerializeField] private float _angularSpeed;
-    private CharacterController _controller;
 
+    [CustomHeader("Interact Settings")]
+    [SerializeField] private float _interactionDistance;
+
+    // --------------------------------------------------------------
     private InputData _inputData;
 
-    private float _angle;
-    private Vector3 _forward;
-    private Vector3 _right;
-    private Vector3 _currentHeading; public Vector3 currentHeading => _currentHeading;
+    private Transform _cameraTransform;
+    private Vector3 _forwardRelativeToCamera;
+    private Vector3 _rightRelativeToCamera;
+    private Vector3 _currentHeading;
     private Quaternion _targetRotation;
 
-    [SerializeField] private float _interactionRadius;
-    [SerializeField] private Vector3 _attachmentOffset;
+    private FSM.FSM _fsm;
     private Golem _currentGolem;
 
     private Rigidbody _rb;
     private Transform _thisTransform;
-    private Transform _cameraTransform;
 
-    private FSM.FSM _fsm;
+    private CharacterController _controller;
 
     private void Awake()
     {
@@ -112,11 +115,11 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
     private void ComputeAxes()
     {
-        _angle = _cameraTransform.rotation.eulerAngles.y;
-        _forward = Quaternion.AngleAxis(_angle, Vector3.up) * Vector3.forward;
-        _right = Vector3.Cross(Vector3.up, _forward);
+        float angle = _cameraTransform.rotation.eulerAngles.y;
+        _forwardRelativeToCamera = Quaternion.AngleAxis(angle, Vector3.up) * Vector3.forward;
+        _rightRelativeToCamera = Vector3.Cross(Vector3.up, _forwardRelativeToCamera);
 
-        _currentHeading = _inputData.normalisedMovement.x * _right + _inputData.normalisedMovement.y * _forward;
+        _currentHeading = _inputData.normalisedMovement.x * _rightRelativeToCamera + _inputData.normalisedMovement.y * _forwardRelativeToCamera;
     }
 
     public void UpdateController()
@@ -161,12 +164,12 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
     private bool FindGolem()
     {
-        Collider[] golems = Physics.OverlapSphere(_thisTransform.position, _interactionRadius, LayerMap.golemLayer);
+        Collider[] golems = Physics.OverlapSphere(_thisTransform.position, _interactionDistance, LayerMap.golemLayer);
 
         for (int i = 0; i < golems.Length; i++)
         {
             Vector3 thisToGolem = (golems[i].transform.position + Vector3.up * 0.5f) - _thisTransform.position;
-            if (Physics.Raycast(_thisTransform.position, thisToGolem.normalized, out RaycastHit hit, _interactionRadius, ~(LayerMap.orbLayer | LayerMap.pressurePlateLayer | LayerMap.invisRampLayer)))
+            if (Physics.Raycast(_thisTransform.position, thisToGolem.normalized, out RaycastHit hit, _interactionDistance, ~(LayerMap.orbLayer | LayerMap.pressurePlateLayer | LayerMap.invisRampLayer)))
             {
                 if (hit.collider.CompareTag("Golem"))
                 {
@@ -198,7 +201,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
     public void StickToGolem()
     {
-        _rb.position = _currentGolem.transform.position + _attachmentOffset;
+        _rb.position = _currentGolem.transform.position + _currentGolem.attachmentOffset;
     }
 
     public void ExitGolem()
@@ -237,10 +240,5 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
     void IReset.OnEnter(Vector3 checkpointPos)
     {
         _checkpointPos = checkpointPos;
-    }
-
-    public void EnterthisGolem()
-    {
-        return;
     }
 }
