@@ -1,11 +1,12 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using UnityEngine;
-using UnityEngine.ProBuilder;
 
 public class Block : MonoBehaviour, IReset, IPlayAudio
 {
+	[CustomHeader("Physics Properties")]
     [SerializeField] private float _mass; public float mass => _mass;
+
+	[CustomHeader("Audio")]
 	[SerializeField] private ParticleSystem _pebbles;
 	[SerializeField] private AudioClip _stoneDragging; 
 
@@ -29,7 +30,6 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 	private bool _isGrounded = false;
 	private bool _isConnected = false;
 	private bool _isLifted = false;
-	private bool _isMoving = false; 
 
 	private RaycastHit _hit;
 
@@ -57,7 +57,7 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 		_velocity = _cc.velocity;
 
 		Vector3 temp = _velocity;
-		temp.y = 0; 
+		temp.y = 0f; 
 
 
 		if (temp != Vector3.zero && _prevVelocity == Vector3.zero)
