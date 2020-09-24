@@ -121,7 +121,7 @@ public class CharacterController : IMovementController
 
         for (int i = 0; i < _collisionNormals.Count; i++)
         {
-            if (_collisionNormals[i].y > 0f)
+            if (Vector3.Dot(_collisionNormals[i], Vector3.up) > 0.25f)
             {
                 _groundNormal += _collisionNormals[i];
                 amountOfGroundNormals++;
