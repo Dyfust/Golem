@@ -27,7 +27,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
     [SerializeField] private Animator _anim;
 
     // --------------------------------------------------------------
-    private InputData _inputData;
+    private PlayerInputData _inputData;
 
     private Transform _cameraTransform;
     private Vector3 _forwardRelativeToCamera;
@@ -115,7 +115,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
         // Pushing
         _fsm.AddTransition(idleState, pushingState, () =>
         {
-            if (_inputData.pushButtonPress)
+            if (_inputData.pushButtonPressedThisFrame)
                 return BeginPushing();
 
             return false;
@@ -123,7 +123,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(walkingState, pushingState, () =>
         {
-            if (_inputData.pushButtonPress)
+            if (_inputData.pushButtonPressedThisFrame)
                 return BeginPushing();
 
             return false;
@@ -131,7 +131,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(pushingState, idleState, () =>
         {
-            if (_inputData.pushButtonPress)
+            if (_inputData.pushButtonPressedThisFrame)
                 StopPushing();
 
             return _block == null;
@@ -148,7 +148,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
         // Lifting
         _fsm.AddTransition(idleState, liftingState, () =>
         {
-            if (_inputData.liftButtonPress)
+            if (_inputData.liftButtonPressedThisFrame)
                 return BeginLifting();
 
             return false;
@@ -156,7 +156,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(liftingState, idleState, () =>
         {
-            return _inputData.liftButtonPress;
+            return _inputData.liftButtonPressedThisFrame;
         });
 
         _fsm.SetDefaultState(idleState);
@@ -168,12 +168,12 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
         _forwardRelativeToCamera = Quaternion.AngleAxis(_angle, Vector3.up) * Vector3.forward;
         _rightRelativeToCamera = Vector3.Cross(Vector3.up, _forwardRelativeToCamera);
 
-        _currentHeading = _inputData.normalisedMovement.x * _rightRelativeToCamera + _inputData.normalisedMovement.y * _forwardRelativeToCamera;
+        _currentHeading = _inputData.normalizedAxes.x * _rightRelativeToCamera + _inputData.normalizedAxes.y * _forwardRelativeToCamera;
     }
 
     public void Move()
     {
-        _controller.Move(_currentHeading);
+        _controller.Move(_currentHeading, _inputData.joystickDepth);
     }
 
     private void Orientate(Quaternion targetRotation)
@@ -234,8 +234,8 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
             return;
         }
 
-        _controller.Move(_inputData.movement.y * -_blockNormal / _block.mass);
-        _block.Move(_controller.GetVelocity() * Time.fixedDeltaTime, _inputData.movement.y);
+        _controller.Move(_inputData.axes.y * -_blockNormal / _block.mass, _inputData.joystickDepth);
+        _block.Move(_controller.GetVelocity() * Time.fixedDeltaTime, _inputData.axes.y);
     }
 
     public void StopPushing()
@@ -289,7 +289,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
         _anim.SetBool(name, value);
     }
 
-    public void SetInputData(InputData data)
+    public void SetInputData(PlayerInputData data)
     {
         _inputData = data;
     }
