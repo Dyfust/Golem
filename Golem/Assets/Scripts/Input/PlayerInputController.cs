@@ -16,7 +16,7 @@ public class PlayerInputController : MonoBehaviour
 	{
 		controls.Gameplay.Enable();
 
-		DebugWindow.AddPrintTask(() => "Joystick: " + controls.Gameplay.Movement.ReadValue<Vector2>().x);
+		controls.Gameplay.PushPull.performed += (c) => { Debug.Log(c); };
 	}
 
 	private void OnDisable()
