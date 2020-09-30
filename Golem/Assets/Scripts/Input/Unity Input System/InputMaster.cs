@@ -58,7 +58,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""path"": ""<XInputController>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Xbox Control Scheme"",
+                    ""groups"": ""XBox"",
                     ""action"": ""Push/Pull"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -69,7 +69,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Push/Pull"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -91,7 +91,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -102,7 +102,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -113,7 +113,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -124,7 +124,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -146,7 +146,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""XBox"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -157,7 +157,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""XBox"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -168,7 +168,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""XBox"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -179,7 +179,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""XBox"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -190,7 +190,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""path"": ""<XInputController>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Xbox Control Scheme"",
+                    ""groups"": ""XBox"",
                     ""action"": ""Lift"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -201,7 +201,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Lift"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -212,7 +212,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""path"": ""<XInputController>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Xbox Control Scheme"",
+                    ""groups"": ""XBox"",
                     ""action"": ""Enter/Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -223,7 +223,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Enter/Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -245,11 +245,22 @@ public class @InputMaster : IInputActionCollection, IDisposable
             ],
             ""bindings"": [
                 {
+                    ""name"": """",
+                    ""id"": ""b9d54ca2-169d-4f31-8540-646e6a4e4e3d"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": ""ScaleVector2(x=0.25,y=0.25)"",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""Joystick"",
-                    ""id"": ""4748119f-47bc-42f5-8fa5-6d781882df3e"",
+                    ""id"": ""730eb229-5853-4d28-b3db-b5ed9caace07"",
                     ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
-                    ""processors"": ""ScaleVector2"",
+                    ""processors"": ""ScaleVector2(x=2,y=2)"",
                     ""groups"": """",
                     ""action"": ""Look"",
                     ""isComposite"": true,
@@ -257,104 +268,61 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""07e36ab2-2ff3-4263-a23c-0849a11da566"",
-                    ""path"": ""<XInputController>/rightStick/up"",
+                    ""id"": ""282895fa-d272-45e8-bd46-c96c3101692f"",
+                    ""path"": ""<Gamepad>/rightStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Xbox Control Scheme"",
+                    ""groups"": ""XBox"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""fdf8de74-dc03-4883-b936-d784b97473ec"",
-                    ""path"": ""<XInputController>/rightStick/down"",
+                    ""id"": ""99894e41-b7f3-4fab-b75d-7b79413dca19"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Xbox Control Scheme"",
+                    ""groups"": ""XBox"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""a936d09e-b792-4e0f-b57f-53b0dccaf977"",
-                    ""path"": ""<XInputController>/rightStick/left"",
+                    ""id"": ""9d6bdf6d-edf1-4de9-bc8e-2c24e1e50a6c"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Xbox Control Scheme"",
+                    ""groups"": ""XBox"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""814f490c-c665-4a0d-8e55-6a54a4442f97"",
-                    ""path"": ""<XInputController>/rightStick/right"",
+                    ""id"": ""e4c63f9f-129a-45b8-a6af-f6039d5dc25c"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Xbox Control Scheme"",
+                    ""groups"": ""XBox"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b9d54ca2-169d-4f31-8540-646e6a4e4e3d"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": ""ScaleVector2(x=0.25,y=0.25)"",
-                    ""groups"": """",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
         {
             ""name"": ""Menu"",
             ""id"": ""9d7705a7-2f04-4ea1-a0de-a3346c903c86"",
-            ""actions"": [
-                {
-                    ""name"": ""New action"",
-                    ""type"": ""Button"",
-                    ""id"": ""9c461a36-1ddb-4d58-8f9d-52cb18ff5127"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""c4b827d8-4810-4fd6-835b-2a4b809efbde"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""New action"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
+            ""actions"": [],
+            ""bindings"": []
         }
     ],
     ""controlSchemes"": [
         {
-            ""name"": ""Xbox Control Scheme"",
-            ""bindingGroup"": ""Xbox Control Scheme"",
-            ""devices"": [
-                {
-                    ""devicePath"": ""<XInputController>"",
-                    ""isOptional"": false,
-                    ""isOR"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Keyboard & Mouse"",
-            ""bindingGroup"": ""Keyboard & Mouse"",
+            ""name"": ""Keyboard"",
+            ""bindingGroup"": ""Keyboard"",
             ""devices"": [
                 {
                     ""devicePath"": ""<Keyboard>"",
@@ -363,6 +331,17 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 },
                 {
                     ""devicePath"": ""<Mouse>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""XBox"",
+            ""bindingGroup"": ""XBox"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<XInputController>"",
                     ""isOptional"": true,
                     ""isOR"": false
                 }
@@ -381,7 +360,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
-        m_Menu_Newaction = m_Menu.FindAction("New action", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -521,12 +499,10 @@ public class @InputMaster : IInputActionCollection, IDisposable
     // Menu
     private readonly InputActionMap m_Menu;
     private IMenuActions m_MenuActionsCallbackInterface;
-    private readonly InputAction m_Menu_Newaction;
     public struct MenuActions
     {
         private @InputMaster m_Wrapper;
         public MenuActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_Menu_Newaction;
         public InputActionMap Get() { return m_Wrapper.m_Menu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -536,36 +512,30 @@ public class @InputMaster : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_MenuActionsCallbackInterface != null)
             {
-                @Newaction.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
-                @Newaction.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
-                @Newaction.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
             }
             m_Wrapper.m_MenuActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Newaction.started += instance.OnNewaction;
-                @Newaction.performed += instance.OnNewaction;
-                @Newaction.canceled += instance.OnNewaction;
             }
         }
     }
     public MenuActions @Menu => new MenuActions(this);
-    private int m_XboxControlSchemeSchemeIndex = -1;
-    public InputControlScheme XboxControlSchemeScheme
+    private int m_KeyboardSchemeIndex = -1;
+    public InputControlScheme KeyboardScheme
     {
         get
         {
-            if (m_XboxControlSchemeSchemeIndex == -1) m_XboxControlSchemeSchemeIndex = asset.FindControlSchemeIndex("Xbox Control Scheme");
-            return asset.controlSchemes[m_XboxControlSchemeSchemeIndex];
+            if (m_KeyboardSchemeIndex == -1) m_KeyboardSchemeIndex = asset.FindControlSchemeIndex("Keyboard");
+            return asset.controlSchemes[m_KeyboardSchemeIndex];
         }
     }
-    private int m_KeyboardMouseSchemeIndex = -1;
-    public InputControlScheme KeyboardMouseScheme
+    private int m_XBoxSchemeIndex = -1;
+    public InputControlScheme XBoxScheme
     {
         get
         {
-            if (m_KeyboardMouseSchemeIndex == -1) m_KeyboardMouseSchemeIndex = asset.FindControlSchemeIndex("Keyboard & Mouse");
-            return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
+            if (m_XBoxSchemeIndex == -1) m_XBoxSchemeIndex = asset.FindControlSchemeIndex("XBox");
+            return asset.controlSchemes[m_XBoxSchemeIndex];
         }
     }
     public interface IGameplayActions
@@ -581,6 +551,5 @@ public class @InputMaster : IInputActionCollection, IDisposable
     }
     public interface IMenuActions
     {
-        void OnNewaction(InputAction.CallbackContext context);
     }
 }
