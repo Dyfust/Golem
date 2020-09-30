@@ -146,7 +146,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8192
   _offsetFromBlock: 1.75
-  _liftingVerticalOffset: 2
+  _liftingVerticalOffset: 2.25
   _attachmentOffset: {x: 0, y: 2, z: 0}
   _anim: {fileID: 588577935}
 --- !u!1001 &7162779735184219713
