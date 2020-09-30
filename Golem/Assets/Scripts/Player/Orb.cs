@@ -16,7 +16,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
     [SerializeField] private float _interactionDistance;
 
     // --------------------------------------------------------------
-    private InputData _inputData;
+    private PlayerInputData _inputData;
 
     private Transform _cameraTransform;
     private Vector3 _forwardRelativeToCamera;
@@ -49,6 +49,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         DebugWindow.AddPrintTask(() => "Orb State: " + _fsm.GetCurrentState().debugName);
         DebugWindow.AddPrintTask(() => "Orb Heading: " + _currentHeading.ToString());
         DebugWindow.AddPrintTask(() => "Orb Velocity: " + _rb.velocity.ToString());
+        DebugWindow.AddPrintTask(() => "Orb Speed: " + _rb.velocity.magnitude.ToString());
         DebugWindow.AddPrintTask(() => "Orb Grounded: " + _controller.IsGrounded().ToString());
         DebugWindow.AddPrintTask(() => "Orb Ground Normal: " + _controller.GetCollisionNormal().ToString());
     }
@@ -60,7 +61,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         _fsm.HandleTransitions();
         _fsm.UpdateLogic();
 
-        _inputData.enterButtonPress = false;
+        _inputData.enterButtonPressedThisFrame = false;
     }
 
     private void FixedUpdate()
@@ -91,7 +92,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(idleState, mountedState, () =>
         {
-            if (_inputData.enterButtonPress)
+            if (_inputData.enterButtonPressedThisFrame)
                 return EnterGolem();
 
             return false;
@@ -99,7 +100,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(rollingState, mountedState, () =>
         {
-            if (_inputData.enterButtonPress)
+            if (_inputData.enterButtonPressedThisFrame)
                 return EnterGolem();
 
             return false;
@@ -107,7 +108,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(mountedState, idleState, () =>
         {
-            return _inputData.enterButtonPress;
+            return _inputData.enterButtonPressedThisFrame;
         });
 
         _fsm.SetDefaultState(idleState);
@@ -119,7 +120,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         _forwardRelativeToCamera = Quaternion.AngleAxis(angle, Vector3.up) * Vector3.forward;
         _rightRelativeToCamera = Vector3.Cross(Vector3.up, _forwardRelativeToCamera);
 
-        _currentHeading = _inputData.normalisedMovement.x * _rightRelativeToCamera + _inputData.normalisedMovement.y * _forwardRelativeToCamera;
+        _currentHeading = _inputData.normalizedAxes.x * _rightRelativeToCamera + _inputData.normalizedAxes.y * _forwardRelativeToCamera;
     }
 
     public void UpdateController()
@@ -149,12 +150,12 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
     public void Move()
     {
-        _controller.Move(_currentHeading);
+        _controller.Move(_currentHeading, _inputData.joystickDepth);
     }
 
     public void ResetState()
     {
-        _controller.Move(Vector3.zero);
+        _controller.Move(Vector3.zero, 0f);
     }
 
     public void ResetVelocity()
@@ -216,7 +217,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
     }
 
     // Interfaces
-    public void SetInputData(InputData data)
+    public void SetInputData(PlayerInputData data)
     {
         _inputData = data;
     }
