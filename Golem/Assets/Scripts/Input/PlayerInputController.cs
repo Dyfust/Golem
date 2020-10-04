@@ -15,8 +15,7 @@ public class PlayerInputController : MonoBehaviour
 	private void OnEnable()
 	{
 		controls.Gameplay.Enable();
-
-		controls.Gameplay.PushPull.performed += (c) => { Debug.Log(c); };
+		//controls.Gameplay.PushPull.performed += (c) => { Debug.Log(c); };
 	}
 
 	private void OnDisable()

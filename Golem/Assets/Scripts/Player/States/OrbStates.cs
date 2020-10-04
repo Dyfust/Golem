@@ -60,7 +60,6 @@ namespace OrbStates
         {
             _orb.Move();
             _orb.UpdateController();
-            _orb.OrientateToCamera();
         }
     }
 
@@ -87,12 +86,12 @@ namespace OrbStates
 
         public override void UpdateLogic()
         {
-            _orb.OrientateToGolem();
         }
 
         public override void UpdatePhysics()
         {
             _orb.StickToGolem();
+            _orb.OrientateToGolem();
         }
     }
 }
