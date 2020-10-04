@@ -7,27 +7,30 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
     public delegate void OrbEventHandler(Orb orb);
     public static event OrbEventHandler OnOrbActive;
 
+    // --------------------------------------------------------------
+    [CustomHeader("Movement")]
     [SerializeField] private CharacterControllerSettings _controllerSettings;
     [SerializeField] private float _angularSpeed;
-    private CharacterController _controller;
 
-    private InputData _inputData;
+    [CustomHeader("Interact Settings")]
+    [SerializeField] private float _interactionDistance;
 
-    private float _angle;
-    private Vector3 _forward;
-    private Vector3 _right;
-    private Vector3 _currentHeading; public Vector3 currentHeading => _currentHeading;
+    // --------------------------------------------------------------
+    private PlayerInputData _inputData;
+
+    private Transform _cameraTransform;
+    private Vector3 _forwardRelativeToCamera;
+    private Vector3 _rightRelativeToCamera;
+    private Vector3 _currentHeading;
     private Quaternion _targetRotation;
 
-    [SerializeField] private float _interactionRadius;
-    [SerializeField] private Vector3 _attachmentOffset;
+    private FSM.FSM _fsm;
     private Golem _currentGolem;
 
     private Rigidbody _rb;
     private Transform _thisTransform;
-    private Transform _cameraTransform;
 
-    private FSM.FSM _fsm;
+    private CharacterController _controller;
 
     private void Awake()
     {
@@ -46,6 +49,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         DebugWindow.AddPrintTask(() => "Orb State: " + _fsm.GetCurrentState().debugName);
         DebugWindow.AddPrintTask(() => "Orb Heading: " + _currentHeading.ToString());
         DebugWindow.AddPrintTask(() => "Orb Velocity: " + _rb.velocity.ToString());
+        DebugWindow.AddPrintTask(() => "Orb Speed: " + _rb.velocity.magnitude.ToString());
         DebugWindow.AddPrintTask(() => "Orb Grounded: " + _controller.IsGrounded().ToString());
         DebugWindow.AddPrintTask(() => "Orb Ground Normal: " + _controller.GetCollisionNormal().ToString());
     }
@@ -57,7 +61,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         _fsm.HandleTransitions();
         _fsm.UpdateLogic();
 
-        _inputData.enterButtonPress = false;
+        _inputData.enterButtonPressedThisFrame = false;
     }
 
     private void FixedUpdate()
@@ -88,7 +92,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(idleState, mountedState, () =>
         {
-            if (_inputData.enterButtonPress)
+            if (_inputData.enterButtonPressedThisFrame)
                 return EnterGolem();
 
             return false;
@@ -96,7 +100,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(rollingState, mountedState, () =>
         {
-            if (_inputData.enterButtonPress)
+            if (_inputData.enterButtonPressedThisFrame)
                 return EnterGolem();
 
             return false;
@@ -104,7 +108,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(mountedState, idleState, () =>
         {
-            return _inputData.enterButtonPress;
+            return _inputData.enterButtonPressedThisFrame;
         });
 
         _fsm.SetDefaultState(idleState);
@@ -112,11 +116,11 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
     private void ComputeAxes()
     {
-        _angle = _cameraTransform.rotation.eulerAngles.y;
-        _forward = Quaternion.AngleAxis(_angle, Vector3.up) * Vector3.forward;
-        _right = Vector3.Cross(Vector3.up, _forward);
+        float angle = _cameraTransform.rotation.eulerAngles.y;
+        _forwardRelativeToCamera = Quaternion.AngleAxis(angle, Vector3.up) * Vector3.forward;
+        _rightRelativeToCamera = Vector3.Cross(Vector3.up, _forwardRelativeToCamera);
 
-        _currentHeading = _inputData.normalisedMovement.x * _right + _inputData.normalisedMovement.y * _forward;
+        _currentHeading = _inputData.normalizedAxes.x * _rightRelativeToCamera + _inputData.normalizedAxes.y * _forwardRelativeToCamera;
     }
 
     public void UpdateController()
@@ -146,12 +150,12 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
     public void Move()
     {
-        _controller.Move(_currentHeading);
+        _controller.Move(_currentHeading, _inputData.joystickDepth);
     }
 
     public void ResetState()
     {
-        _controller.Move(Vector3.zero);
+        _controller.Move(Vector3.zero, 0f);
     }
 
     public void ResetVelocity()
@@ -161,12 +165,12 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
     private bool FindGolem()
     {
-        Collider[] golems = Physics.OverlapSphere(_thisTransform.position, _interactionRadius, LayerMap.golemLayer);
+        Collider[] golems = Physics.OverlapSphere(_thisTransform.position, _interactionDistance, LayerMap.golemLayer);
 
         for (int i = 0; i < golems.Length; i++)
         {
             Vector3 thisToGolem = (golems[i].transform.position + Vector3.up * 0.5f) - _thisTransform.position;
-            if (Physics.Raycast(_thisTransform.position, thisToGolem.normalized, out RaycastHit hit, _interactionRadius, ~(LayerMap.orbLayer | LayerMap.pressurePlateLayer | LayerMap.invisRampLayer)))
+            if (Physics.Raycast(_thisTransform.position, thisToGolem.normalized, out RaycastHit hit, _interactionDistance, ~(LayerMap.orbLayer | LayerMap.pressurePlateLayer | LayerMap.invisRampLayer)))
             {
                 if (hit.collider.CompareTag("Golem"))
                 {
@@ -198,7 +202,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
     public void StickToGolem()
     {
-        _rb.position = _currentGolem.transform.position + _attachmentOffset;
+        _rb.position = _currentGolem.transform.position + _currentGolem.attachmentOffset;
     }
 
     public void ExitGolem()
@@ -213,7 +217,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
     }
 
     // Interfaces
-    public void SetInputData(InputData data)
+    public void SetInputData(PlayerInputData data)
     {
         _inputData = data;
     }
@@ -237,10 +241,5 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
     void IReset.OnEnter(Vector3 checkpointPos)
     {
         _checkpointPos = checkpointPos;
-    }
-
-    public void EnterthisGolem()
-    {
-        return;
     }
 }
