@@ -6,23 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Main Menu.unity
+    path: Assets/Scenes/Essentials/Main Menu.unity
     guid: ca31ff35f9047324d991cdfd4fca7687
   - enabled: 1
     path: Assets/Scenes/BetterestMidAlpha 2.unity
     guid: f4a4982141f5d754aa474a43d7740a3b
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: Assets/Scenes/Karl.unity
-    guid: 423b1e806d1cf2243bbaf4c72d00fb39
-  - enabled: 0
-    path: Assets/Scenes/Sandbox/Johnny.unity
-    guid: 80ebbe690da51844280127567738dd54
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 87ffc79499ea0da42b6da6219a6e7eb4,
       type: 2}
