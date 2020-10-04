@@ -72,7 +72,7 @@ public class CharacterController : IMovementController
             }
         }
 
-        // Apply gravity only when grounded.
+        // Apply gravity when airborne
         if (_isGrounded == false)
             _velocity += Vector3.down * _settings.gravity * Time.fixedDeltaTime;
 

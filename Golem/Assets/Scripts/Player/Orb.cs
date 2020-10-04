@@ -10,10 +10,10 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
     // --------------------------------------------------------------
     [CustomHeader("Movement")]
     [SerializeField] private CharacterControllerSettings _controllerSettings;
-    [SerializeField] private float _angularSpeed;
 
     [CustomHeader("Interact Settings")]
     [SerializeField] private float _interactionDistance;
+    [SerializeField] private Transform _meshTransform;
 
     // --------------------------------------------------------------
     private PlayerInputData _inputData;
@@ -23,6 +23,9 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
     private Vector3 _rightRelativeToCamera;
     private Vector3 _currentHeading;
     private Quaternion _targetRotation;
+    private Vector3 _realVelocity;
+    private Vector3 _prevPosition;
+    private Vector3 _currentPosition;
 
     private FSM.FSM _fsm;
     private Golem _currentGolem;
@@ -66,7 +69,11 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
     private void FixedUpdate()
     {
+        _currentPosition = _rb.position;
+        _realVelocity = (_currentPosition - _prevPosition) / Time.fixedDeltaTime;
         _fsm.UpdatePhysics();
+        Roll();
+        _prevPosition = _currentPosition;
     }
 
     private State _idleState;
@@ -128,24 +135,18 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         _controller.FixedUpdate();
     }
 
-    private void Orientate(Quaternion targetRotation)
+    public void Roll()
     {
-        _thisTransform.rotation = Quaternion.Slerp(_thisTransform.rotation, _targetRotation, _angularSpeed * Time.fixedDeltaTime);
-    }
+        Vector3 rotAxis = Vector3.Cross(Vector3.up, _realVelocity.normalized);
+        float targetAngularVelocity = _realVelocity.magnitude / 1f;
 
-    public void OrientateToCamera()
-    {
-        if (_currentHeading != Vector3.zero)
-        {
-            _targetRotation = Quaternion.LookRotation(_currentHeading, Vector3.up);
-            Orientate(_targetRotation);
-        }
+        _meshTransform.Rotate(rotAxis, Mathf.Rad2Deg * targetAngularVelocity * Time.fixedDeltaTime, Space.World);
     }
 
     public void OrientateToGolem()
     {
         _targetRotation = Quaternion.LookRotation(_currentGolem.transform.forward, Vector3.up);
-        Orientate(_targetRotation);
+        _meshTransform.transform.rotation = _targetRotation;
     }
 
     public void Move()

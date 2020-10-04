@@ -54,8 +54,6 @@ public class PressurePlate : MonoBehaviour
 
 			if (_emmisiveAnim != null)
 				_emmisiveAnim.OnActivate();
-
-			Debug.Log("Enter");
 		}
 	}
 
@@ -69,8 +67,6 @@ public class PressurePlate : MonoBehaviour
 
 				if (_emmisiveAnim != null)
 					_emmisiveAnim.OnDeactivate();
-
-				Debug.Log("Exit");
 			}
 		}
 	}
