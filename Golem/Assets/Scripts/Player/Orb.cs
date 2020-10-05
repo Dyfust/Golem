@@ -2,245 +2,258 @@
 using UnityEngine;
 using FSM;
 
-public class Orb : MonoBehaviour, IRequireInput, IReset
+public class Orb : MonoBehaviour, IRequireInput, IReset, IPause
 {
-    public delegate void OrbEventHandler(Orb orb);
-    public static event OrbEventHandler OnOrbActive;
+	public delegate void OrbEventHandler(Orb orb);
+	public static event OrbEventHandler OnOrbActive;
 
-    // --------------------------------------------------------------
-    [CustomHeader("Movement")]
-    [SerializeField] private CharacterControllerSettings _controllerSettings;
+	// --------------------------------------------------------------
+	[CustomHeader("Movement")]
+	[SerializeField] private CharacterControllerSettings _controllerSettings;
 
-    [CustomHeader("Interact Settings")]
-    [SerializeField] private float _interactionDistance;
-    [SerializeField] private Transform _meshTransform;
+	[CustomHeader("Interact Settings")]
+	[SerializeField] private float _interactionDistance;
+	[SerializeField] private Transform _meshTransform;
 
-    // --------------------------------------------------------------
-    private PlayerInputData _inputData;
+	// --------------------------------------------------------------
+	private PlayerInputData _inputData;
 
-    private Transform _cameraTransform;
-    private Vector3 _forwardRelativeToCamera;
-    private Vector3 _rightRelativeToCamera;
-    private Vector3 _currentHeading;
-    private Quaternion _targetRotation;
-    private Vector3 _realVelocity;
-    private Vector3 _prevPosition;
-    private Vector3 _currentPosition;
+	private Transform _cameraTransform;
+	private Vector3 _forwardRelativeToCamera;
+	private Vector3 _rightRelativeToCamera;
+	private Vector3 _currentHeading;
+	private Quaternion _targetRotation;
+	private Vector3 _realVelocity;
+	private Vector3 _prevPosition;
+	private Vector3 _currentPosition;
 
-    private FSM.FSM _fsm;
-    private Golem _currentGolem;
+	private FSM.FSM _fsm;
+	private Golem _currentGolem;
 
-    private Rigidbody _rb;
-    private Transform _thisTransform;
+	private Rigidbody _rb;
+	private Transform _thisTransform;
 
-    private CharacterController _controller;
+	private CharacterController _controller;
 
-    private void Awake()
-    {
-        _rb = GetComponent<Rigidbody>();
+	private void OnEnable()
+	{
+			
+	}
+	private void Awake()
+	{
+		_rb = GetComponent<Rigidbody>();
 
-        _thisTransform = transform;
-        _cameraTransform = Camera.main.transform;
+		_thisTransform = transform;
+		_cameraTransform = Camera.main.transform;
 
-        _controller = new CharacterController(_rb, _controllerSettings);
-    }
+		_controller = new CharacterController(_rb, _controllerSettings);
+	}
 
-    private void Start()
-    {
-        InitialiseFSM();
+	private void Start()
+	{
+		InitialiseFSM();
 
-        DebugWindow.AddPrintTask(() => "Orb State: " + _fsm.GetCurrentState().debugName);
-        DebugWindow.AddPrintTask(() => "Orb Heading: " + _currentHeading.ToString());
-        DebugWindow.AddPrintTask(() => "Orb Velocity: " + _rb.velocity.ToString());
-        DebugWindow.AddPrintTask(() => "Orb Speed: " + _rb.velocity.magnitude.ToString());
-        DebugWindow.AddPrintTask(() => "Orb Grounded: " + _controller.IsGrounded().ToString());
-        DebugWindow.AddPrintTask(() => "Orb Ground Normal: " + _controller.GetCollisionNormal().ToString());
-    }
+		DebugWindow.AddPrintTask(() => "Orb State: " + _fsm.GetCurrentState().debugName);
+		DebugWindow.AddPrintTask(() => "Orb Heading: " + _currentHeading.ToString());
+		DebugWindow.AddPrintTask(() => "Orb Velocity: " + _rb.velocity.ToString());
+		DebugWindow.AddPrintTask(() => "Orb Speed: " + _rb.velocity.magnitude.ToString());
+		DebugWindow.AddPrintTask(() => "Orb Grounded: " + _controller.IsGrounded().ToString());
+		DebugWindow.AddPrintTask(() => "Orb Ground Normal: " + _controller.GetCollisionNormal().ToString());
+	}
 
-    private void Update()
-    {
-        ComputeAxes();
+	private void Update()
+	{
+		ComputeAxes();
 
-        _fsm.HandleTransitions();
-        _fsm.UpdateLogic();
+		_fsm.HandleTransitions();
+		_fsm.UpdateLogic();
 
-        _inputData.enterButtonPressedThisFrame = false;
-    }
+		_inputData.enterButtonPressedThisFrame = false;
+	}
 
-    private void FixedUpdate()
-    {
-        _currentPosition = _rb.position;
-        _realVelocity = (_currentPosition - _prevPosition) / Time.fixedDeltaTime;
-        _fsm.UpdatePhysics();
-        Roll();
-        _prevPosition = _currentPosition;
-    }
+	private void FixedUpdate()
+	{
+		_currentPosition = _rb.position;
+		_realVelocity = (_currentPosition - _prevPosition) / Time.fixedDeltaTime;
+		_fsm.UpdatePhysics();
+		Roll();
+		_prevPosition = _currentPosition;
+	}
 
-    private State _idleState;
+	private State _idleState;
 
-    private void InitialiseFSM()
-    {
-        _fsm = new FSM.FSM();
+	private void InitialiseFSM()
+	{
+		_fsm = new FSM.FSM();
 
-        State idleState = new IdleState(this);
-        _idleState = idleState;
-        State rollingState = new RollingState(this);
-        State mountedState = new MountedState(this);
+		State idleState = new IdleState(this);
+		_idleState = idleState;
+		State rollingState = new RollingState(this);
+		State mountedState = new MountedState(this);
 
-        _fsm.AddTransition(idleState, rollingState, () =>
-        {
-            return _currentHeading != Vector3.zero;
-        });
+		_fsm.AddTransition(idleState, rollingState, () =>
+		{
+			return _currentHeading != Vector3.zero;
+		});
 
-        _fsm.AddTransition(rollingState, idleState, () =>
-        {
-            return _currentHeading == Vector3.zero;
-        });
+		_fsm.AddTransition(rollingState, idleState, () =>
+		{
+			return _currentHeading == Vector3.zero;
+		});
 
-        _fsm.AddTransition(idleState, mountedState, () =>
-        {
-            if (_inputData.enterButtonPressedThisFrame)
-                return EnterGolem();
+		_fsm.AddTransition(idleState, mountedState, () =>
+		{
+			if (_inputData.enterButtonPressedThisFrame)
+				return EnterGolem();
 
-            return false;
-        });
+			return false;
+		});
 
-        _fsm.AddTransition(rollingState, mountedState, () =>
-        {
-            if (_inputData.enterButtonPressedThisFrame)
-                return EnterGolem();
+		_fsm.AddTransition(rollingState, mountedState, () =>
+		{
+			if (_inputData.enterButtonPressedThisFrame)
+				return EnterGolem();
 
-            return false;
-        });
+			return false;
+		});
 
-        _fsm.AddTransition(mountedState, idleState, () =>
-        {
-            return _inputData.enterButtonPressedThisFrame;
-        });
+		_fsm.AddTransition(mountedState, idleState, () =>
+		{
+			return _inputData.enterButtonPressedThisFrame;
+		});
 
-        _fsm.SetDefaultState(idleState);
-    }
+		_fsm.SetDefaultState(idleState);
+	}
 
-    private void ComputeAxes()
-    {
-        float angle = _cameraTransform.rotation.eulerAngles.y;
-        _forwardRelativeToCamera = Quaternion.AngleAxis(angle, Vector3.up) * Vector3.forward;
-        _rightRelativeToCamera = Vector3.Cross(Vector3.up, _forwardRelativeToCamera);
+	private void ComputeAxes()
+	{
+		float angle = _cameraTransform.rotation.eulerAngles.y;
+		_forwardRelativeToCamera = Quaternion.AngleAxis(angle, Vector3.up) * Vector3.forward;
+		_rightRelativeToCamera = Vector3.Cross(Vector3.up, _forwardRelativeToCamera);
 
-        _currentHeading = _inputData.normalizedAxes.x * _rightRelativeToCamera + _inputData.normalizedAxes.y * _forwardRelativeToCamera;
-    }
+		_currentHeading = _inputData.normalizedAxes.x * _rightRelativeToCamera + _inputData.normalizedAxes.y * _forwardRelativeToCamera;
+	}
 
-    public void UpdateController()
-    {
-        _controller.FixedUpdate();
-    }
+	public void UpdateController()
+	{
+		_controller.FixedUpdate();
+	}
 
-    public void Roll()
-    {
-        Vector3 rotAxis = Vector3.Cross(Vector3.up, _realVelocity.normalized);
-        float targetAngularVelocity = _realVelocity.magnitude / 1f;
+	public void Roll()
+	{
+		Vector3 rotAxis = Vector3.Cross(Vector3.up, _realVelocity.normalized);
+		float targetAngularVelocity = _realVelocity.magnitude / 1f;
 
-        _meshTransform.Rotate(rotAxis, Mathf.Rad2Deg * targetAngularVelocity * Time.fixedDeltaTime, Space.World);
-    }
+		_meshTransform.Rotate(rotAxis, Mathf.Rad2Deg * targetAngularVelocity * Time.fixedDeltaTime, Space.World);
+	}
 
-    public void OrientateToGolem()
-    {
-        _targetRotation = Quaternion.LookRotation(_currentGolem.transform.forward, Vector3.up);
-        _meshTransform.transform.rotation = _targetRotation;
-    }
+	public void OrientateToGolem()
+	{
+		_targetRotation = Quaternion.LookRotation(_currentGolem.transform.forward, Vector3.up);
+		_meshTransform.transform.rotation = _targetRotation;
+	}
 
-    public void Move()
-    {
-        _controller.Move(_currentHeading, _inputData.joystickDepth);
-    }
+	public void Move()
+	{
+		_controller.Move(_currentHeading, _inputData.joystickDepth);
+	}
 
-    public void ResetState()
-    {
-        _controller.Move(Vector3.zero, 0f);
-    }
+	public void ResetState()
+	{
+		_controller.Move(Vector3.zero, 0f);
+	}
 
-    public void ResetVelocity()
-    {
-        _rb.velocity = Vector3.zero;
-    }
+	public void ResetVelocity()
+	{
+		_rb.velocity = Vector3.zero;
+	}
 
-    private bool FindGolem()
-    {
-        Collider[] golems = Physics.OverlapSphere(_thisTransform.position, _interactionDistance, LayerMap.golemLayer);
+	private bool FindGolem()
+	{
+		Collider[] golems = Physics.OverlapSphere(_thisTransform.position, _interactionDistance, LayerMap.golemLayer);
 
-        for (int i = 0; i < golems.Length; i++)
-        {
-            Vector3 thisToGolem = (golems[i].transform.position + Vector3.up * 0.5f) - _thisTransform.position;
-            if (Physics.Raycast(_thisTransform.position, thisToGolem.normalized, out RaycastHit hit, _interactionDistance, ~(LayerMap.orbLayer | LayerMap.pressurePlateLayer | LayerMap.invisRampLayer)))
-            {
-                if (hit.collider.CompareTag("Golem"))
-                {
-                    _currentGolem = hit.collider.GetComponent<Golem>();
-                    return true;
-                }
-            }
-        }
+		for (int i = 0; i < golems.Length; i++)
+		{
+			Vector3 thisToGolem = (golems[i].transform.position + Vector3.up * 0.5f) - _thisTransform.position;
+			if (Physics.Raycast(_thisTransform.position, thisToGolem.normalized, out RaycastHit hit, _interactionDistance, ~(LayerMap.orbLayer | LayerMap.pressurePlateLayer | LayerMap.invisRampLayer)))
+			{
+				if (hit.collider.CompareTag("Golem"))
+				{
+					_currentGolem = hit.collider.GetComponent<Golem>();
+					return true;
+				}
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    public bool EnterGolem()
-    {
-        if (FindGolem())
-        {
-            _rb.useGravity = false;
-            _rb.velocity = Vector3.zero;
+	public bool EnterGolem()
+	{
+		if (FindGolem())
+		{
+			_rb.useGravity = false;
+			_rb.velocity = Vector3.zero;
 
-            GetComponent<Collider>().enabled = false;
+			GetComponent<Collider>().enabled = false;
 
-            _currentGolem.Enter();
+			_currentGolem.Enter();
 
-            return true;
-        }
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    public void StickToGolem()
-    {
-        _rb.position = _currentGolem.transform.position + _currentGolem.attachmentOffset;
-    }
+	public void StickToGolem()
+	{
+		_rb.position = _currentGolem.transform.position + _currentGolem.attachmentOffset;
+	}
 
-    public void ExitGolem()
-    {
-        _currentGolem.Exit();
-        _currentGolem = null;
+	public void ExitGolem()
+	{
+		_currentGolem.Exit();
+		_currentGolem = null;
 
-        GetComponent<Collider>().enabled = true;
-        _rb.useGravity = true;
+		GetComponent<Collider>().enabled = true;
+		_rb.useGravity = true;
 
-        OnOrbActive?.Invoke(this);
-    }
+		OnOrbActive?.Invoke(this);
+	}
 
-    // Interfaces
-    public void SetInputData(PlayerInputData data)
-    {
-        _inputData = data;
-    }
+	// Interfaces
+	public void SetInputData(PlayerInputData data)
+	{
+		_inputData = data;
+	}
 
-    private void OnCollisionStay(Collision collision)
-    {
-        _controller.OnCollisionStay(collision);
-    }
+	private void OnCollisionStay(Collision collision)
+	{
+		_controller.OnCollisionStay(collision);
+	}
 
-    private Vector3 _checkpointPos;
+	private Vector3 _checkpointPos;
 
-    void IReset.Reset()
-    {
-        _fsm.MoveTo(_idleState);
+	void IReset.Reset()
+	{
+		_fsm.MoveTo(_idleState);
 
-        ResetVelocity();
+		ResetVelocity();
 
-        _thisTransform.position = new Vector3(_checkpointPos.x, _checkpointPos.y, _checkpointPos.z);
-    }
+		_thisTransform.position = new Vector3(_checkpointPos.x, _checkpointPos.y, _checkpointPos.z);
+	}
 
-    void IReset.OnEnter(Vector3 checkpointPos)
-    {
-        _checkpointPos = checkpointPos;
-    }
+	void IReset.OnEnter(Vector3 checkpointPos)
+	{
+		_checkpointPos = checkpointPos;
+	}
+
+	void IPause.Pause()
+	{
+	}
+
+	void IPause.Resume()
+	{
+		return; 
+	}
 }

@@ -1,19 +1,49 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq; 
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	private List<IPause> _pausableObjects; 
+	// Start is called before the first frame update
+	void Start()
+	{
+		var temp = FindObjectsOfType<MonoBehaviour>().OfType<IPause>();
+		_pausableObjects = new List<IPause>(); 
+		
+		foreach (IPause pausableObject in temp)
+		{
+			_pausableObjects.Add(pausableObject); 
+		}
 
-    // Update is called once per frame
-    void Update()
-    {
+		Debug.Log(_pausableObjects.Count()); 
+	}
+
+	// Update is called once per frame
+	void Update()
+	{
 		if (Input.GetKeyDown(KeyCode.Escape))
 			Application.Quit();
+
+		if (Input.GetKeyDown(KeyCode.P))
+			PauseGame();
+		if (Input.GetKeyDown(KeyCode.L))
+			ResumeGame(); 
+	}
+
+	public void PauseGame()
+	{
+		for (int i = 0; i < _pausableObjects.Count(); i++)
+		{
+			_pausableObjects[i].Pause();
+		}
+	}
+
+	public void ResumeGame()
+	{
+		for (int i = 0; i < _pausableObjects.Count(); i++)
+		{
+			_pausableObjects[i].Resume(); 
+		}
 	}
 }
