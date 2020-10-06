@@ -1,0 +1,7 @@
+﻿using UnityEngine;
+
+public interface IReset
+{
+	void Reset();
+	void OnEnter(Vector3 checkpointPos); 
+}

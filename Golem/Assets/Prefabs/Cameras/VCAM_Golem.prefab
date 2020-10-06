@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7205261507498174350}
   - component: {fileID: 1449140611880044564}
   - component: {fileID: 5369532814853191498}
+  - component: {fileID: 7420422519947714094}
   m_Layer: 0
   m_Name: VCAM_Golem
   m_TagString: VCam
@@ -26,8 +27,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1449140611880044567}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.1, z: -19.02}
+  m_LocalRotation: {x: 0.082017556, y: 0.0769013, z: 0.006347632, w: -0.9936393}
+  m_LocalPosition: {x: -13.313334, y: 2.4689999, z: 85.799126}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2502290140761419118}
@@ -65,8 +66,8 @@ MonoBehaviour:
     Dutch: 0
     LensShift: {x: 0, y: 0}
   m_Transitions:
-    m_BlendHint: 2
-    m_InheritPosition: 0
+    m_BlendHint: 0
+    m_InheritPosition: 1
     m_OnCameraLive:
       m_PersistentCalls:
         m_Calls: []
@@ -75,8 +76,8 @@ MonoBehaviour:
     Value: 0.5
     m_SpeedMode: 1
     m_MaxSpeed: 0.01
-    m_AccelTime: 0.2
-    m_DecelTime: 0.1
+    m_AccelTime: 1
+    m_DecelTime: 0.2
     m_InputAxisName: Mouse Y
     m_InputAxisValue: 0
     m_InvertInput: 1
@@ -98,9 +99,9 @@ MonoBehaviour:
   m_XAxis:
     Value: 1.8
     m_SpeedMode: 1
-    m_MaxSpeed: 1.8
-    m_AccelTime: 0.1
-    m_DecelTime: 0.1
+    m_MaxSpeed: 1
+    m_AccelTime: 1
+    m_DecelTime: 0.2
     m_InputAxisName: Mouse X
     m_InputAxisValue: 0
     m_InvertInput: 0
@@ -160,12 +161,12 @@ MonoBehaviour:
   m_AvoidObstacles: 1
   m_DistanceLimit: 0
   m_MinimumOcclusionTime: 0
-  m_CameraRadius: 0.1
+  m_CameraRadius: 0.25
   m_Strategy: 0
   m_MaximumEffort: 4
   m_SmoothingTime: 0
-  m_Damping: 0
-  m_DampingWhenOccluded: 0
+  m_Damping: 2
+  m_DampingWhenOccluded: 2
   m_OptimalTargetDistance: 0
 --- !u!114 &5369532814853191498
 MonoBehaviour:
@@ -180,6 +181,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraPriority: 0
+  _layerToCull:
+    serializedVersion: 2
+    m_Bits: 0
+  _desiredUpdateMethod: 0
+--- !u!114 &7420422519947714094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449140611880044567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb7194dc27b9df64c8beca7482ee8e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerIndex: -1
+  XYAxis: {fileID: 7425863476766785021, guid: d12f53e142ebefb47a60e20623da302e, type: 3}
+  ZAxis: {fileID: 0}
 --- !u!1 &2096292189792184408
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +224,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2096292189792184408}
-  m_LocalRotation: {x: 0.17065129, y: 0.015476858, z: -0.0026808046, w: 0.9852063}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -313,9 +333,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BindingMode: 4
   m_FollowOffset: {x: 0, y: 4, z: -5.6}
-  m_XDamping: 0
-  m_YDamping: 0
-  m_ZDamping: 0
+  m_XDamping: 0.2
+  m_YDamping: 0.2
+  m_ZDamping: 0.2
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -404,7 +424,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5881519462785851556}
-  m_LocalRotation: {x: 0.17065129, y: 0.015476858, z: -0.0026808046, w: 0.9852063}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -478,8 +498,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8091887655426236896}
-  m_LocalRotation: {x: 0.17378531, y: 1e-45, z: -0, w: 0.9847836}
-  m_LocalPosition: {x: 5.1759, y: 1.0000005, z: 33.837234}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8673658150811136616}
@@ -587,9 +607,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BindingMode: 4
   m_FollowOffset: {x: 0, y: 4, z: -5.6}
-  m_XDamping: 0
-  m_YDamping: 0
-  m_ZDamping: 0
+  m_XDamping: 0.2
+  m_YDamping: 0.2
+  m_ZDamping: 0.2
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -713,9 +733,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BindingMode: 4
   m_FollowOffset: {x: 0, y: 4, z: -5.6}
-  m_XDamping: 0
-  m_YDamping: 0
-  m_ZDamping: 0
+  m_XDamping: 0.2
+  m_YDamping: 0.2
+  m_ZDamping: 0.2
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
