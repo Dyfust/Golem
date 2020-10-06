@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System;
+using System.Collections;
 
 public class CameraTrigger : MonoBehaviour
 {
@@ -26,8 +28,8 @@ public class CameraTrigger : MonoBehaviour
 	{
 		if (other.CompareTag(_targetTag))
 		{
-			VirtualCameraManager.instance.ToggleCamera(_virtualCamera);
-			Debug.Log("OKAY");
+			StopCoroutine("CameraFade"); 
+			StartCoroutine("CameraFade");
 		}
 	}
 
@@ -36,4 +38,14 @@ public class CameraTrigger : MonoBehaviour
 		if (other.CompareTag(_targetTag))
 			VirtualCameraManager.instance.TogglePlayerCamera();
 	}
+
+	IEnumerator CameraFade()
+	{
+		yield return StartCoroutine(ScreenFader.instance.FadeCo(ScreenFader.FadeType.OUT, false));
+		VirtualCameraManager.instance.ToggleCamera(_virtualCamera);
+		yield return StartCoroutine(ScreenFader.instance.FadeCo(ScreenFader.FadeType.IN, false));
+
+	}
+
+
 }
