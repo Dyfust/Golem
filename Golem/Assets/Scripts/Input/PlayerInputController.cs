@@ -1,10 +1,18 @@
 ﻿using UnityEngine;
 
-public class PlayerInputController : MonoBehaviour
+
+public class PlayerInputController : MonoBehaviour, IPause
 {
+	private enum STATE
+	{
+		ACTIVE, 
+		INACTIVE
+	}
+
+	private STATE _currentState = STATE.ACTIVE;
 	private IRequireInput _dest;
 	private PlayerInputData _localInputData;
-	private InputMaster controls; 
+	private InputMaster controls;
 
 	private void Awake()
 	{
@@ -20,11 +28,14 @@ public class PlayerInputController : MonoBehaviour
 
 	private void OnDisable()
 	{
-		controls.Gameplay.Disable(); 
+		controls.Gameplay.Disable();
 	}
 
 	private void Update()
 	{
+		if (_currentState == STATE.INACTIVE)
+			return;
+
 		_localInputData.axes = controls.Gameplay.Movement.ReadValue<Vector2>();
 		_localInputData.normalizedAxes = _localInputData.axes.normalized;
 		_localInputData.joystickDepth = controls.Gameplay.Movement.ReadValue<Vector2>().magnitude;
@@ -33,5 +44,16 @@ public class PlayerInputController : MonoBehaviour
 		_localInputData.liftButtonPressedThisFrame = controls.Gameplay.Lift.triggered;
 
 		_dest.SetInputData(_localInputData);
+	}
+
+	void IPause.Pause()
+	{
+		_currentState = STATE.INACTIVE;
+		_dest.SetInputData(new PlayerInputData()); 
+	}
+
+	void IPause.Resume()
+	{
+		_currentState = STATE.ACTIVE;
 	}
 }
