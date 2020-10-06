@@ -7,13 +7,17 @@ public class ScreenFader : MonoBehaviour
     private static ScreenFader _instance;
     public static ScreenFader instance => _instance;
 
-    private static float _fadeDuration = 0.5f;
+    private static float _defaultFadeDuration = 0.5f;
 
     public enum FadeType { IN, OUT }
 
     [SerializeField] private Image _screenFadeUI;
+    [Tooltip("How long the screen will stay black after fading out")]
     [SerializeField] private float _intialFadePauseDuration;
     [SerializeField] private bool _fadeOnInit;
+    [SerializeField] private bool _pause;
+    [Tooltip("Time it takes for the fade to complete")]
+    [SerializeField] private float _fadeDuration; 
 
     private bool _fading = false;
 
@@ -30,6 +34,8 @@ public class ScreenFader : MonoBehaviour
 
     public IEnumerator FadeCo(FadeType type, bool init)
     {
+        float duration = _fadeDuration > 0 ? _fadeDuration : _defaultFadeDuration; 
+
         if (type == FadeType.OUT)
             _screenFadeUI.color = new Color(0f, 0f, 0f, 0f);
         else
@@ -37,7 +43,7 @@ public class ScreenFader : MonoBehaviour
 
         _screenFadeUI.gameObject.SetActive(true);
 
-        if (init && type == FadeType.IN)
+        if (init || _pause == true && type == FadeType.IN)
             yield return new WaitForSecondsRealtime(_intialFadePauseDuration);
 
         float start;
@@ -62,7 +68,7 @@ public class ScreenFader : MonoBehaviour
         while (t <= 1f)
         {
             float elapsedTime = Time.time - startTime;
-            t = elapsedTime / _fadeDuration;
+            t = elapsedTime / duration;
 
             float alpha = Mathf.Lerp(start, end, t);
 
