@@ -4,7 +4,17 @@ using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
-	private List<IPause> _pausableObjects; 
+	private static GameManager _instance;
+	public static GameManager instance => _instance; 
+
+	private List<IPause> _pausableObjects;
+
+	private void Awake()
+	{
+		if (_instance == null)
+			_instance = this; 
+	}
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -30,6 +40,8 @@ public class GameManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.L))
 			ResumeGame(); 
 	}
+
+
 
 	public void PauseGame()
 	{
