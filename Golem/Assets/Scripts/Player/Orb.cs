@@ -2,7 +2,7 @@
 using UnityEngine;
 using FSM;
 
-public class Orb : MonoBehaviour, IRequireInput, IReset, IPause
+public class Orb : MonoBehaviour, IRequireInput, IReset, IPauseableObject
 {
 	public delegate void OrbEventHandler(Orb orb);
 	public static event OrbEventHandler OnOrbActive;
@@ -248,11 +248,11 @@ public class Orb : MonoBehaviour, IRequireInput, IReset, IPause
 		_checkpointPos = checkpointPos;
 	}
 
-	void IPause.Pause()
+	void IPauseableObject.Pause()
 	{
 	}
 
-	void IPause.Resume()
+	void IPauseableObject.Resume()
 	{
 		return; 
 	}
