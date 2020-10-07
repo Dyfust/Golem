@@ -1,6 +1,7 @@
 ﻿using Cinemachine;
 using UnityEngine;
-using System.Collections; 
+using System.Collections;
+using System.Runtime.Remoting.Messaging;
 
 // NEED TO DO PRIORITY SYSTEM.
 
@@ -92,7 +93,12 @@ public class VirtualCameraManager : MonoBehaviour
 	public void ToggleExternalCamera(VirtualCamera cam)
 	{
 		StopAllCoroutines();
-		StartCoroutine("FadeOut"); 
+		StartCoroutine(ToggleExternalCameraCo(cam)); 
+	}
+
+	private IEnumerator ToggleExternalCameraCo(VirtualCamera cam)
+	{
+		yield return StartCoroutine("FadeOut"); 
 		if (cam.GetCameraPriority() >= _currentVirtualCamera.GetCameraPriority())
 		{
 			ForceToggleCam(cam);
@@ -101,8 +107,7 @@ public class VirtualCameraManager : MonoBehaviour
 		{
 			CachePlayerCamera(cam);
 		}
-		StopAllCoroutines();
-		StartCoroutine("FadeIn"); 
+		yield return StartCoroutine("FadeIn"); 
 	}
 
 	private void CachePlayerCamera(VirtualCamera cam)
@@ -114,10 +119,13 @@ public class VirtualCameraManager : MonoBehaviour
 	public void TogglePlayerCamera()
 	{
 		StopAllCoroutines();
-		StartCoroutine("FadeOut"); 
+		StartCoroutine("TogglePlayerCameraCo");
+	}
+	private IEnumerator TogglePlayerCameraCo()
+	{
+		yield return StartCoroutine("FadeOut"); 
 		ForceToggleCam(_cachedPlayerCamera);
-		StopAllCoroutines();
-		StartCoroutine("FadeIn");
+		yield return StartCoroutine("FadeIn");
 	}
 
 

@@ -17,7 +17,11 @@ public class PauseManager : MonoBehaviour
 
 	private RoomCameraTrigger[] _roomCameraTriggers; 
 	private VirtualCamera _currentRoomCamera;
-	[SerializeField] private VirtualCamera _startingCam; 
+	[SerializeField] private VirtualCamera _startingCam;
+
+	[SerializeField] private GameObject _pauseScreen;
+
+	private bool _isPaused = false; 
 
 	private void Awake()
 	{
@@ -32,7 +36,9 @@ public class PauseManager : MonoBehaviour
 			_roomCameraTriggers[i] = camTriggerGOs[i].GetComponent<RoomCameraTrigger>(); 
 		}
 
-		_currentRoomCamera = _startingCam; 
+		_currentRoomCamera = _startingCam;
+
+		_pauseScreen.SetActive(false); 
 	}
 
 	// Start is called before the first frame update
@@ -61,22 +67,36 @@ public class PauseManager : MonoBehaviour
 	/// </summary>
 	public void PlayerPause()
 	{
+		if (_isPaused == true)
+			return; 
+
 		for (int i = 0; i < _pausableObjects.Count(); i++)
 		{
 			_pausableObjects[i].Pause();
 		}
 
-		VirtualCameraManager.instance.ToggleExternalCamera(_currentRoomCamera); 
+		VirtualCameraManager.instance.ToggleExternalCamera(_currentRoomCamera);
+
+		_pauseScreen.SetActive(true);
+
+		_isPaused = true; 
 	}
 
 	public void PlayerResume()
 	{
+		if (_isPaused == false)
+			return; 
+
 		for (int i = 0; i < _pausableObjects.Count(); i++)
 		{
 			_pausableObjects[i].Resume();
 		}
 
-		VirtualCameraManager.instance.TogglePlayerCamera(); 
+		VirtualCameraManager.instance.TogglePlayerCamera();
+
+		_pauseScreen.SetActive(false);
+
+		_isPaused = false; 
 	}
 
 	public void SetCurrentCamera(VirtualCamera cam)
