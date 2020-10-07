@@ -78,7 +78,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controllerSettings: {fileID: 11400000, guid: 909af9a64c71d0a4483feca2e676051f,
     type: 2}
-  _angularSpeed: 6
   _interactionDistance: 1.5
   _meshTransform: {fileID: 7372586536742205992}
 --- !u!114 &1323688339277252294
@@ -206,6 +205,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Orb head
       objectReference: {fileID: 0}
+    - target: {fileID: 3661768765710512857, guid: 490cc523575db8544b927deaa3c6294e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 1616744752128808567, guid: 490cc523575db8544b927deaa3c6294e,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 490cc523575db8544b927deaa3c6294e, type: 3}
 --- !u!4 &888332794920593967 stripped
