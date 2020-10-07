@@ -88,7 +88,7 @@ public class VirtualCameraManager : MonoBehaviour
         }
     }
 
-    public void ToggleCamera(VirtualCamera cam)
+    public void ToggleExternalCamera(VirtualCamera cam)
     {
         if (cam.GetCameraPriority() >= _currentVirtualCamera.GetCameraPriority())
         {
