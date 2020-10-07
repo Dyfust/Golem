@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-public class PlayerInputController : MonoBehaviour, IPause
+public class PlayerInputController : MonoBehaviour, IPauseableObject
 {
 	private enum STATE
 	{
@@ -46,13 +46,13 @@ public class PlayerInputController : MonoBehaviour, IPause
 		_dest.SetInputData(_localInputData);
 	}
 
-	void IPause.Pause()
+	void IPauseableObject.Pause()
 	{
 		_currentState = STATE.INACTIVE;
 		_dest.SetInputData(new PlayerInputData()); 
 	}
 
-	void IPause.Resume()
+	void IPauseableObject.Resume()
 	{
 		_currentState = STATE.ACTIVE;
 	}
