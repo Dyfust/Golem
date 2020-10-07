@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 	private static GameManager _instance;
 	public static GameManager instance => _instance; 
 
-	private List<IPause> _pausableObjects;
+	private List<IPauseableObject> _pausableObjects;
 
 	private void Awake()
 	{
@@ -18,15 +18,15 @@ public class GameManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		var temp = FindObjectsOfType<MonoBehaviour>().OfType<IPause>();
-		_pausableObjects = new List<IPause>(); 
+		var temp = FindObjectsOfType<MonoBehaviour>().OfType<IPauseableObject>();
+		_pausableObjects = new List<IPauseableObject>(); 
 		
-		foreach (IPause pausableObject in temp)
+		foreach (IPauseableObject pausableObject in temp)
 		{
 			_pausableObjects.Add(pausableObject); 
 		}
 
-		Debug.Log(_pausableObjects.Count()); 
+		Debug.Log(_pausableObjects.Count); 
 	}
 
 	// Update is called once per frame
@@ -35,15 +35,16 @@ public class GameManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Escape))
 			Application.Quit();
 
-		if (Input.GetKeyDown(KeyCode.P))
-			PauseGame();
-		if (Input.GetKeyDown(KeyCode.L))
-			ResumeGame(); 
+		//if (Input.GetKeyDown(KeyCode.P))
+		//	PauseGame();
+		//if (Input.GetKeyDown(KeyCode.L))
+		//	ResumeGame(); 
 	}
 
-
-
-	public void PauseGame()
+	/// <summary>
+	/// Paused triggered by a system in the game 
+	/// </summary>
+	public void SystemPause()
 	{
 		for (int i = 0; i < _pausableObjects.Count(); i++)
 		{
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	public void ResumeGame()
+	public void SystemResume()
 	{
 		for (int i = 0; i < _pausableObjects.Count(); i++)
 		{
