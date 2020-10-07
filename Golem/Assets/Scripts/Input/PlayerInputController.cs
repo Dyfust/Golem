@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-public class PlayerInputController : MonoBehaviour, IPauseableObject
+public class PlayerInputController : MonoBehaviour, IPauseableObject, IPlayerPause
 {
 	private enum STATE
 	{
@@ -55,5 +55,16 @@ public class PlayerInputController : MonoBehaviour, IPauseableObject
 	void IPauseableObject.Resume()
 	{
 		_currentState = STATE.ACTIVE;
+	}
+
+	void IPlayerPause.Pause()
+	{
+		_currentState = STATE.INACTIVE;
+		_dest.SetInputData(new PlayerInputData());
+	}
+
+	void IPlayerPause.Resume()
+	{
+		_currentState = STATE.ACTIVE; 
 	}
 }

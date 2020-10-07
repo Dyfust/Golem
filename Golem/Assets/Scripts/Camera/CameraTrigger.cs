@@ -7,6 +7,8 @@ public class CameraTrigger : MonoBehaviour
 	enum Target { ORB, GOLEM }
 
 	[SerializeField] private Target _target;
+	[SerializeField] private bool _oneTimeActivate = true;
+	private bool _activated = false; 
 	[SerializeField] private VirtualCamera _virtualCamera;
 	private string _targetTag;
 
@@ -32,11 +34,14 @@ public class CameraTrigger : MonoBehaviour
 	{
 		if (other.CompareTag(_targetTag))
 		{
-			StopAllCoroutines();
-			StartCoroutine("PauseCam");
-			GameManager.instance.SystemPause();
-			_timer = 0;
-			_startTimer = true; 
+			if (_oneTimeActivate == false || _activated == false)
+			{
+				VirtualCameraManager.instance.ToggleExternalCamera(_virtualCamera);
+				GameManager.instance.SystemPause();
+				_timer = 0;
+				_startTimer = true;
+				_activated = true; 
+			}
 		}
 	}
 
@@ -48,25 +53,10 @@ public class CameraTrigger : MonoBehaviour
 
 			if (_timer > _timerDuration)
 			{
-				StopAllCoroutines();
-				StartCoroutine("ResumeCam");
+				VirtualCameraManager.instance.TogglePlayerCamera(); 
 				GameManager.instance.SystemResume();
 				_startTimer = false;
 			}
 		}
-	}
-
-	IEnumerator PauseCam()
-	{
-		yield return StartCoroutine(ScreenFader.instance.FadeCo(ScreenFader.FadeType.OUT, false));
-		VirtualCameraManager.instance.ToggleExternalCamera(_virtualCamera);
-		yield return StartCoroutine(ScreenFader.instance.FadeCo(ScreenFader.FadeType.IN, false));
-	}
-
-	IEnumerator ResumeCam()
-	{
-		yield return StartCoroutine(ScreenFader.instance.FadeCo(ScreenFader.FadeType.OUT, false));
-		VirtualCameraManager.instance.TogglePlayerCamera();
-		yield return StartCoroutine(ScreenFader.instance.FadeCo(ScreenFader.FadeType.IN, false));
 	}
 }
