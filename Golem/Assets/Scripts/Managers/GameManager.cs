@@ -25,8 +25,6 @@ public class GameManager : MonoBehaviour
 		{
 			_pausableObjects.Add(pausableObject); 
 		}
-
-		Debug.Log(_pausableObjects.Count); 
 	}
 
 	// Update is called once per frame
