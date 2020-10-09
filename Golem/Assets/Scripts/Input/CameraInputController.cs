@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
 using Cinemachine;
 
-public class CameraInputController : MonoBehaviour, AxisState.IInputAxisProvider, IPauseableObject
+public class CameraInputController : MonoBehaviour, AxisState.IInputAxisProvider, IPauseableObject, IPlayerPause
 {
 	private enum STATE
 	{
@@ -113,6 +113,16 @@ public class CameraInputController : MonoBehaviour, AxisState.IInputAxisProvider
 	}
 
 	void IPauseableObject.Resume()
+	{
+		_currentState = STATE.ACTIVE;
+	}
+
+	void IPlayerPause.Pause()
+	{
+		_currentState = STATE.INACTIVE;
+	}
+
+	void IPlayerPause.Resume()
 	{
 		_currentState = STATE.ACTIVE;
 	}
