@@ -2,7 +2,7 @@
 using UnityEngine;
 using FSM;
 
-public class Orb : MonoBehaviour, IRequireInput, IReset, IPauseableObject
+public class Orb : MonoBehaviour, IRequireInput, IReset
 {
     public delegate void OrbEventHandler(Orb orb);
     public static event OrbEventHandler OnOrbActive;
@@ -244,17 +244,8 @@ public class Orb : MonoBehaviour, IRequireInput, IReset, IPauseableObject
         _thisTransform.position = new Vector3(_checkpointPos.x, _checkpointPos.y, _checkpointPos.z);
     }
 
-    void IReset.OnEnter(Vector3 checkpointPos)
-    {
-        _checkpointPos = checkpointPos;
-    }
-
-    void IPauseableObject.Pause()
-    {
-    }
-
-    void IPauseableObject.Resume()
-    {
-        return;
-    }
+	void IReset.OnEnter(Vector3 checkpointPos)
+	{
+		_checkpointPos = checkpointPos;
+	}
 }
