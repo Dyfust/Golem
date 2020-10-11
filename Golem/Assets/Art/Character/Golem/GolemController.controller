@@ -7,7 +7,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Blend Tree
+  m_Name: Push Blend
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -49,8 +49,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: d34bbf377dd516a49ba8375a4d1e440d,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: cf687d5b88141ab4287cb527b886a92a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -355,7 +354,7 @@ AnimatorStateMachine:
     m_Position: {x: 530, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3559965298670333966}
-    m_Position: {x: 510, y: 400, z: 0}
+    m_Position: {x: 7210, y: -3530, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8500503864627391333}
     m_Position: {x: 510, y: 150, z: 0}
