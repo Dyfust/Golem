@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 public class PauseManager : MonoBehaviour
