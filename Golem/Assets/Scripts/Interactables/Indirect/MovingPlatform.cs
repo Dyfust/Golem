@@ -83,18 +83,18 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.tag.Equals("Orb") || other.gameObject.tag.Equals("Golem") || other.gameObject.tag.Equals("Block"))
-		{
+		//if (other.gameObject.tag.Equals("Orb") || other.gameObject.tag.Equals("Golem") || other.gameObject.tag.Equals("Block"))
+		//{
 			other.gameObject.transform.SetParent(transform);
-		}
+		//}
 	}
 
 	private void OnTriggerExit(Collider other)
 	{
-		if (other.gameObject.tag.Equals("Orb") || other.gameObject.tag.Equals("Golem") || other.gameObject.tag.Equals("Block"))
-		{
+		//if (other.gameObject.tag.Equals("Orb") || other.gameObject.tag.Equals("Golem") || other.gameObject.tag.Equals("Block"))
+		//{
 			other.gameObject.transform.SetParent(null);
-		}
+		//}
 	}
 
 	private void Moving()
