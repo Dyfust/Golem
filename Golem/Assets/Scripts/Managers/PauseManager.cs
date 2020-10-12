@@ -36,7 +36,7 @@ public class PauseManager : MonoBehaviour
 
 		_currentRoomCamera = _startingCam;
 
-		_pauseScreen.SetActive(false); 
+		_pauseScreen.SetActive(false);
 	}
 
 	// Start is called before the first frame update
@@ -75,7 +75,8 @@ public class PauseManager : MonoBehaviour
 
 		VirtualCameraManager.instance.ToggleExternalCamera(_currentRoomCamera);
 
-		_pauseScreen.SetActive(true);
+		StopAllCoroutines();
+		StartCoroutine("PauseUI"); 
 
 		_isPaused = true; 
 	}
@@ -100,5 +101,11 @@ public class PauseManager : MonoBehaviour
 	public void SetCurrentCamera(VirtualCamera cam)
 	{
 		_currentRoomCamera = cam; 
+	}
+
+	private IEnumerator PauseUI()
+	{
+		yield return new WaitForSeconds(1);
+		_pauseScreen.SetActive(true);
 	}
 }
