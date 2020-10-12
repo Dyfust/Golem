@@ -45,10 +45,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.64
-  m_Height: 1.73
+  m_Radius: 0.44
+  m_Height: 1.6041815
   m_Direction: 1
-  m_Center: {x: 0, y: 0.85, z: 0}
+  m_Center: {x: 0, y: 0.7870908, z: 0}
 --- !u!54 &711294025203271634
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -91,14 +91,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterControllerSettings: {fileID: 11400000, guid: 846db1491dff0284c9a8ddcc1784c1f7,
     type: 2}
-  _angularSpeed: 4
+  _angularSpeed: 6
   _interactionDistance: 1.5
   _blockLayer:
     serializedVersion: 2
     m_Bits: 8192
   _offsetFromBlock: 2.25
   _liftingVerticalOffset: 2.25
-  _attachmentOffset: {x: 0, y: 1.8, z: 0}
+  _orbMesh: {fileID: 9017123307972857242}
+  _attachmentOffset: {x: 0, y: 1.7, z: 0}
   _anim: {fileID: 711294024464831041}
 --- !u!95 &711294024464831041
 Animator:
@@ -1107,6 +1108,12 @@ GameObject:
 --- !u!4 &5523017240904203403 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 68b7c1fb1d4a622499387fbc7f2d1368,
+    type: 3}
+  m_PrefabInstance: {fileID: 711294024780765073}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9017123307972857242 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8429691742377499147, guid: 68b7c1fb1d4a622499387fbc7f2d1368,
     type: 3}
   m_PrefabInstance: {fileID: 711294024780765073}
   m_PrefabAsset: {fileID: 0}

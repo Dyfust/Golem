@@ -31,7 +31,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
     private Golem _currentGolem;
 
     private const float _exitEnterCD = 1f;
-    private float _exitEnterTimeStap;
+    private float _exitEnterTimeStamp;
 
     private Rigidbody _rb;
     private Transform _thisTransform;
@@ -122,7 +122,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
         _fsm.AddTransition(mountedState, idleState, () =>
         {
-            return (_inputData.enterButtonPressedThisFrame && Time.time >= _exitEnterTimeStap + _exitEnterCD);
+            return (_inputData.enterButtonPressedThisFrame && Time.time >= _exitEnterTimeStamp + _exitEnterCD);
         });
 
         _fsm.SetDefaultState(idleState);
@@ -193,12 +193,16 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
     public bool EnterGolem()
     {
-        if (Time.time >= _exitEnterTimeStap + _exitEnterCD)
+        if (Time.time >= _exitEnterTimeStamp + _exitEnterCD)
         {
             if (FindGolem())
             {
+                ResetVelocity();
+                ResetState();
+                GetComponent<Collider>().enabled = false;
+                _meshTransform.gameObject.SetActive(false);
                 _currentGolem.Enter();
-                _exitEnterTimeStap = Time.time;
+                _exitEnterTimeStamp = Time.time;
 
                 return true;
             }
@@ -214,12 +218,18 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
     public void ExitGolem()
     {
+        ResetVelocity();
+        ResetState();
+        _thisTransform.position = _currentGolem.transform.position + _currentGolem.attachmentOffset;
+        GetComponent<Collider>().enabled = true;
+        _meshTransform.gameObject.SetActive(true);
+
         _currentGolem.Exit();
         _currentGolem = null;
 
         OnOrbActive?.Invoke(this);
 
-        _exitEnterTimeStap = Time.time;
+        _exitEnterTimeStamp = Time.time;
     }
 
     // Interfaces
@@ -244,8 +254,8 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         _thisTransform.position = new Vector3(_checkpointPos.x, _checkpointPos.y, _checkpointPos.z);
     }
 
-	void IReset.OnEnter(Vector3 checkpointPos)
-	{
-		_checkpointPos = checkpointPos;
-	}
+    void IReset.OnEnter(Vector3 checkpointPos)
+    {
+        _checkpointPos = checkpointPos;
+    }
 }
