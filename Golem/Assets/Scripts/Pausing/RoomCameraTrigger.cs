@@ -24,6 +24,17 @@ public class RoomCameraTrigger : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		PauseManager.instance.SetCurrentCamera(_pauseCamera); 
+		bool player = false;
+		if (other.gameObject.CompareTag("Orb"))
+			player = true; 
+
+		if (other.gameObject.CompareTag("Golem"))
+		{
+			if (other.GetComponent<Golem>().IsActive())
+				player = true;
+		}
+
+		if (player == true)
+			PauseManager.instance.SetCurrentCamera(_pauseCamera); 
 	}
 }
