@@ -72,7 +72,7 @@ public class PauseManager : MonoBehaviour
 		{
 			_pausableObjects[i].Pause();
 		}
-
+		Debug.Log(_currentRoomCamera.name); 
 		VirtualCameraManager.instance.ToggleExternalCamera(_currentRoomCamera);
 
 		StopAllCoroutines();

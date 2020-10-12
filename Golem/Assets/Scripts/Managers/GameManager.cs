@@ -57,4 +57,9 @@ public class GameManager : MonoBehaviour
 			_pausableObjects[i].Resume(); 
 		}
 	}
+
+	public void QuitGame()
+	{
+		Application.Quit(); 
+	}
 }
