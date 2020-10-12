@@ -73,7 +73,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 		_fsm.HandleTransitions();
 		_fsm.UpdateLogic();
 
-		_anim.SetFloat("Speed", _rb.velocity.sqrMagnitude);
+		_anim.SetFloat("Speed", _rb.velocity.magnitude);
 
 		Debug.DrawRay(_thisTransform.position + Vector3.up * 1.0f, _forwardRelativeToCharacter);
 	}
