@@ -9,7 +9,6 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 	[SerializeField] private Vector3 _openedOffset;
 	[SerializeField] private Vector3 _closedOffset;
 	[SerializeField] private float _time;
-	[SerializeField] private GameObject _camTrigger;
 
 	private Vector3 _closedPos;
 	private Vector3 _openedPos;
@@ -22,8 +21,6 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 	private float _speed;
 
 	private bool _startState;
-
-	private VirtualCameraManager _vCamRef;
 
 
 	// Start is called before the first frame update
@@ -83,29 +80,18 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 
 	private void OnTriggerEnter(Collider other)
 	{
-		//if (other.gameObject.tag.Equals("Orb") || other.gameObject.tag.Equals("Golem") || other.gameObject.tag.Equals("Block"))
+		//if (other.gameObject.tag.Equals("Orb") || other.gameObject.tag.Equals("Golem") || other.gameObject.tag.Equals("Block") || other.gameObject.layer.Equals("Ground"))
 		//{
 			other.gameObject.transform.SetParent(transform);
 		//}
+		//Debug.Log(other.gameObject.tag); 
 	}
 
 	private void OnTriggerExit(Collider other)
 	{
-		//if (other.gameObject.tag.Equals("Orb") || other.gameObject.tag.Equals("Golem") || other.gameObject.tag.Equals("Block"))
-		//{
+		if (other.gameObject.tag.Equals("Orb") || other.gameObject.tag.Equals("Golem") || other.gameObject.tag.Equals("Block") || other.gameObject.layer.Equals("Ground"))
+		{
 			other.gameObject.transform.SetParent(null);
-		//}
-	}
-
-	private void Moving()
-	{
-		Debug.Log("MOVING TRIGGERED");
-		_camTrigger.SetActive(true);
-	}
-
-	private void Stationary()
-	{
-		Debug.Log("STATIONARY TRIGGERED"); 
-		_camTrigger.SetActive(false);
+		}
 	}
 }

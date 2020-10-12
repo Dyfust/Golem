@@ -4,7 +4,7 @@ using System.Collections;
 
 public class CameraTrigger : MonoBehaviour
 {
-	enum Target { ORB, GOLEM }
+	enum Target { ORB, GOLEM, BLOCK }
 
 	[SerializeField] private Target _target;
 	[SerializeField] private bool _oneTimeActivate = true;
@@ -26,6 +26,10 @@ public class CameraTrigger : MonoBehaviour
 
 			case Target.GOLEM:
 				_targetTag = "Golem";
+				break;
+
+			case Target.BLOCK:
+				_targetTag = "Block";
 				break;
 		}
 	}

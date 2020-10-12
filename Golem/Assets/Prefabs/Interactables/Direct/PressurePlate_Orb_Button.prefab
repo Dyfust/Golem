@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 0
   _interactions: []
-  _oneTimeActivate: 0
+  _oneTimeActivate: 1
 --- !u!1001 &2030115833881546392
 PrefabInstance:
   m_ObjectHideFlags: 0
