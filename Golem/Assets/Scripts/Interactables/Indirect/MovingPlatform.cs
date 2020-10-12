@@ -9,7 +9,6 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 	[SerializeField] private Vector3 _openedOffset;
 	[SerializeField] private Vector3 _closedOffset;
 	[SerializeField] private float _time;
-	[SerializeField] private GameObject _camTrigger;
 
 	private Vector3 _closedPos;
 	private Vector3 _openedPos;
@@ -22,8 +21,6 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 	private float _speed;
 
 	private bool _startState;
-
-	private VirtualCameraManager _vCamRef;
 
 
 	// Start is called before the first frame update
@@ -95,17 +92,5 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 		//{
 			other.gameObject.transform.SetParent(null);
 		//}
-	}
-
-	private void Moving()
-	{
-		Debug.Log("MOVING TRIGGERED");
-		_camTrigger.SetActive(true);
-	}
-
-	private void Stationary()
-	{
-		Debug.Log("STATIONARY TRIGGERED"); 
-		_camTrigger.SetActive(false);
 	}
 }
