@@ -5,7 +5,10 @@ using System.Linq;
 public class GameManager : MonoBehaviour
 {
 	private static GameManager _instance;
-	public static GameManager instance => _instance; 
+	public static GameManager instance => _instance;
+
+	[SerializeField] private GameObject _player;
+	[SerializeField] private GameObject _spawn;
 
 	private List<IPauseableObject> _pausableObjects;
 
@@ -33,6 +36,9 @@ public class GameManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Escape))
 			Application.Quit();
 
+		if (Input.GetKeyDown(KeyCode.T))
+			_player.transform.position = _spawn.transform.position; 
+
 		//if (Input.GetKeyDown(KeyCode.P))
 		//	PauseGame();
 		//if (Input.GetKeyDown(KeyCode.L))
@@ -56,5 +62,10 @@ public class GameManager : MonoBehaviour
 		{
 			_pausableObjects[i].Resume(); 
 		}
+	}
+
+	public void QuitGame()
+	{
+		Application.Quit(); 
 	}
 }

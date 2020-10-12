@@ -133,12 +133,12 @@ namespace GolemStates
 
 		public override void OnEnter()
 		{
-			_golem.SetAnimatorBool("Pushing", true);
+			//_golem.SetAnimatorBool("Pushing", true);
 		}
 
 		public override void OnExit()
 		{
-			_golem.SetAnimatorBool("Pushing", false);
+			//_golem.SetAnimatorBool("Pushing", false);
 		}
 
 		public override void UpdateLogic()

@@ -81,12 +81,12 @@ public class VirtualCameraManager : MonoBehaviour
 		_mainCamera.cullingMask = ~cam.GetCullLayer();
 		_brain.m_UpdateMethod = (Cinemachine.CinemachineBrain.UpdateMethod)cam.GetUpdateMethod();
 		_currentVirtualCamera = cam;
-		_currentVirtualCamera.gameObject.SetActive(true);
 		for (int i = 0; i < _virtualCameras.Length; i++)
 		{
 			if (_virtualCameras[i] != _currentVirtualCamera)
 				_virtualCameras[i].gameObject.SetActive(false);
 		}
+		_currentVirtualCamera.gameObject.SetActive(true);
 	}
 
 	public void ToggleExternalCamera(VirtualCamera cam)
