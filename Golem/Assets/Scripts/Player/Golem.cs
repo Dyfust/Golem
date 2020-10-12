@@ -21,6 +21,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
     [SerializeField] private float _liftingVerticalOffset;
 
     [CustomHeader("Orb Attachment")]
+    [SerializeField] private GameObject _orbMesh;
     [SerializeField] private Vector3 _attachmentOffset; public Vector3 attachmentOffset => _attachmentOffset;
 
     [CustomHeader("References")]
@@ -31,6 +32,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
     private Transform _cameraTransform;
     private Vector3 _forwardRelativeToCamera;
+    private Vector3 _forwardRelativeToCharacter;
     private Vector3 _rightRelativeToCamera;
     private Vector3 _currentHeading;
     private Quaternion _targetRotation;
@@ -61,6 +63,9 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
         InitaliseFSM();
         _initPos = _thisTransform.position;
 
+        if (_orbMesh != null)
+            _orbMesh.SetActive(false);
+
         DebugWindow.AddPrintTask(() => "Golem Grounded: " + _controller.IsGrounded().ToString());
         DebugWindow.AddPrintTask(() => "Golem Ground Normal: " + _controller.GetCollisionNormal().ToString());
     }
@@ -73,6 +78,8 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
         _fsm.UpdateLogic();
 
         _anim.SetFloat("Speed", _rb.velocity.sqrMagnitude);
+
+        Debug.DrawRay(_thisTransform.position + Vector3.up * 1.0f, _forwardRelativeToCharacter);
     }
 
     private void FixedUpdate()
@@ -167,7 +174,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
         float _angle = _cameraTransform.rotation.eulerAngles.y;
         _forwardRelativeToCamera = Quaternion.AngleAxis(_angle, Vector3.up) * Vector3.forward;
         _rightRelativeToCamera = Vector3.Cross(Vector3.up, _forwardRelativeToCamera);
-
+        _forwardRelativeToCharacter = _thisTransform.forward;
         _currentHeading = _inputData.normalizedAxes.x * _rightRelativeToCamera + _inputData.normalizedAxes.y * _forwardRelativeToCamera;
     }
 
@@ -192,12 +199,18 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
     public void Enter()
     {
+        if (_orbMesh != null)
+            _orbMesh.SetActive(true);
+
         OnGolemActive?.Invoke(this);
         _dormant = false;
     }
 
     public void Exit()
     {
+        if (_orbMesh != null)
+            _orbMesh.SetActive(false);
+
         _dormant = true;
     }
 
@@ -205,7 +218,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
     public bool BeginPushing()
     {
         RaycastHit hit;
-        if (Physics.Raycast(_thisTransform.position + Vector3.up * 0.5f, _forwardRelativeToCamera, out hit, _interactionDistance, LayerMap.block))
+        if (Physics.Raycast(_thisTransform.position + Vector3.up * 1.0f, _forwardRelativeToCharacter, out hit, _interactionDistance, LayerMap.block))
         {
             _block = hit.collider.GetComponent<Block>();
 
@@ -213,10 +226,10 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
             Vector3 newGolemPos = _block.transform.position + (_blockNormal * _offsetFromBlock);
             newGolemPos.y = _thisTransform.position.y;
-
             _thisTransform.position = newGolemPos;
             _thisTransform.rotation = Quaternion.LookRotation(-_blockNormal);
             _block.BeginPushing(this, _blockNormal, _characterControllerSettings.maxSpeed);
+            _anim.SetBool("Pushing", true);
             return true;
         }
 
@@ -225,7 +238,6 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
     public void Push()
     {
-
         bool _blockCentered = Physics.Raycast(transform.position + Vector3.up * 0.85f, transform.forward, 2.0f, _blockLayer);
 
         if (_blockCentered == false)
@@ -233,7 +245,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
             StopPushing();
             return;
         }
-
+        _anim.SetFloat("Direction", _inputData.axes.y);
         _controller.Move(_inputData.axes.y * -_blockNormal / _block.mass, _inputData.joystickDepth);
         _block.Move(_controller.GetVelocity() * Time.fixedDeltaTime, _inputData.axes.y);
     }
@@ -243,6 +255,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
         if (_block != null)
             _block.StopPushing();
         _block = null;
+        _anim.SetBool("Pushing", false);
     }
     #endregion
 
@@ -299,12 +312,16 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
     void IReset.Reset()
     {
         _fsm.MoveTo(_dormantState);
-
         _thisTransform.position = new Vector3(_initPos.x, _initPos.y, _initPos.z);
     }
 
     void IReset.OnEnter(Vector3 checkpointPos)
     {
 
+    }
+
+    public bool IsActive()
+    {
+        return !_dormant;
     }
 }

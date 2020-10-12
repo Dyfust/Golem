@@ -77,16 +77,27 @@ public class VirtualCameraManager : MonoBehaviour
 
 	private void ForceToggleCam(VirtualCamera cam)
 	{
+		//if (cam != _golemVirtualCamera || cam != _orbVirtualCamera)
+  //      {
+		//	_golemFreeLookCM.m_Transitions.m_InheritPosition = false;
+		//	_orbFreeLookCM.m_Transitions.m_InheritPosition = false;
+		//}
+		//else
+  //      {
+		//	_golemFreeLookCM.m_Transitions.m_InheritPosition = true;
+		//	_orbFreeLookCM.m_Transitions.m_InheritPosition = true;
+		//}
+
 		CachePlayerCamera(cam);
 		_mainCamera.cullingMask = ~cam.GetCullLayer();
 		_brain.m_UpdateMethod = (Cinemachine.CinemachineBrain.UpdateMethod)cam.GetUpdateMethod();
 		_currentVirtualCamera = cam;
-		_currentVirtualCamera.gameObject.SetActive(true);
 		for (int i = 0; i < _virtualCameras.Length; i++)
 		{
 			if (_virtualCameras[i] != _currentVirtualCamera)
 				_virtualCameras[i].gameObject.SetActive(false);
 		}
+		_currentVirtualCamera.gameObject.SetActive(true);
 	}
 
 	public void ToggleExternalCamera(VirtualCamera cam)

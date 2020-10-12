@@ -24,7 +24,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1890311995736127936}
   - component: {fileID: 1890311995736127939}
-  - component: {fileID: 1890311995736127937}
   - component: {fileID: -6705740260000273019}
   m_Layer: 12
   m_Name: PressurePlate_Orb
@@ -60,23 +59,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.4, z: 0.8}
-  m_Center: {x: 0, y: 0.35, z: 0}
---- !u!114 &1890311995736127937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1890311995736127938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbdcf2087b5005a4eb9de468d3484ad6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _type: 0
-  _interactions: []
-  _functionToggle: 0
+  m_Size: {x: 0.3, y: 0.1, z: 0.3}
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!114 &-6705740260000273019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,6 +74,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 1696880526503113425}
+  _curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _duration: 1
 --- !u!1 &1890311996187426505
 GameObject:
