@@ -73,7 +73,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 		_fsm.HandleTransitions();
 		_fsm.UpdateLogic();
 
-		_anim.SetFloat("Speed", _rb.velocity.sqrMagnitude);
+		_anim.SetFloat("Speed", _rb.velocity.magnitude);
 
 		Debug.DrawRay(_thisTransform.position + Vector3.up * 1.0f, _forwardRelativeToCharacter);
 	}
@@ -220,9 +220,10 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 			_thisTransform.position = newGolemPos;
 			_thisTransform.rotation = Quaternion.LookRotation(-_blockNormal);
 			_block.BeginPushing(this, _blockNormal, _characterControllerSettings.maxSpeed);
+			_anim.SetBool("Pushing", true); 
 			return true;
 		}
-
+		
 		return false;
 	}
 
@@ -246,6 +247,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 		if (_block != null)
 			_block.StopPushing();
 		_block = null;
+		_anim.SetBool("Pushing", false); 
 	}
 	#endregion
 
