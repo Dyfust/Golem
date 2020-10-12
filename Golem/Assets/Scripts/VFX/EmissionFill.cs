@@ -4,6 +4,7 @@ using UnityEngine;
 public class EmissionFill : MonoBehaviour
 {
 	[SerializeField] private MeshRenderer _renderer;
+	[SerializeField] private AnimationCurve _curve;
 	[SerializeField] private float _duration;
 
 	private float _current = 0f;
@@ -36,7 +37,7 @@ public class EmissionFill : MonoBehaviour
 			elapsedTime += Time.deltaTime;
 			t = elapsedTime / _duration;
 
-			_current = Mathf.Lerp(start, end, t);
+			_current = Mathf.Lerp(start, end, _curve.Evaluate(t));
 			_material.SetFloat("Vector1_1A79052A", _current);
 			yield return null;
 		}
