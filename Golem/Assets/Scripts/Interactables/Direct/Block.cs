@@ -90,7 +90,9 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 
 		_maxSpeed = maxSpeed; 
 		_pebbles.Play();
-		_pushingNormal = blockNormal; 
+		_pushingNormal = blockNormal;
+
+		UIManager.instance.HideUI(UIManager.UI.BLOCKUI);
 	}
 
 	public void Move(Vector3 velocity, float direction)
@@ -117,7 +119,9 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 		_connectedGolem = null;
 		_pebbles.Stop();
 
-		StopLoopedAudio?.Invoke(this, EventArgs.Empty); 
+		StopLoopedAudio?.Invoke(this, EventArgs.Empty);
+
+		UIManager.instance.ShowUI(UIManager.UI.BLOCKUI); 
 	}
 
 	public void BeginLift()
@@ -155,4 +159,20 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 	{
 		StopLoopedAudio?.Invoke(this, EventArgs.Empty);
 	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.CompareTag("Golem"))
+		{
+			if (other.GetComponent<Golem>().IsActive() == true)
+				UIManager.instance.ShowUI(UIManager.UI.BLOCKUI);
+		}
+	}
+
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.GetComponent<Golem>().IsActive() == true)
+			UIManager.instance.HideUI(UIManager.UI.BLOCKUI); 
+	}
+
 }
