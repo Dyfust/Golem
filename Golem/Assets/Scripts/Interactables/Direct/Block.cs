@@ -90,7 +90,7 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 
 		_maxSpeed = maxSpeed; 
 		_pebbles.Play();
-		_pushingNormal = blockNormal; 
+		_pushingNormal = blockNormal;
 	}
 
 	public void Move(Vector3 velocity, float direction)
@@ -117,7 +117,7 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 		_connectedGolem = null;
 		_pebbles.Stop();
 
-		StopLoopedAudio?.Invoke(this, EventArgs.Empty); 
+		StopLoopedAudio?.Invoke(this, EventArgs.Empty);
 	}
 
 	public void BeginLift()
