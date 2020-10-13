@@ -1028,6 +1028,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Floor_New (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3750191528889340403, guid: 6b34d2155f5146148a4bf5776cf576dc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6112329690814628072, guid: 6b34d2155f5146148a4bf5776cf576dc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1096,6 +1101,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Floor_New (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3750191528889340403, guid: 6b34d2155f5146148a4bf5776cf576dc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6112329690814628072, guid: 6b34d2155f5146148a4bf5776cf576dc,
         type: 3}
@@ -1588,8 +1598,8 @@ Camera:
   m_GameObject: {fileID: 1959187717}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 1}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1844,6 +1854,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Floor_New (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3750191528889340403, guid: 6b34d2155f5146148a4bf5776cf576dc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6112329690814628072, guid: 6b34d2155f5146148a4bf5776cf576dc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1919,7 +1934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2142927474
 MonoBehaviour:
   m_ObjectHideFlags: 0
