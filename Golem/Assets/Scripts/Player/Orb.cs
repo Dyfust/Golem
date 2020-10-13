@@ -15,6 +15,10 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
     [SerializeField] private float _interactionDistance;
     [SerializeField] private Transform _meshTransform;
 
+    [CustomHeader("Audio Emitters")]
+    [SerializeField] private OneShotEmitter _golemAttachmentSFX;
+    [SerializeField] private AudioEmitter _rollingSFX;
+
     // --------------------------------------------------------------
     private PlayerInputData _inputData;
 
@@ -38,10 +42,6 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
     private CharacterController _controller;
 
-    private void OnEnable()
-    {
-
-    }
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -55,6 +55,8 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
     private void Start()
     {
         InitialiseFSM();
+        _rollingSFX.SetValue(0f);
+        _rollingSFX.Play();
 
         DebugWindow.AddPrintTask(() => "Orb State: " + _fsm.GetCurrentState().debugName);
         DebugWindow.AddPrintTask(() => "Orb Heading: " + _currentHeading.ToString());
@@ -70,6 +72,9 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
         _fsm.HandleTransitions();
         _fsm.UpdateLogic();
+
+        if (_controller.IsGrounded())
+            _rollingSFX.SetValue(_realVelocity.magnitude / _controllerSettings.maxSpeed);
 
         _inputData.enterButtonPressedThisFrame = false;
     }
@@ -204,6 +209,9 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
                 _currentGolem.Enter();
                 _exitEnterTimeStamp = Time.time;
 
+                _rollingSFX.Stop();
+                _golemAttachmentSFX.Play();
+
                 return true;
             }
         }
@@ -228,6 +236,8 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         _currentGolem = null;
 
         OnOrbActive?.Invoke(this);
+
+        _rollingSFX.Play();
 
         _exitEnterTimeStamp = Time.time;
     }
