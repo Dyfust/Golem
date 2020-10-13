@@ -78,12 +78,12 @@ public class VirtualCameraManager : MonoBehaviour
 	private void ForceToggleCam(VirtualCamera cam)
 	{
 		//if (cam != _golemVirtualCamera || cam != _orbVirtualCamera)
-  //      {
+		//{
 		//	_golemFreeLookCM.m_Transitions.m_InheritPosition = false;
 		//	_orbFreeLookCM.m_Transitions.m_InheritPosition = false;
 		//}
 		//else
-  //      {
+		//{
 		//	_golemFreeLookCM.m_Transitions.m_InheritPosition = true;
 		//	_orbFreeLookCM.m_Transitions.m_InheritPosition = true;
 		//}
