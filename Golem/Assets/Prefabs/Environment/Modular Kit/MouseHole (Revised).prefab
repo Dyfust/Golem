@@ -210,8 +210,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.99999964, y: 1.0660994, z: 1.9999999}
-  m_Center: {x: -0.000000044703484, y: -0.00000008940697, z: 0.000000059604645}
+  m_Size: {x: 1, y: 1, z: 1.9999999}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1360532881748454842
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -308,7 +308,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: f613793131eaf2d46803027f986270d1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.54
+      value: -7.484
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: f613793131eaf2d46803027f986270d1,
         type: 3}
@@ -695,6 +695,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MouseHole_Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 7341559278405429781, guid: 32fe6ad658be17d4da3e937b53b0e7a2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32fe6ad658be17d4da3e937b53b0e7a2, type: 3}
 --- !u!1 &8575944641786795613 stripped
@@ -885,7 +890,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: f613793131eaf2d46803027f986270d1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.04
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: f613793131eaf2d46803027f986270d1,
         type: 3}
