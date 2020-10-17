@@ -1476,6 +1476,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3758597136875997968, guid: 68b7c1fb1d4a622499387fbc7f2d1368,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3881046216699967312, guid: 68b7c1fb1d4a622499387fbc7f2d1368,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
