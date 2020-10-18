@@ -135,7 +135,6 @@ public class CharacterController : IMovementController
             _groundNormal = (_groundNormal / amountOfGroundNormals).normalized;
 
         _collisionNormals.Clear();
-
         return isGrounded;
     }
 
