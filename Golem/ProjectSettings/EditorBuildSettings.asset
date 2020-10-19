@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: ca31ff35f9047324d991cdfd4fca7687
   - enabled: 1
-    path: Assets/Scenes/Beta Build.unity
+    path: Assets/Scenes/Marcus Beta Build.unity
     guid: 9fb9163b64e642249a359dca64b06a93
   m_configObjects: {}
