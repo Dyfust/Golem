@@ -422,3 +422,4 @@ ParticleSystem:
     type: 3}
   m_PrefabInstance: {fileID: 4181372580194403560}
   m_PrefabAsset: {fileID: 0}
+  _duration: 0.85
