@@ -6,6 +6,10 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 	[CustomHeader("Physics Properties")]
     [SerializeField] private float _mass; public float mass => _mass;
 
+	[CustomHeader("Mesh")]
+	[SerializeField] private GameObject _mesh;
+	[SerializeField] private float _meshSmoothingSpeed; 
+
 	[CustomHeader("Emissive")]
 	[SerializeField] private EmissionFill _emissiveFill;
 
