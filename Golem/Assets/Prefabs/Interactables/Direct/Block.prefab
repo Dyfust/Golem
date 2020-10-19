@@ -5011,6 +5011,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mass: 1
+  _mesh: {fileID: 136654361}
+  _meshSmoothingSpeed: 0.2
   _pebbles: {fileID: 4194643596078987082}
   _stoneDragging: {fileID: 8300000, guid: 180c1a670f66bf14da2329750e46dafa, type: 3}
 --- !u!114 &4773167402477531318

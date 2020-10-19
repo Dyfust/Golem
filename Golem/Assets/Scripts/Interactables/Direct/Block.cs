@@ -6,6 +6,10 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 	[CustomHeader("Physics Properties")]
     [SerializeField] private float _mass; public float mass => _mass;
 
+	[CustomHeader("Mesh")]
+	[SerializeField] private GameObject _mesh; 
+	[SerializeField] private float _meshSmoothingSpeed; 
+
 	[CustomHeader("Audio")]
 	[SerializeField] private ParticleSystem _pebbles;
 	[SerializeField] private AudioClip _stoneDragging; 
@@ -69,6 +73,9 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 			StoppedMoving();
 		}
 
+		_mesh.transform.position = Vector3.MoveTowards(_mesh.transform.position, this.transform.position - new Vector3(0, _hit.distance, 0), _meshSmoothingSpeed * Time.fixedDeltaTime);
+
+
 		_prevVelocity = _velocity;
 		_prevVelocity.y = 0; 
 	}
@@ -76,7 +83,7 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 	private void FixedUpdate()
 	{
 		_isGrounded = Physics.BoxCast(transform.position + Vector3.up * _coll.bounds.size.y * 0.5f, _coll.bounds.size * 0.5f, Vector3.down, out _hit, Quaternion.identity, 0.1f, int.MaxValue, QueryTriggerInteraction.Ignore);
-		
+
 
 		//Applying gravity only if the block is not on the ground or not being lifted! 
 		if (_isGrounded == false && _isLifted == false)
