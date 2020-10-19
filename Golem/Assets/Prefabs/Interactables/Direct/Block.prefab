@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 136654364}
   - component: {fileID: 136654363}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4914,7 +4914,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.65
+  m_Volume: 0.45
   m_Pitch: 0.4
   Loop: 0
   Mute: 0
@@ -5012,7 +5012,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mass: 1
   _pebbles: {fileID: 4194643596078987082}
-  _stoneDragging: {fileID: 8300000, guid: 8782cf224c3bfa74a96dfd2909f52e20, type: 3}
+  _stoneDragging: {fileID: 8300000, guid: 180c1a670f66bf14da2329750e46dafa, type: 3}
 --- !u!114 &4773167402477531318
 MonoBehaviour:
   m_ObjectHideFlags: 0
