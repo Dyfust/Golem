@@ -4,7 +4,6 @@ using UnityEngine;
 public class EmissionFill : MonoBehaviour
 {
 	[SerializeField] private MeshRenderer _renderer;
-	[SerializeField] private AnimationCurve _curve;
 	[SerializeField] private float _duration;
 
 	private float _current = 0f;
@@ -18,26 +17,22 @@ public class EmissionFill : MonoBehaviour
 	public void OnActivate()
     {
 		StopAllCoroutines();
-		StartCoroutine(PlayCoroutine(0f, 1f));
+		StartCoroutine(PlayCoroutine(1f));
 	}
 
 	public void OnDeactivate()
     {
 		StopAllCoroutines();
-		StartCoroutine(PlayCoroutine(_current, 0f));
+		StartCoroutine(PlayCoroutine(0f));
 	}
 
-    IEnumerator PlayCoroutine(float start, float end)
+    IEnumerator PlayCoroutine(float end)
     {
-		float elapsedTime = 0f;
-		float t = 0f;
+		float speed = 1f / _duration;
 
-		while(t < 1f)
+		while(_current != end)
         {
-			elapsedTime += Time.deltaTime;
-			t = elapsedTime / _duration;
-
-			_current = Mathf.Lerp(start, end, _curve.Evaluate(t));
+			_current = Mathf.MoveTowards(_current, end, speed * Time.deltaTime);
 			_material.SetFloat("Vector1_1A79052A", _current);
 			yield return null;
 		}
