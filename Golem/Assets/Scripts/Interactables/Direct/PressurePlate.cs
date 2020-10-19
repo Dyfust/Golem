@@ -2,9 +2,6 @@
 
 public class PressurePlate : MonoBehaviour
 {
-    enum PressurePlateType { ORB, GOLEM }
-
-    [SerializeField] private PressurePlateType _type;
     [SerializeField] private GameObject[] _interactions;
 
     //[Tooltip("If set to false, what ever the pressure plate activates will deactivate when the player leaves the trigger. If true then the pressure plate will stay active forever")]
@@ -12,28 +9,14 @@ public class PressurePlate : MonoBehaviour
 
     private string[] _targetTags;
 
-    private EmissionFill _emmisiveAnim;
+    [SerializeField] private EmissionFill _innerEmissionFill;
+    [SerializeField] private EmissionFill _outerEmmisionFill;
 
     private void Awake()
     {
-        _emmisiveAnim = GetComponent<EmissionFill>();
-
-        switch (_type)
-        {
-            case PressurePlateType.ORB:
-                {
-                    _targetTags = new string[1];
-                    _targetTags[0] = "Orb";
-                    break;
-                }
-            case PressurePlateType.GOLEM:
-                {
-                    _targetTags = new string[2];
-                    _targetTags[0] = "Golem";
-                    _targetTags[1] = "Block";
-                    break;
-                }
-        }
+        _targetTags = new string[2];
+        _targetTags[0] = "Golem";
+        _targetTags[1] = "Block";
     }
 
     private void ToggleInteractions()
@@ -50,8 +33,8 @@ public class PressurePlate : MonoBehaviour
         {
             ToggleInteractions();
 
-            if (_emmisiveAnim != null)
-                _emmisiveAnim.OnActivate();
+            _innerEmissionFill.OnActivate();
+            _outerEmmisionFill.OnActivate();
         }
     }
 
@@ -61,8 +44,8 @@ public class PressurePlate : MonoBehaviour
         {
             ToggleInteractions();
 
-            if (_emmisiveAnim != null)
-                _emmisiveAnim.OnDeactivate();
+            _innerEmissionFill.OnDeactivate();
+            _outerEmmisionFill.OnDeactivate();
         }
     }
 
