@@ -6,6 +6,10 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 	[CustomHeader("Physics Properties")]
     [SerializeField] private float _mass; public float mass => _mass;
 
+	[CustomHeader("Mesh")]
+	[SerializeField] private GameObject _mesh;
+	[SerializeField] private float _meshSmoothingSpeed; 
+
 	[CustomHeader("Emissive")]
 	[SerializeField] private EmissionFill _emissiveFill;
 
@@ -73,6 +77,9 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 		{
 			StoppedMoving();
 		}
+
+		_mesh.transform.position = Vector3.MoveTowards(_mesh.transform.position, this.transform.position - new Vector3(0, _hit.distance, 0), _meshSmoothingSpeed * Time.fixedDeltaTime);
+
 
 		_prevVelocity = _velocity;
 		_prevVelocity.y = 0; 
