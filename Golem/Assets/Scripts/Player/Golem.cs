@@ -84,8 +84,8 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
     private void FixedUpdate()
     {
-        _fsm.UpdatePhysics();
         _controller.FixedUpdate();
+        _fsm.UpdatePhysics();
     }
 
     private void OnCollisionStay(Collision collision)
