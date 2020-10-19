@@ -6,9 +6,14 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 	[CustomHeader("Physics Properties")]
     [SerializeField] private float _mass; public float mass => _mass;
 
+	[CustomHeader("Emissive")]
+	[SerializeField] private EmissionFill _emissiveFill;
+
 	[CustomHeader("Audio")]
-	[SerializeField] private ParticleSystem _pebbles;
 	[SerializeField] private AudioClip _stoneDragging; 
+
+	[CustomHeader("Particles")]
+	[SerializeField] private ParticleSystem _pebbles;
 
 	private float _maxEmissionRate; 
 	private float _maxSpeed = 0;
@@ -76,7 +81,6 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 	private void FixedUpdate()
 	{
 		_isGrounded = Physics.BoxCast(transform.position + Vector3.up * _coll.bounds.size.y * 0.5f, _coll.bounds.size * 0.5f, Vector3.down, out _hit, Quaternion.identity, 0.1f, int.MaxValue, QueryTriggerInteraction.Ignore);
-		
 
 		//Applying gravity only if the block is not on the ground or not being lifted! 
 		if (_isGrounded == false && _isLifted == false)
@@ -89,8 +93,10 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 		_connectedGolem = golem;
 
 		_maxSpeed = maxSpeed; 
-		_pebbles.Play();
 		_pushingNormal = blockNormal;
+
+		_emissiveFill.OnActivate();
+		_pebbles.Play();
 	}
 
 	public void Move(Vector3 velocity, float direction)
@@ -118,6 +124,7 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 		_pebbles.Stop();
 
 		StopLoopedAudio?.Invoke(this, EventArgs.Empty);
+		_emissiveFill.OnDeactivate();
 	}
 
 	public void BeginLift()
