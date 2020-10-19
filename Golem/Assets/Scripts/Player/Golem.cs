@@ -247,7 +247,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
         }
         _anim.SetFloat("Direction", _inputData.axes.y);
         _controller.Move(_inputData.axes.y * -_blockNormal / _block.mass, _inputData.joystickDepth);
-        _block.Move(_controller.GetVelocity() * Time.fixedDeltaTime, _inputData.axes.y);
+        _block.Move(_rb.velocity * Time.fixedDeltaTime, _inputData.axes.y);
     }
 
     public void StopPushing()
