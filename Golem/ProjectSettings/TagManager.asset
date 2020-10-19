@@ -12,6 +12,7 @@ TagManager:
   - Room
   - Ramp
   - AudioSource
+  - TEst
   layers:
   - Default
   - TransparentFX
