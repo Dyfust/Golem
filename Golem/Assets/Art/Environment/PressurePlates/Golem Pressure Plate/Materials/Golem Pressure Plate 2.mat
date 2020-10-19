@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Golem Pressure Plate_Anim
+  m_Name: Golem Pressure Plate 2
   m_Shader: {fileID: -6465566751694194690, guid: b92e139047a2dfc4b91af12a7a2df494,
     type: 3}
   m_ShaderKeywords: _EMISSION _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
@@ -25,7 +25,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_4DB4AD20:
-        m_Texture: {fileID: 2800000, guid: 905897821e5588f48a2dd1a139bcb0b8, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7f50cb51d15af6846aa2fa61c5a2d8f0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_929BA434:
@@ -37,11 +37,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 905897821e5588f48a2dd1a139bcb0b8, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7f50cb51d15af6846aa2fa61c5a2d8f0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 3c197bbb2e2c7fd4cb96a0b3a90ba40a, type: 3}
+        m_Texture: {fileID: 2800000, guid: a74b4c260cbd6754ba622e7275ccfa5a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -49,11 +49,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 905897821e5588f48a2dd1a139bcb0b8, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7f50cb51d15af6846aa2fa61c5a2d8f0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 8f61f59dbf1bfcc4a85253580c38d90b, type: 3}
+        m_Texture: {fileID: 2800000, guid: f1c246a9232b2124fb5c49bdad6f47de, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -65,7 +65,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_1A79052A: 1
+    - Vector1_1A79052A: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -89,7 +89,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_DEFD9CD1: {r: 1, g: 1, b: 1, a: 0}
-    - Color_FBC97434: {r: 1, g: 1, b: 1, a: 0}
+    - Color_FBC97434: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
