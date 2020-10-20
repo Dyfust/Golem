@@ -26,10 +26,6 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
 	[CustomHeader("References")]
 	[SerializeField] private Animator _anim;
-
-	[CustomHeader("UI")]
-	[SerializeField] private GameObject _ui;
-
 	// --------------------------------------------------------------
 	private PlayerInputData _inputData;
 
@@ -326,23 +322,5 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 	public bool IsActive()
 	{
 		return !_dormant;
-	}
-
-	private void OnTriggerEnter(Collider other)
-	{
-		if (other.gameObject.CompareTag("Orb"))
-		{
-			if (_ui != null)
-				_ui.SetActive(true);
-		}
-	}
-
-	private void OnTriggerExit(Collider other)
-	{
-		if (other.gameObject.CompareTag("Orb"))
-		{
-			if (_ui != null)
-				_ui.SetActive(false);
-		}
 	}
 }

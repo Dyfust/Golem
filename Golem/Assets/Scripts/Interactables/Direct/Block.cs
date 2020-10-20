@@ -173,4 +173,9 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 	{
 		StopLoopedAudio?.Invoke(this, EventArgs.Empty);
 	}
+
+	public bool IsConnected()
+	{
+		return _isConnected; 
+	}
 }
