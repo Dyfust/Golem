@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Block : MonoBehaviour, IReset, IPlayAudio
 {
+	//-----------------------------------------------------------------
 	[CustomHeader("Physics Properties")]
     [SerializeField] private float _mass; public float mass => _mass;
 
@@ -19,6 +20,9 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 	[CustomHeader("Particles")]
 	[SerializeField] private ParticleSystem _pebbles;
 
+	[CustomHeader("UI")]
+	[SerializeField] private GameObject _ui; 
+	//-----------------------------------------------------------------
 	private float _maxEmissionRate; 
 	private float _maxSpeed = 0;
 	private ParticleSystem.EmissionModule _emissionModule;
