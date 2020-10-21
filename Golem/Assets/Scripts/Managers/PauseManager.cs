@@ -54,10 +54,13 @@ public class PauseManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.P))
-			PlayerPause();
-		if (Input.GetKeyDown(KeyCode.L))
-			PlayerResume();
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			if (_isPaused)
+				PlayerResume();
+			else
+				PlayerPause(); 
+		}
 	}
 
 	/// <summary>
@@ -75,7 +78,9 @@ public class PauseManager : MonoBehaviour
 		VirtualCameraManager.instance.ToggleExternalCamera(_currentRoomCamera);
 
 		StopAllCoroutines();
-		StartCoroutine("PauseUI"); 
+		StartCoroutine("PauseUI");
+
+		CursorManager.instance.ToggleCursor(true); 
 
 		_isPaused = true; 
 	}
@@ -93,6 +98,8 @@ public class PauseManager : MonoBehaviour
 		VirtualCameraManager.instance.TogglePlayerCamera();
 
 		_pauseScreen.SetActive(false);
+
+		CursorManager.instance.ToggleCursor(false);
 
 		_isPaused = false; 
 	}
