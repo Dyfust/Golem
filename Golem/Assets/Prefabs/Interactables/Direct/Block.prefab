@@ -263,6 +263,7 @@ MonoBehaviour:
   _emissiveFill: {fileID: 5243322481984843659}
   _stoneDragging: {fileID: 8300000, guid: 180c1a670f66bf14da2329750e46dafa, type: 3}
   _pebbles: {fileID: 4181372580212890408}
+  _ui: {fileID: 0}
 --- !u!114 &4773167402477531318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,30 +289,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 136654363}
-  _curve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   _duration: 2
 --- !u!1001 &4181372580194403560
 PrefabInstance:
@@ -422,4 +399,3 @@ ParticleSystem:
     type: 3}
   m_PrefabInstance: {fileID: 4181372580194403560}
   m_PrefabAsset: {fileID: 0}
-  _duration: 0.85
