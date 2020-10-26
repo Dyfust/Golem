@@ -256,7 +256,7 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 0
   - m_From: VCAM_Orb
-    m_To: CM vcam2
+    m_To: VCAM_TunnelCam
     m_Blend:
       m_Style: 1
       m_Time: 0.65
@@ -266,7 +266,7 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: CM vcam2
+  - m_From: VCAM_TunnelCam
     m_To: VCAM_Orb
     m_Blend:
       m_Style: 1
