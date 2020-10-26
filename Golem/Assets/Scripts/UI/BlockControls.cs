@@ -30,7 +30,7 @@ public class BlockControls : MonoBehaviour
 	{
 		if (other.gameObject.CompareTag("Golem"))
 		{
-			if (_controlsRef._ui.activeInHierarchy == false && _golemRef.IsActive() == true)
+			if (_controlsRef._tineText.activeInHierarchy == false && _golemRef.IsActive() == true)
 			{
 				_ui.SetActive(true); 
 			}

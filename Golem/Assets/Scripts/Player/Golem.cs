@@ -24,6 +24,9 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 	[SerializeField] private GameObject _orbMesh;
 	[SerializeField] private Vector3 _attachmentOffset; public Vector3 attachmentOffset => _attachmentOffset;
 
+	[CustomHeader("States")]
+	[SerializeField] private State _dormantState;
+
 	[CustomHeader("References")]
 	[SerializeField] private Animator _anim;
 	// --------------------------------------------------------------
@@ -77,8 +80,6 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 		_fsm.UpdateLogic();
 
 		_anim.SetFloat("Speed", _rb.velocity.sqrMagnitude);
-
-		Debug.DrawRay(_thisTransform.position + Vector3.up * 1.0f, _forwardRelativeToCharacter);
 	}
 
 	private void FixedUpdate()
@@ -92,25 +93,22 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 		_controller.OnCollisionStay(collision);
 	}
 
-	State _dormantState;
-
 	private void InitaliseFSM()
 	{
 		_fsm = new FSM.FSM();
 
-		State dormantState = new DormantState(this);
-		_dormantState = dormantState;
+		_dormantState = new DormantState(this);
 		State idleState = new IdleState(this);
 		State walkingState = new WalkingState(this);
 		State pushingState = new PushingState(this);
 		State liftingState = new LiftingState(this);
 
-		_fsm.AddTransition(dormantState, idleState, () => { return !_dormant; });
+		_fsm.AddTransition(_dormantState, idleState, () => { return !_dormant; });
 
-		_fsm.AddTransition(idleState, dormantState, () => { return _dormant; });
+		_fsm.AddTransition(idleState, _dormantState, () => { return _dormant; });
 		_fsm.AddTransition(idleState, walkingState, () => { return _currentHeading != Vector3.zero; });
 
-		_fsm.AddTransition(walkingState, dormantState, () => _dormant);
+		_fsm.AddTransition(walkingState, _dormantState, () => _dormant);
 		_fsm.AddTransition(walkingState, idleState, () =>
 		{
 			Vector3 vel = _rb.velocity;
