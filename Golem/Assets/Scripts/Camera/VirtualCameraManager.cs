@@ -17,6 +17,10 @@ public class VirtualCameraManager : MonoBehaviour
 
 	[SerializeField] private CinemachineFreeLook _orbFreeLookCM;
 	[SerializeField] private CinemachineFreeLook _golemFreeLookCM;
+    [SerializeField] private CinemachineVirtualCamera _orbTunnelCM;
+
+    private CinemachineTransposer _orbTunnelTransposer;
+    private VirtualCamera _orbTunnelVirtualCamera;
 	private VirtualCamera _orbVirtualCamera;
 	private VirtualCamera _golemVirtualCamera;
 
@@ -37,6 +41,8 @@ public class VirtualCameraManager : MonoBehaviour
 
 		_orbVirtualCamera = _orbFreeLookCM.GetComponent<VirtualCamera>();
 		_golemVirtualCamera = _golemFreeLookCM.GetComponent<VirtualCamera>();
+        _orbTunnelVirtualCamera = _orbTunnelCM.GetComponent<VirtualCamera>();
+        _orbTunnelTransposer = _orbTunnelCM.GetCinemachineComponent<CinemachineTransposer>();
 
 		GameObject[] vcamGOs = GameObject.FindGameObjectsWithTag(_identifierTag);
 		_virtualCameras = new VirtualCamera[vcamGOs.Length];
@@ -88,7 +94,7 @@ public class VirtualCameraManager : MonoBehaviour
 		//	_orbFreeLookCM.m_Transitions.m_InheritPosition = true;
 		//}
 
-		CachePlayerCamera(cam);
+		CachePlayerCamera(_currentVirtualCamera);
 		_mainCamera.cullingMask = ~cam.GetCullLayer();
 		_brain.m_UpdateMethod = (Cinemachine.CinemachineBrain.UpdateMethod)cam.GetUpdateMethod();
 		_currentVirtualCamera = cam;
@@ -124,6 +130,20 @@ public class VirtualCameraManager : MonoBehaviour
 	{
 		if (cam == _golemVirtualCamera || cam == _orbVirtualCamera)
 			_cachedPlayerCamera = cam;
+	}
+
+	public void ToggleTunnelCamera(int offset, int axis)
+	{
+        Vector3 originalFollowOffset = _orbTunnelTransposer.m_FollowOffset;
+        Vector3 followOffset = new Vector3(0f, originalFollowOffset.y, 0f);
+        followOffset[axis] = offset;
+        _orbTunnelTransposer.m_FollowOffset = followOffset;
+		ForceToggleCam(_orbTunnelVirtualCamera);
+	}
+		
+	public void TogglePlayerCameraNoFade()
+	{
+		ForceToggleCam(_cachedPlayerCamera);
 	}
 
 	public void TogglePlayerCamera()
