@@ -55,8 +55,8 @@ namespace OrbStates
 
         public override void UpdateLogic()
         {
-            //if (_orb.IsGrounded())
-            //    _rollingSFX.SetValue(_orb.GetVelocity().magnitude / _orb.GetMaxSpeed());
+            if (_orb.IsGrounded())
+                _rollingSFX.SetValue(_orb.GetVelocity().magnitude / _orb.GetMaxSpeed());
         }
 
         public override void UpdatePhysics()
