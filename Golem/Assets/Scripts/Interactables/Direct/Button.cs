@@ -56,7 +56,6 @@ public class Button : MonoBehaviour
 			if (_oneTimeActivate == true && _activated == false)
 			{
 				ToggleInteractions();
-				Debug.Log("Enter");
 				_activated = true;
 
 				if (_emmisiveAnim != null)
@@ -65,7 +64,6 @@ public class Button : MonoBehaviour
 			else if (_oneTimeActivate == false)
 			{
 				ToggleInteractions();
-				Debug.Log("Enter");
 
 				if (_emmisiveActivated == true)
 				{
