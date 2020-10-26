@@ -4,10 +4,9 @@ public class TunnelZone : MonoBehaviour
 {
     enum Axis {X, Y, Z};
     [SerializeField] private Axis _axis;
-    [SerializeField] private float _offset;
 
-    private Vector3 _center;
     private Collider _coll;
+    private Vector3 _center;
 
     private void Awake()
     {
