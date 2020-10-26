@@ -3,7 +3,17 @@ guid: 98af8514ee4ed0a4c94b8f07e0c56baa
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FrogTotem_PBR
+    second: {fileID: 2100000, guid: 13d5b7cc7d79c7645a1eb0ec262f685c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TotemBorder_PBR
+    second: {fileID: 2100000, guid: 240efc74f467abd449455f2bf719f6c7, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

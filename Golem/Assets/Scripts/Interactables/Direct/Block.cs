@@ -3,8 +3,13 @@ using UnityEngine;
 
 public class Block : MonoBehaviour, IReset, IPlayAudio
 {
+	//-----------------------------------------------------------------
 	[CustomHeader("Physics Properties")]
     [SerializeField] private float _mass; public float mass => _mass;
+
+	[CustomHeader("Mesh")]
+	[SerializeField] private GameObject _mesh;
+	[SerializeField] private float _meshSmoothingSpeed; 
 
 	[CustomHeader("Emissive")]
 	[SerializeField] private EmissionFill _emissiveFill;
@@ -15,6 +20,9 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 	[CustomHeader("Particles")]
 	[SerializeField] private ParticleSystem _pebbles;
 
+	[CustomHeader("UI")]
+	[SerializeField] private GameObject _ui; 
+	//-----------------------------------------------------------------
 	private float _maxEmissionRate; 
 	private float _maxSpeed = 0;
 	private ParticleSystem.EmissionModule _emissionModule;
@@ -73,6 +81,9 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 		{
 			StoppedMoving();
 		}
+
+		_mesh.transform.position = Vector3.MoveTowards(_mesh.transform.position, this.transform.position - new Vector3(0, _hit.distance, 0), _meshSmoothingSpeed * Time.fixedDeltaTime);
+
 
 		_prevVelocity = _velocity;
 		_prevVelocity.y = 0; 
@@ -161,5 +172,10 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 	private void StoppedMoving()
 	{
 		StopLoopedAudio?.Invoke(this, EventArgs.Empty);
+	}
+
+	public bool IsConnected()
+	{
+		return _isConnected; 
 	}
 }
