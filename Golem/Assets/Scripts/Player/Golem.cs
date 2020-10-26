@@ -179,7 +179,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
 	public void Move()
 	{
-		_controller.Move(_currentHeading, _inputData.joystickDepth);
+		_controller.Move(_currentHeading);
 	}
 
 	private void Orientate(Quaternion targetRotation)
@@ -245,7 +245,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 			return;
 		}
 		_anim.SetFloat("Direction", _inputData.axes.y);
-		_controller.Move(_inputData.axes.y * -_blockNormal / _block.mass, _inputData.joystickDepth);
+		_controller.Move(_inputData.axes.y * -_blockNormal / _block.mass);
 		_block.Move(_rb.velocity * Time.fixedDeltaTime, _inputData.axes.y);
 	}
 
