@@ -1,5 +1,4 @@
 using FSM;
-using UnityEngine;
 
 namespace OrbStates
 {
@@ -19,7 +18,7 @@ namespace OrbStates
 
         public override void OnExit()
         {
-            _orb.ResetState();
+
         }
 
         public override void UpdateLogic()
@@ -29,17 +28,19 @@ namespace OrbStates
 
         public override void UpdatePhysics()
         {
-            _orb.UpdateController();
+
         }
     }
 
     public class RollingState : State
     {
         private Orb _orb;
+        private AudioEmitter _rollingSFX;
 
-        public RollingState(Orb orb) : base("Rolling State")
+        public RollingState(Orb orb, AudioEmitter rollingSFX) : base("Rolling State")
         {
             _orb = orb;
+            _rollingSFX = rollingSFX;
         }
 
         public override void OnEnter()
@@ -49,17 +50,19 @@ namespace OrbStates
 
         public override void OnExit()
         {
-            _orb.ResetState();
+
         }
 
         public override void UpdateLogic()
         {
+            //if (_orb.IsGrounded())
+            //    _rollingSFX.SetValue(_orb.GetVelocity().magnitude / _orb.GetMaxSpeed());
         }
 
         public override void UpdatePhysics()
         {
             _orb.Move();
-            _orb.UpdateController();
+            _orb.Roll();
         }
     }
 
@@ -74,13 +77,13 @@ namespace OrbStates
 
         public override void OnEnter()
         {
-
+            _orb.ResetMovement();
+            _orb.EnterGolem();
         }
 
         public override void OnExit()
         {
-            _orb.ResetState();
-            _orb.ResetVelocity();
+            _orb.ResetMovement();
             _orb.ExitGolem();
         }
 
@@ -90,7 +93,6 @@ namespace OrbStates
 
         public override void UpdatePhysics()
         {
-            _orb.StickToGolem();
             _orb.OrientateToGolem();
         }
     }
