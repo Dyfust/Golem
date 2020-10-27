@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// When a game object enters the trigger it will activated the bloom animation for the flower 
+/// </summary>
 public class BloomingFlower : MonoBehaviour
 {
 	private enum FlowerState { NORMAL, BLOOMED }
@@ -25,7 +28,7 @@ public class BloomingFlower : MonoBehaviour
 		if (_state == FlowerState.NORMAL && _orbFound)
 		{
 			float distBetweenOrb = (_orbTransform.position - transform.position).magnitude;
-			
+
 			if (distBetweenOrb <= _distance)
 			{
 				Bloom();
@@ -39,8 +42,6 @@ public class BloomingFlower : MonoBehaviour
 		_anim.SetBool("Bloom_" + index, true);
 		_state = FlowerState.BLOOMED;
 	}
-
-
 
 	private void OnTriggerEnter(Collider other)
 	{

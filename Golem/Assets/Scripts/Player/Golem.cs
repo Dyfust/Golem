@@ -29,6 +29,9 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
 	[CustomHeader("References")]
 	[SerializeField] private Animator _anim;
+
+	[CustomHeader("Emission Anim")]
+	[SerializeField] private GolemBloom _emissionRef; 
 	// --------------------------------------------------------------
 	private PlayerInputData _inputData;
 
@@ -201,6 +204,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 
 		OnGolemActive?.Invoke(this);
 		_dormant = false;
+		_emissionRef.OnActivate(); 
 	}
 
 	public void Exit()
@@ -209,6 +213,7 @@ public class Golem : MonoBehaviour, IRequireInput, IReset
 			_orbMesh.SetActive(false);
 
 		_dormant = true;
+		_emissionRef.OnDeactivate(); 
 	}
 
 	#region Pushing
