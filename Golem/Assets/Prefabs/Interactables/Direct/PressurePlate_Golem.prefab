@@ -28,6 +28,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderer: {fileID: 4400378768018201384}
   _duration: 1
+  _target: Vector1_1A79052A
 --- !u!64 &5004474537450129051
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -56,6 +57,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderer: {fileID: 8737982251171529404}
   _duration: 1
+  _target: Vector1_1A79052A
 --- !u!1 &8611235625379198015
 GameObject:
   m_ObjectHideFlags: 0

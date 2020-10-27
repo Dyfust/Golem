@@ -132,8 +132,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         float angle = _cameraTransform.rotation.eulerAngles.y;
         _forwardRelativeToCamera = Quaternion.AngleAxis(angle, Vector3.up) * Vector3.forward;
         _rightRelativeToCamera = Vector3.Cross(Vector3.up, _forwardRelativeToCamera);
-
-        _currentHeading = _inputData.normalizedAxes.x * _rightRelativeToCamera + _inputData.normalizedAxes.y * _forwardRelativeToCamera;
+        _currentHeading = _inputData.axes.x * _rightRelativeToCamera + _inputData.axes.y * _forwardRelativeToCamera;
     }
 
     public void Roll()

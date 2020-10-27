@@ -227,17 +227,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""action"": ""Enter/Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f011fd8e-a4b3-4b71-a2c9-986856f0975d"",
-                    ""path"": ""<Keyboard>/g"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Enter/Exit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
