@@ -1,6 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>
+/// Intractable block. 
+/// Attaches it self to an active Golem with interacted with. 
+/// </summary>
 public class Block : MonoBehaviour, IReset, IPlayAudio
 {
 	//-----------------------------------------------------------------
@@ -19,9 +23,6 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 
 	[CustomHeader("Particles")]
 	[SerializeField] private ParticleSystem _pebbles;
-
-	[CustomHeader("UI")]
-	[SerializeField] private GameObject _ui; 
 	//-----------------------------------------------------------------
 	private float _maxEmissionRate; 
 	private float _maxSpeed = 0;
