@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
-
+/// <summary>
+/// Used to switch to a desired camera when the triggered is activated. 
+/// </summary>
 public class CameraTrigger : MonoBehaviour
 {
 	enum Target { ORB, GOLEM, BLOCK }
