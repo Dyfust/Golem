@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
+/// <summary>
+/// This class is responsible for handling all aspects of motion including slope handling & ground detection.
+/// </summary>
 public class CharacterController : IMovementController
 {
-    /// This class is responsible for handling all aspects of motion including slope handling & ground detection.
     private CharacterControllerSettings _settings;
     private float _maxSpeed;
     private float _acceleration;

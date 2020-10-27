@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
-
+/// <summary>
+/// Container for a virtual camera and used for identification in scene 
+/// </summary>
 public class VirtualCamera : MonoBehaviour
 {
 	[Tooltip("Higher number means higher priority")]
