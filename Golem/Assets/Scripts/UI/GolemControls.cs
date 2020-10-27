@@ -50,11 +50,6 @@ public class GolemControls : MonoBehaviour
 			_golemControlTxt.SetActive(false);
 			_glyphs.SetActive(false); 
 		}
-
-		if (Gamepad.current.IsPressed())
-			_currentInput = CURRENTDEVICE.GAMEPAD;
-		if (Keyboard.current.IsPressed())
-			_currentInput = CURRENTDEVICE.KEYBOARD; 
 	}
 
 	private void OnTriggerEnter(Collider other)
