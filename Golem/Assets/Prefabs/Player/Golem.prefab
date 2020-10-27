@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 8275215695563863985}
-  _duration: 3
+  _duration: 1.5
   _target: _EmissionColor
   _start: -2
   _end: 4
