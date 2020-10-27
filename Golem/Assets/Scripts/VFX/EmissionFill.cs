@@ -5,6 +5,7 @@ public class EmissionFill : MonoBehaviour
 {
 	[SerializeField] private MeshRenderer _renderer;
 	[SerializeField] private float _duration;
+	[SerializeField] private string _target; 
 
 	private float _current = 0f;
 	private Material _material;
@@ -33,7 +34,7 @@ public class EmissionFill : MonoBehaviour
 		while(_current != end)
         {
 			_current = Mathf.MoveTowards(_current, end, speed * Time.deltaTime);
-			_material.SetFloat("Vector1_1A79052A", _current);
+			_material.SetFloat(_target, _current);
 			yield return null;
 		}
     }

@@ -2,7 +2,7 @@
 
 public class TunnelZone : MonoBehaviour
 {
-    enum Axis {X, Y, Z};
+    private enum Axis {X, Y, Z};
     [SerializeField] private Axis _axis;
 
     private Collider _coll;

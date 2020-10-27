@@ -3,26 +3,53 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
+using System;
+using System.Data.SqlClient;
 
 public class GolemControls : MonoBehaviour
 {
-	public GameObject _tineText;
-	public GameObject _golemControl;
 
+	[SerializeField] private GameObject _glyphs;
+	[SerializeField] private GameObject _golemControlTxt;
+	[SerializeField] private InputActionReference _inputType;
+	[SerializeField] private float _fadeInTimer;
+	[SerializeField] private float _fadeOutTimer;
+
+
+	private InputAction _action; 
+	private TMP_Text _textref; 
 	private Golem _ref;
+	private bool _firstView = true;
 
-	private bool _firstView = true; 
-	// Start is called before the first frame update
-	void Start()
+	private void OnEnable()
 	{
-		_ref = this.GetComponent<Golem>(); 
+		_action.performed += _action_performed;
+	}
+
+	private void _action_performed(InputAction.CallbackContext obj)
+	{
+		Debug.Log(obj.control.path); 
+	}
+
+	private void Awake()
+	{
+		_action = new InputAction(type: InputActionType.PassThrough, binding: "*/<Button>");
+		_ref = this.GetComponent<Golem>();
+		_textref = _golemControlTxt.GetComponent<TMP_Text>();
+
+		_textref.text = "Press " + _inputType.action.GetBindingDisplayString(InputBinding.DisplayStringOptions.DontOmitDevice) + " to enter!"; 
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 		if (_ref.IsActive() == true)
-			_tineText.SetActive(false);
+		{
+			_golemControlTxt.SetActive(false);
+			_glyphs.SetActive(false); 
+		}
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -32,47 +59,61 @@ public class GolemControls : MonoBehaviour
 			if (_firstView == true)
 			{
 				StopAllCoroutines();
-				StartCoroutine(FadeOut(1.5f, 1.5f, _tineText, _golemControl));
+				StartCoroutine(FadeOut(_fadeInTimer, _fadeOutTimer, _glyphs, _golemControlTxt));
 				_firstView = false; 
 			}
 			else
-				_golemControl.SetActive(true); 
+				_golemControlTxt.SetActive(true); 
 		}
-	}
-
-	private void OnTriggerStay(Collider other)
-	{
 	}
 
 	private void OnTriggerExit(Collider other)
 	{
 		if (other.gameObject.CompareTag("Orb"))
 		{
-			_tineText.SetActive(false);
-			_golemControl.SetActive(false);
+			_glyphs.SetActive(false);
+			_golemControlTxt.SetActive(false);
 		}
 	}
 
+	/// <summary>
+	/// This will fade the image in and the text 
+	/// </summary>
+	/// <param name="t1"></param>
+	/// <param name="t2"></param>
+	/// <param name="image"></param>
+	/// <param name="text"></param>
+	/// <returns></returns>
 	private IEnumerator FadeOut(float t1, float t2, GameObject image, GameObject text)
 	{
-		_tineText.SetActive(true);
-		_golemControl.SetActive(true);
+		_glyphs.SetActive(true);
+		_golemControlTxt.SetActive(true);
+
 		Image img = image.GetComponent<Image>();
-		img.color = new Color(img.color.r, img.color.g, img.color.b, 1);
+		img.color = new Color(img.color.r, img.color.g, img.color.b, 0);
 
-		TMP_Text txt = text.GetComponent<TMP_Text>();
-		txt.color = new Color(txt.color.r, txt.color.g, txt.color.b, 0); 
+		_textref.color = new Color(_textref.color.r, _textref.color.g, _textref.color.b, 0);
 
+		while (img.color.a <= 1.0f)
+		{
+			img.color = new Color(img.color.r, img.color.g, img.color.b, img.color.a + (Time.deltaTime / t1));
+			yield return null;
+		}
 		while (img.color.a > 0.0f)
 		{
-			img.color = new Color(img.color.r, img.color.g, img.color.b, img.color.a - (Time.deltaTime / t1));
+			img.color = new Color(img.color.r, img.color.g, img.color.b, img.color.a - (Time.deltaTime / t2));
 			yield return null;
 		}
 
-		while (txt.color.a <= 1.0f)
+		while (_textref.color.a <= 1.0f)
 		{
-			txt.color = new Color(txt.color.r, txt.color.g, txt.color.b, txt.color.a + (Time.deltaTime / t2));
+			_textref.color = new Color(_textref.color.r, _textref.color.g, _textref.color.b, _textref.color.a + (Time.deltaTime / t2));
 			yield return null;
 		}
+	}
+
+	public GameObject GetImage()
+	{
+		return _glyphs; 
 	}
 }
