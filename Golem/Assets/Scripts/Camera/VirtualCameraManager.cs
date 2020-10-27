@@ -3,7 +3,11 @@ using UnityEngine;
 using System.Collections;
 
 // NEED TO DO PRIORITY SYSTEM.
-
+/// <summary>
+/// Singleton.
+/// Used to switch between virtual cameras and keep track of the current camera.
+/// Has different functions to control how the cameras transition between each other 
+/// </summary>
 public class VirtualCameraManager : MonoBehaviour
 {
 	private static VirtualCameraManager _instance;
