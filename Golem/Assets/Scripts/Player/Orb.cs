@@ -114,7 +114,7 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
 
     private bool IsEnteringGolem()
     {
-        if (_inputData.enterButtonPressedThisFrame)
+        if (_inputData.enterButtonPressedThisFrame && Time.time >= _exitEnterTimeStamp + _exitEnterCD)
         {
             return FindGolem();
         }
@@ -187,8 +187,9 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         _meshTransform.gameObject.SetActive(false);
         _currentGolem.Enter();
 
-        _rollingSFX.Stop();
         _golemAttachmentSFX.Play();
+
+        _exitEnterTimeStamp = Time.time;
     }
 
     public void ExitGolem()
@@ -203,7 +204,6 @@ public class Orb : MonoBehaviour, IRequireInput, IReset
         OnOrbActive?.Invoke(this);
 
         _controller.Toggle(true);
-        _rollingSFX.Play();
 
         _exitEnterTimeStamp = Time.time;
 

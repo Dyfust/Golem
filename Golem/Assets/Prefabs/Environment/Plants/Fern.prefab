@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5367606358650931517}
   - component: {fileID: 1819763075076568516}
   m_Layer: 0
-  m_Name: Fern_1 (1)
+  m_Name: Fern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 41c7eb04883e424438ef05f30060ec3e, type: 2}
+  - {fileID: 2100000, guid: 5bf0ea785f224d743a7f9c7d9a556547, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
