@@ -82,7 +82,6 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 		{
 			other.gameObject.transform.SetParent(transform);
 		}
-		Debug.Log(other.gameObject.tag); 
 	}
 
 	private void OnTriggerExit(Collider other)
