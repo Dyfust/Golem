@@ -6,17 +6,15 @@ using UnityEngine.InputSystem;
 
 public class GolemControls : MonoBehaviour
 {
-
 	[SerializeField] private GameObject _glyphs;
 	[SerializeField] private GameObject _golemControlTxt;
-	[SerializeField] private InputActionReference _inputType;
+	[SerializeField] private Golem _ref;
 	[SerializeField] private float _fadeInTimer;
 	[SerializeField] private float _fadeOutTimer;
 
 
-	private InputAction _action; 
-	private TMP_Text _textRef; 
-	private Golem _ref;
+	private InputAction _action;
+	private TMP_Text _textRef;
 	private bool _firstView = true;
 
 	private void OnEnable()
@@ -26,13 +24,12 @@ public class GolemControls : MonoBehaviour
 
 	private void _action_performed(InputAction.CallbackContext obj)
 	{
-		Debug.Log(obj.control.path); 
+		Debug.Log(obj.control.path);
 	}
 
 	private void Awake()
 	{
 		_action = new InputAction(type: InputActionType.PassThrough, binding: "*/<Button>");
-		_ref = this.GetComponent<Golem>();
 		_textRef = _golemControlTxt.GetComponent<TMP_Text>();
 
 		//_textref.text = "Press " + _inputType.action.GetBindingDisplayString(InputBinding.DisplayStringOptions.DontOmitDevice) + " to enter!"; 
@@ -45,7 +42,7 @@ public class GolemControls : MonoBehaviour
 		if (_ref.IsActive() == true)
 		{
 			_golemControlTxt.SetActive(false);
-			_glyphs.SetActive(false); 
+			_glyphs.SetActive(false);
 		}
 
 		if (GlobalInput.instance.GetCurrentInputMethod() == GlobalInput.DEVICE.KEYBOARD)
@@ -62,10 +59,10 @@ public class GolemControls : MonoBehaviour
 			{
 				StopAllCoroutines();
 				StartCoroutine(FadeOut(_fadeInTimer, _fadeOutTimer, _glyphs, _golemControlTxt));
-				_firstView = false; 
+				_firstView = false;
 			}
-			else
-				_golemControlTxt.SetActive(true); 
+			//else
+			//	_golemControlTxt.SetActive(true);
 		}
 	}
 
@@ -116,6 +113,6 @@ public class GolemControls : MonoBehaviour
 
 	public GameObject GetImage()
 	{
-		return _glyphs; 
+		return _glyphs;
 	}
 }
