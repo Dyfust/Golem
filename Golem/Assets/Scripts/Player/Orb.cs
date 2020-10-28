@@ -2,7 +2,7 @@
 using UnityEngine;
 using FSM;
 
-public class Orb : MonoBehaviour, IRequireInput, IReset
+public class Orb : Player, IRequireInput, IReset
 {
     public delegate void OrbEventHandler(Orb orb);
     public static event OrbEventHandler OnOrbActive;
