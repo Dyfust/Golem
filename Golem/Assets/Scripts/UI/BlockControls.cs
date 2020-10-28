@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,24 +9,19 @@ public class BlockControls : MonoBehaviour
 	[SerializeField] private GameObject _glyphs;
 	[SerializeField] private GameObject _blockControlTxt;
 	[SerializeField] private GameObject _tutGolem;
-	[SerializeField] private InputActionReference _inputType;
 	[SerializeField] private float _fadeInTimer;
 	[SerializeField] private float _fadeOutTimer;
+	[SerializeField] private GolemControls _controlsRef;
+	[SerializeField] private Block _blockRef;
 
-	private TMP_Text _textRef; 
-	private GolemControls _controlsRef;
+	private TMP_Text _textRef;
 	private Golem _golemRef;
-	private Block _blockRef;
 	private bool _firstView = true;
 
 	private void Awake()
 	{
-		_controlsRef = _tutGolem.GetComponent<GolemControls>();
 		_golemRef = _tutGolem.GetComponent<Golem>();
-		_blockRef = this.GetComponent<Block>();
 		_textRef = _blockControlTxt.GetComponent<TMP_Text>();
-
-		//_textRef.text = "Press " + _inputType.action.GetBindingDisplayString(InputBinding.DisplayStringOptions.DontOmitDevice) + " to push/pull"; 
 	}
 
 	private void Update()
@@ -50,8 +44,8 @@ public class BlockControls : MonoBehaviour
 					StartCoroutine(FadeOut(_fadeInTimer, _fadeOutTimer, _glyphs, _blockControlTxt));
 					_firstView = false;
 				}
-				else 
-					_blockControlTxt.SetActive(true); 
+				//else
+				//	_blockControlTxt.SetActive(true);
 
 			}
 		}
