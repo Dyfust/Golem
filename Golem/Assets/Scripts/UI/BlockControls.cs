@@ -27,7 +27,15 @@ public class BlockControls : MonoBehaviour
 		_blockRef = this.GetComponent<Block>();
 		_textRef = _blockControlTxt.GetComponent<TMP_Text>();
 
-		_textRef.text = "Press " + _inputType.action.GetBindingDisplayString(InputBinding.DisplayStringOptions.DontOmitDevice) + " to push/pull"; 
+		//_textRef.text = "Press " + _inputType.action.GetBindingDisplayString(InputBinding.DisplayStringOptions.DontOmitDevice) + " to push/pull"; 
+	}
+
+	private void Update()
+	{
+		if (GlobalInput.instance.GetCurrentInputMethod() == GlobalInput.DEVICE.KEYBOARD)
+			_textRef.text = "Press 'E' to Interact!";
+		if (GlobalInput.instance.GetCurrentInputMethod() == GlobalInput.DEVICE.GAMEPAD)
+			_textRef.text = "Press 'X' to Interact!";
 	}
 
 	private void OnTriggerEnter(Collider other)

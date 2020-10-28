@@ -1,12 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Users;
-using System;
-using System.Data.SqlClient;
 
 public class GolemControls : MonoBehaviour
 {
@@ -19,7 +15,7 @@ public class GolemControls : MonoBehaviour
 
 
 	private InputAction _action; 
-	private TMP_Text _textref; 
+	private TMP_Text _textRef; 
 	private Golem _ref;
 	private bool _firstView = true;
 
@@ -37,9 +33,10 @@ public class GolemControls : MonoBehaviour
 	{
 		_action = new InputAction(type: InputActionType.PassThrough, binding: "*/<Button>");
 		_ref = this.GetComponent<Golem>();
-		_textref = _golemControlTxt.GetComponent<TMP_Text>();
+		_textRef = _golemControlTxt.GetComponent<TMP_Text>();
 
-		_textref.text = "Press " + _inputType.action.GetBindingDisplayString(InputBinding.DisplayStringOptions.DontOmitDevice) + " to enter!"; 
+		//_textref.text = "Press " + _inputType.action.GetBindingDisplayString(InputBinding.DisplayStringOptions.DontOmitDevice) + " to enter!"; 
+
 	}
 
 	// Update is called once per frame
@@ -50,6 +47,11 @@ public class GolemControls : MonoBehaviour
 			_golemControlTxt.SetActive(false);
 			_glyphs.SetActive(false); 
 		}
+
+		if (GlobalInput.instance.GetCurrentInputMethod() == GlobalInput.DEVICE.KEYBOARD)
+			_textRef.text = "Press 'F' to enter!";
+		if (GlobalInput.instance.GetCurrentInputMethod() == GlobalInput.DEVICE.GAMEPAD)
+			_textRef.text = "Press 'A' to enter!";
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -92,7 +94,7 @@ public class GolemControls : MonoBehaviour
 		Image img = image.GetComponent<Image>();
 		img.color = new Color(img.color.r, img.color.g, img.color.b, 0);
 
-		_textref.color = new Color(_textref.color.r, _textref.color.g, _textref.color.b, 0);
+		_textRef.color = new Color(_textRef.color.r, _textRef.color.g, _textRef.color.b, 0);
 
 		while (img.color.a <= 1.0f)
 		{
@@ -105,9 +107,9 @@ public class GolemControls : MonoBehaviour
 			yield return null;
 		}
 
-		while (_textref.color.a <= 1.0f)
+		while (_textRef.color.a <= 1.0f)
 		{
-			_textref.color = new Color(_textref.color.r, _textref.color.g, _textref.color.b, _textref.color.a + (Time.deltaTime / t2));
+			_textRef.color = new Color(_textRef.color.r, _textRef.color.g, _textRef.color.b, _textRef.color.a + (Time.deltaTime / t2));
 			yield return null;
 		}
 	}
