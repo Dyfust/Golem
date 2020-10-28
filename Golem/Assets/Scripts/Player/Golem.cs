@@ -2,7 +2,7 @@
 using GolemStates;
 using FSM;
 
-public class Golem : MonoBehaviour, IRequireInput, IReset
+public class Golem : Player, IRequireInput, IReset
 {
 	public delegate void GolemEventHandler(Golem golem);
 	public static event GolemEventHandler OnGolemActive;
