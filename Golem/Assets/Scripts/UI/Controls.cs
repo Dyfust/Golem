@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(SphereCollider))]
+
 public class Controls : MonoBehaviour
 {
 	enum TARGET
@@ -13,20 +14,19 @@ public class Controls : MonoBehaviour
 		GOLEM
 	}
 
-
 	[SerializeField] private GameObject _glyph;
 	[SerializeField] private GameObject _text;
 	[SerializeField] private float _fadeInTimer;
 	[SerializeField] private float _fadeOutTimer;
-	[SerializeField] private string _keyboardPrompt; 
+	[SerializeField] private string _keyboardPrompt;
 	[SerializeField] private string _gamepadPrompt;
 	[SerializeField] private TARGET _target;
 
-	private string _targetTag; 
-	private SphereCollider _col; 
+	private string _targetTag;
+	private SphereCollider _col;
 	private TMP_Text _textRef;
 	private bool _active = false;
-	private bool _viewed = false; 
+	private bool _viewed = false;
 
 	private void Start()
 	{
@@ -97,6 +97,4 @@ public class Controls : MonoBehaviour
 			yield return null;
 		}
 	}
-
-
 }
