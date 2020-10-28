@@ -1,12 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Users;
-using System;
-using System.Data.SqlClient;
 
 public class GolemControls : MonoBehaviour
 {
