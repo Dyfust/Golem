@@ -234,7 +234,7 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 0
   - m_From: '**ANY CAMERA**'
-    m_To: CamMarcusRP
+    m_To: Cam
     m_Blend:
       m_Style: 0
       m_Time: 2
@@ -244,7 +244,7 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: CamMarcusRP
+  - m_From: Cam
     m_To: '**ANY CAMERA**'
     m_Blend:
       m_Style: 0
