@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7870693594233425007
 Transform:
@@ -111,6 +111,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Brick21_Low
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c1e24bee62e6b734187f78a6e2927991,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295805981713065058, guid: c1e24bee62e6b734187f78a6e2927991,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1e24bee62e6b734187f78a6e2927991, type: 3}

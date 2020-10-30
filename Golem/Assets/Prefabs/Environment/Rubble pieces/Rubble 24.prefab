@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4104107967802725180
 Transform:
@@ -126,6 +126,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Brick25_Low
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3777f546bc7a4e644ab03643b01153f4,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -366676722270661482, guid: 3777f546bc7a4e644ab03643b01153f4,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3777f546bc7a4e644ab03643b01153f4, type: 3}

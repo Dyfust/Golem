@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8953614898905839243
 Transform:
@@ -107,10 +107,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2806288710820829752, guid: f9e11a00e04d99e4e83782810195145a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: f9e11a00e04d99e4e83782810195145a,
         type: 3}
       propertyPath: m_Name
       value: Brick33_Low
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: f9e11a00e04d99e4e83782810195145a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9e11a00e04d99e4e83782810195145a, type: 3}
