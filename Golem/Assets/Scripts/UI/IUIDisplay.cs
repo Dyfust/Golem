@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface IUIDisplay
 {
+	bool UIActive();
 
+	void HideUI(); 
 }

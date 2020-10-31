@@ -231,7 +231,12 @@ public class Orb : Player, IRequireInput, IReset
         _controller.OnCollisionStay(collision);
     }
 
-    public bool IsGrounded() => _controller.IsGrounded();
+	public override bool IsActive()
+	{
+        return true; 
+	}
+
+	public bool IsGrounded() => _controller.IsGrounded();
     public float GetMaxSpeed() => _controller.GetMaxSpeed();
     public Vector3 GetVelocity() => _controller.GetVelocity();
 }
