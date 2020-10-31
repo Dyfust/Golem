@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 6401831824116250092}
   - component: {fileID: 858895926414444821}
   m_Layer: 0
-  m_Name: stone statue_low (1)
+  m_Name: Stone Dragon Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2705791047705972698
 Transform:
