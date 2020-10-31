@@ -3,7 +3,12 @@ guid: 55acf219d43363b43ba5c66ea8bd964d
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Elephant_MAT
+    second: {fileID: 2100000, guid: 7f4e74994da58d040a23c819bf6b393c, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

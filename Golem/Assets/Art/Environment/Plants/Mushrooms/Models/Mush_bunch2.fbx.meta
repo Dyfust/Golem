@@ -3,7 +3,12 @@ guid: 3e8be4f67c11a6c46bfeb401c989eade
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_OysterMush
+    second: {fileID: 2100000, guid: 9047ca128853d6c4b95cc3dbd70ad1e9, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

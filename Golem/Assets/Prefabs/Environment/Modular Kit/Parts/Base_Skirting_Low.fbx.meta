@@ -3,7 +3,12 @@ guid: 3b9b96d68edb5bb4398cc47a14271639
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WallSkirting_MAT
+    second: {fileID: 2100000, guid: 38acc6ca54fa97642aad236b437e7d24, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
