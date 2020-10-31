@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7683819007787096258
 Transform:
@@ -69,7 +69,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5932368717367608085
 Transform:
@@ -198,6 +198,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cornerpiece
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894590648697226063, guid: 580bbea963e07ab4cbc984d09a825df3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 8123704626357478355, guid: 580bbea963e07ab4cbc984d09a825df3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 580bbea963e07ab4cbc984d09a825df3, type: 3}
@@ -424,6 +434,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cornerpiece (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4894590648697226063, guid: 580bbea963e07ab4cbc984d09a825df3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 8123704626357478355, guid: 580bbea963e07ab4cbc984d09a825df3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 580bbea963e07ab4cbc984d09a825df3, type: 3}
 --- !u!4 &643417690244860342 stripped
@@ -574,6 +594,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cornerpiece (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 4894590648697226063, guid: 580bbea963e07ab4cbc984d09a825df3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 8123704626357478355, guid: 580bbea963e07ab4cbc984d09a825df3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 580bbea963e07ab4cbc984d09a825df3, type: 3}
 --- !u!4 &239856105128029774 stripped
@@ -723,6 +753,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cornerpiece (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894590648697226063, guid: 580bbea963e07ab4cbc984d09a825df3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 8123704626357478355, guid: 580bbea963e07ab4cbc984d09a825df3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 580bbea963e07ab4cbc984d09a825df3, type: 3}
