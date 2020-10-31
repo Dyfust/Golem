@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Boo.Lang;
+using System.Collections;
+using System.Linq;
 using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
@@ -6,7 +8,7 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(SphereCollider))]
 
-public class Controls : MonoBehaviour
+public class Controls : MonoBehaviour, IUIDisplay
 {
 	enum TARGET
 	{
@@ -28,8 +30,22 @@ public class Controls : MonoBehaviour
 	private bool _active = false;
 	private bool _viewed = false;
 
+	private List<IUIDisplay> _uiDisplays; 
+
 	private void Start()
 	{
+
+		var temp = FindObjectsOfType<MonoBehaviour>().OfType<IUIDisplay>();
+		_uiDisplays = new List<IUIDisplay>();
+
+		foreach (IUIDisplay ui in temp)
+		{
+			if (ui == this)
+				continue; 
+			_uiDisplays.Add(ui); 
+		}
+
+
 		_textRef = _text.GetComponent<TMP_Text>();
 		_col = GetComponent<SphereCollider>();
 		_col.isTrigger = true; 
@@ -51,14 +67,24 @@ public class Controls : MonoBehaviour
 			_textRef.text = _keyboardPrompt;
 		if (GlobalInput.instance.GetCurrentInputMethod() == GlobalInput.DEVICE.GAMEPAD)
 			_textRef.text = _gamepadPrompt;
+
+
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.CompareTag(_targetTag))
+		if (other.gameObject.CompareTag(_targetTag) && other.gameObject.GetComponent<Player>().IsActive() == true)
 		{
 			if (_viewed == false)
 			{
+				for (int i = 0; i < _uiDisplays.Count(); i++)
+				{
+					if (_uiDisplays[i].UIActive() == true)
+					{
+						_uiDisplays[i].HideUI(); 
+					}
+				}
+				_active = true;
 				StopAllCoroutines();
 				StartCoroutine(FadeOut(_fadeInTimer, _fadeOutTimer, _glyph, _text));
 				_viewed = true; 
@@ -96,5 +122,18 @@ public class Controls : MonoBehaviour
 			_textRef.color = new Color(_textRef.color.r, _textRef.color.g, _textRef.color.b, _textRef.color.a - (Time.deltaTime / t2));
 			yield return null;
 		}
+		_active = false;
+	}
+
+	public bool UIActive()
+	{
+		return _active; 
+	}
+
+	public void HideUI()
+	{
+		StopAllCoroutines();
+		_glyph.SetActive(false);
+		_text.SetActive(false); 
 	}
 }
