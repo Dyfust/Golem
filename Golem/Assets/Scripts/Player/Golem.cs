@@ -322,7 +322,7 @@ public class Golem : Player, IRequireInput, IReset
 
 	}
 
-	public bool IsActive()
+	public override bool IsActive()
 	{
 		return !_dormant;
 	}
