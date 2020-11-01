@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 3802082130110037451}
   - component: {fileID: 7867065048968511239}
   - component: {fileID: 3273569109048558145}
-  m_Layer: 17
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,11 +207,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall_top_skirting_low
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3c6303369d3924d41af8437d6da6d330,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8881151724485163560, guid: 3c6303369d3924d41af8437d6da6d330,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3e1638f21f524724ca99e69d662c3cbe, type: 2}
+    - target: {fileID: 8881151724485163560, guid: 3c6303369d3924d41af8437d6da6d330,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9154087802075454791, guid: 3c6303369d3924d41af8437d6da6d330,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c6303369d3924d41af8437d6da6d330, type: 3}
 --- !u!4 &7023767845829050045 stripped
