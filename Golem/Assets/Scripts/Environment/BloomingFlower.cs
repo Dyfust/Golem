@@ -5,29 +5,49 @@
 /// </summary>
 public class BloomingFlower : MonoBehaviour
 {
+	enum TARGET
+	{
+		ORB, 
+		MENUCAM
+	}
+
 	private enum FlowerState { NORMAL, BLOOMED }
 
 	[SerializeField] private float _distance;
 	[SerializeField] private Animator _anim;
+
+	private TARGET _target = TARGET.ORB;
+	private string _targetTag; 
+	private Transform _targetTranform;
 	private FlowerState _state;
 
-	private Transform _orbTransform;
 
-	private bool _orbFound;
+	private bool _targetFound;
 
 	private void Awake()
 	{
-		_orbTransform = FindObjectOfType<Orb>().transform;
-		_orbFound = _orbTransform != null;
+		switch (_target)
+		{
+			case TARGET.ORB:
+				_targetTag = "Orb";
+				break;
+			case TARGET.MENUCAM:
+				_targetTag = "MenuCam";
+				break;
+		}
+
+		_targetTranform = GameObject.FindGameObjectWithTag(_targetTag).transform;
+		_targetFound = _targetTranform != null;
 
 		_state = FlowerState.NORMAL;
+
 	}
 
 	private void Update()
 	{
-		if (_state == FlowerState.NORMAL && _orbFound)
+		if (_state == FlowerState.NORMAL && _targetFound)
 		{
-			float distBetweenOrb = (_orbTransform.position - transform.position).magnitude;
+			float distBetweenOrb = (_targetTranform.position - transform.position).magnitude;
 
 			if (distBetweenOrb <= _distance)
 			{
