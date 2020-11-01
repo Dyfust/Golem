@@ -67,8 +67,6 @@ public class Controls : MonoBehaviour, IUIDisplay
 			_textRef.text = _keyboardPrompt;
 		if (GlobalInput.instance.GetCurrentInputMethod() == GlobalInput.DEVICE.GAMEPAD)
 			_textRef.text = _gamepadPrompt;
-
-
 	}
 
 	private void OnTriggerEnter(Collider other)
