@@ -118,7 +118,7 @@ MeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 0.5
   m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
@@ -204,6 +204,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 7530551143104911119, guid: 580bbea963e07ab4cbc984d09a825df3,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8123704626357478355, guid: 580bbea963e07ab4cbc984d09a825df3,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -284,6 +289,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Floorskirting (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8398791451708342034, guid: 9cf4114c44797ca40888b1397f4558fb,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cf4114c44797ca40888b1397f4558fb, type: 3}
 --- !u!4 &3544949867128321720 stripped
@@ -358,6 +368,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Floorskirting (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398791451708342034, guid: 9cf4114c44797ca40888b1397f4558fb,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cf4114c44797ca40888b1397f4558fb, type: 3}
@@ -439,6 +454,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 7530551143104911119, guid: 580bbea963e07ab4cbc984d09a825df3,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8123704626357478355, guid: 580bbea963e07ab4cbc984d09a825df3,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -518,6 +538,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Floorskirting
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398791451708342034, guid: 9cf4114c44797ca40888b1397f4558fb,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cf4114c44797ca40888b1397f4558fb, type: 3}
@@ -599,6 +624,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 7530551143104911119, guid: 580bbea963e07ab4cbc984d09a825df3,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8123704626357478355, guid: 580bbea963e07ab4cbc984d09a825df3,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -679,6 +709,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Floorskirting (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8398791451708342034, guid: 9cf4114c44797ca40888b1397f4558fb,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cf4114c44797ca40888b1397f4558fb, type: 3}
 --- !u!4 &7251244504306494743 stripped
@@ -758,6 +793,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7530551143104911119, guid: 580bbea963e07ab4cbc984d09a825df3,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8123704626357478355, guid: 580bbea963e07ab4cbc984d09a825df3,
         type: 3}
