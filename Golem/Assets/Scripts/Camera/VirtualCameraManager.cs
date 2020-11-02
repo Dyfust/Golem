@@ -22,7 +22,6 @@ public class VirtualCameraManager : MonoBehaviour
 	[SerializeField] private CinemachineFreeLook _orbFreeLookCM;
 	[SerializeField] private CinemachineFreeLook _golemFreeLookCM;
     [SerializeField] private CinemachineVirtualCamera _orbTunnelCM;
-	[SerializeField] private CameraSettings _cameraSettings;
 
     private CinemachineTransposer _orbTunnelTransposer;
     private VirtualCamera _orbTunnelVirtualCamera;
@@ -48,7 +47,6 @@ public class VirtualCameraManager : MonoBehaviour
 		_golemVirtualCamera = _golemFreeLookCM.GetComponent<VirtualCamera>();
         _orbTunnelVirtualCamera = _orbTunnelCM.GetComponent<VirtualCamera>();
         _orbTunnelTransposer = _orbTunnelCM.GetCinemachineComponent<CinemachineTransposer>();
-
 		GameObject[] vcamGOs = GameObject.FindGameObjectsWithTag(_identifierTag);
 		_virtualCameras = new VirtualCamera[vcamGOs.Length];
 

@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Linq;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Layouts;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private GameObject _spawn;
 
 	private List<IPauseableObject> _pausableObjects;
+
 	private void Awake()
 	{
 		if (_instance == null)
@@ -23,7 +25,6 @@ public class GameManager : MonoBehaviour
 	{
 		var temp = FindObjectsOfType<MonoBehaviour>().OfType<IPauseableObject>();
 		_pausableObjects = new List<IPauseableObject>();
-
 
 		foreach (IPauseableObject pausableObject in temp)
 		{

@@ -118,8 +118,6 @@ public class GamePadMenuSupport : MonoBehaviour
 		_currentText = child.transform.GetComponent<Text>();
 		EventSystem.current.SetSelectedGameObject(_currentButtonRef);
 
-		_navigation.Camera.Look.processors.Replace("Scale Vector 2(X = 2, Y = 2)", "Scale Vector 2(X = 20, Y = 20)");
-
 	}
 
 
