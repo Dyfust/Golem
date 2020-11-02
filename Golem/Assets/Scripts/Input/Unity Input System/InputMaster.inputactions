@@ -300,10 +300,69 @@
             ]
         },
         {
-            "name": "Menu",
-            "id": "9d7705a7-2f04-4ea1-a0de-a3346c903c86",
-            "actions": [],
-            "bindings": []
+            "name": "MenuNavigation",
+            "id": "38f26d80-0f2a-445f-9a9f-588407c0be50",
+            "actions": [
+                {
+                    "name": "ButtonPress",
+                    "type": "Button",
+                    "id": "4e1f91f6-3ab5-42ae-946f-73515ca1bdad",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Up",
+                    "type": "Button",
+                    "id": "4e37912a-8c3d-4860-92c4-6635abac9055",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Down",
+                    "type": "Button",
+                    "id": "de392444-dc7d-4dde-83f7-1f4bf1fe59a1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "33ed8433-de03-44c6-97c0-ffffb63820cd",
+                    "path": "<XInputController>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XBox",
+                    "action": "ButtonPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4d45c01a-ee5c-4b19-a857-f9a578daaddc",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XBox",
+                    "action": "Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6916bc8d-a5e5-4e26-94df-bea068f74ee8",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XBox",
+                    "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

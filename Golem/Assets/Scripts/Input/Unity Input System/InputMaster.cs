@@ -313,10 +313,69 @@ public class @InputMaster : IInputActionCollection, IDisposable
             ]
         },
         {
-            ""name"": ""Menu"",
-            ""id"": ""9d7705a7-2f04-4ea1-a0de-a3346c903c86"",
-            ""actions"": [],
-            ""bindings"": []
+            ""name"": ""MenuNavigation"",
+            ""id"": ""38f26d80-0f2a-445f-9a9f-588407c0be50"",
+            ""actions"": [
+                {
+                    ""name"": ""ButtonPress"",
+                    ""type"": ""Button"",
+                    ""id"": ""4e1f91f6-3ab5-42ae-946f-73515ca1bdad"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""4e37912a-8c3d-4860-92c4-6635abac9055"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""de392444-dc7d-4dde-83f7-1f4bf1fe59a1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""33ed8433-de03-44c6-97c0-ffffb63820cd"",
+                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox"",
+                    ""action"": ""ButtonPress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4d45c01a-ee5c-4b19-a857-f9a578daaddc"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox"",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6916bc8d-a5e5-4e26-94df-bea068f74ee8"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox"",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -358,8 +417,11 @@ public class @InputMaster : IInputActionCollection, IDisposable
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
-        // Menu
-        m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
+        // MenuNavigation
+        m_MenuNavigation = asset.FindActionMap("MenuNavigation", throwIfNotFound: true);
+        m_MenuNavigation_ButtonPress = m_MenuNavigation.FindAction("ButtonPress", throwIfNotFound: true);
+        m_MenuNavigation_Up = m_MenuNavigation.FindAction("Up", throwIfNotFound: true);
+        m_MenuNavigation_Down = m_MenuNavigation.FindAction("Down", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -496,30 +558,54 @@ public class @InputMaster : IInputActionCollection, IDisposable
     }
     public CameraActions @Camera => new CameraActions(this);
 
-    // Menu
-    private readonly InputActionMap m_Menu;
-    private IMenuActions m_MenuActionsCallbackInterface;
-    public struct MenuActions
+    // MenuNavigation
+    private readonly InputActionMap m_MenuNavigation;
+    private IMenuNavigationActions m_MenuNavigationActionsCallbackInterface;
+    private readonly InputAction m_MenuNavigation_ButtonPress;
+    private readonly InputAction m_MenuNavigation_Up;
+    private readonly InputAction m_MenuNavigation_Down;
+    public struct MenuNavigationActions
     {
         private @InputMaster m_Wrapper;
-        public MenuActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
-        public InputActionMap Get() { return m_Wrapper.m_Menu; }
+        public MenuNavigationActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ButtonPress => m_Wrapper.m_MenuNavigation_ButtonPress;
+        public InputAction @Up => m_Wrapper.m_MenuNavigation_Up;
+        public InputAction @Down => m_Wrapper.m_MenuNavigation_Down;
+        public InputActionMap Get() { return m_Wrapper.m_MenuNavigation; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
-        public void SetCallbacks(IMenuActions instance)
+        public static implicit operator InputActionMap(MenuNavigationActions set) { return set.Get(); }
+        public void SetCallbacks(IMenuNavigationActions instance)
         {
-            if (m_Wrapper.m_MenuActionsCallbackInterface != null)
+            if (m_Wrapper.m_MenuNavigationActionsCallbackInterface != null)
             {
+                @ButtonPress.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnButtonPress;
+                @ButtonPress.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnButtonPress;
+                @ButtonPress.canceled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnButtonPress;
+                @Up.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnUp;
+                @Up.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnUp;
+                @Up.canceled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnUp;
+                @Down.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnDown;
+                @Down.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnDown;
+                @Down.canceled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnDown;
             }
-            m_Wrapper.m_MenuActionsCallbackInterface = instance;
+            m_Wrapper.m_MenuNavigationActionsCallbackInterface = instance;
             if (instance != null)
             {
+                @ButtonPress.started += instance.OnButtonPress;
+                @ButtonPress.performed += instance.OnButtonPress;
+                @ButtonPress.canceled += instance.OnButtonPress;
+                @Up.started += instance.OnUp;
+                @Up.performed += instance.OnUp;
+                @Up.canceled += instance.OnUp;
+                @Down.started += instance.OnDown;
+                @Down.performed += instance.OnDown;
+                @Down.canceled += instance.OnDown;
             }
         }
     }
-    public MenuActions @Menu => new MenuActions(this);
+    public MenuNavigationActions @MenuNavigation => new MenuNavigationActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -549,7 +635,10 @@ public class @InputMaster : IInputActionCollection, IDisposable
     {
         void OnLook(InputAction.CallbackContext context);
     }
-    public interface IMenuActions
+    public interface IMenuNavigationActions
     {
+        void OnButtonPress(InputAction.CallbackContext context);
+        void OnUp(InputAction.CallbackContext context);
+        void OnDown(InputAction.CallbackContext context);
     }
 }
