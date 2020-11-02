@@ -22,6 +22,7 @@ public class VirtualCameraManager : MonoBehaviour
 	[SerializeField] private CinemachineFreeLook _orbFreeLookCM;
 	[SerializeField] private CinemachineFreeLook _golemFreeLookCM;
     [SerializeField] private CinemachineVirtualCamera _orbTunnelCM;
+	[SerializeField] private CameraSettings _cameraSettings;
 
     private CinemachineTransposer _orbTunnelTransposer;
     private VirtualCamera _orbTunnelVirtualCamera;

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Linq; 
+using System.Linq;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,7 +12,6 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private GameObject _spawn;
 
 	private List<IPauseableObject> _pausableObjects;
-
 	private void Awake()
 	{
 		if (_instance == null)
@@ -22,8 +22,9 @@ public class GameManager : MonoBehaviour
 	void Start()
 	{
 		var temp = FindObjectsOfType<MonoBehaviour>().OfType<IPauseableObject>();
-		_pausableObjects = new List<IPauseableObject>(); 
-		
+		_pausableObjects = new List<IPauseableObject>();
+
+
 		foreach (IPauseableObject pausableObject in temp)
 		{
 			_pausableObjects.Add(pausableObject); 
