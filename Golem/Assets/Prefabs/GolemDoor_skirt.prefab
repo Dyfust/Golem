@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3897482588305344246
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 950579939496348748}
+  - component: {fileID: 2797475275726745203}
+  - component: {fileID: 5221767141506887968}
+  - component: {fileID: 2971120986256819321}
+  m_Layer: 0
+  m_Name: GolemDoor_skirt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &950579939496348748
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3897482588305344246}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -11.055998, y: -1.628, z: -83.534}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1812977718908317137}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2797475275726745203
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3897482588305344246}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1181822, y: 2.9111655, z: 2.7241669}
+  m_Center: {x: -0.56978846, y: 1.449175, z: -0.62420654}
+--- !u!65 &5221767141506887968
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3897482588305344246}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.5612135, y: 2.9360359, z: 2.532425}
+  m_Center: {x: -6.230577, y: 1.4192241, z: -0.56461334}
+--- !u!65 &2971120986256819321
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3897482588305344246}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.6501918, y: 0.4461851, z: 2.4320374}
+  m_Center: {x: -3.8196094, y: 2.6416278, z: -0.63671875}
+--- !u!1001 &8821052591263680059
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 950579939496348748}
+    m_Modifications:
+    - target: {fileID: 906996453839339563, guid: adcf10a1ffd839b4a9b5a96419015b69,
+        type: 3}
+      propertyPath: m_Name
+      value: Golemdoorway_open
+      objectReference: {fileID: 0}
+    - target: {fileID: 7152368466668153834, guid: adcf10a1ffd839b4a9b5a96419015b69,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.5220513
+      objectReference: {fileID: 0}
+    - target: {fileID: 7152368466668153834, guid: adcf10a1ffd839b4a9b5a96419015b69,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4709557
+      objectReference: {fileID: 0}
+    - target: {fileID: 7152368466668153834, guid: adcf10a1ffd839b4a9b5a96419015b69,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.7015991
+      objectReference: {fileID: 0}
+    - target: {fileID: 7152368466668153834, guid: adcf10a1ffd839b4a9b5a96419015b69,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7152368466668153834, guid: adcf10a1ffd839b4a9b5a96419015b69,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7152368466668153834, guid: adcf10a1ffd839b4a9b5a96419015b69,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7152368466668153834, guid: adcf10a1ffd839b4a9b5a96419015b69,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7152368466668153834, guid: adcf10a1ffd839b4a9b5a96419015b69,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7152368466668153834, guid: adcf10a1ffd839b4a9b5a96419015b69,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7152368466668153834, guid: adcf10a1ffd839b4a9b5a96419015b69,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7152368466668153834, guid: adcf10a1ffd839b4a9b5a96419015b69,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: adcf10a1ffd839b4a9b5a96419015b69, type: 3}
+--- !u!4 &1812977718908317137 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7152368466668153834, guid: adcf10a1ffd839b4a9b5a96419015b69,
+    type: 3}
+  m_PrefabInstance: {fileID: 8821052591263680059}
+  m_PrefabAsset: {fileID: 0}
