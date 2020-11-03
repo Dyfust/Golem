@@ -13,6 +13,9 @@ public class OneShotEmitter : MonoBehaviour
 
     public void Play()
     {
+        if (_source.isPlaying)
+            return;
+
         AudioClip clip = _clips[Random.Range(0, _clips.Length)];
         float pitch = Random.Range(_minPitch, _maxPitch);
 

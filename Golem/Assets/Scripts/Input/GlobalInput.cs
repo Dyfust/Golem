@@ -26,7 +26,6 @@ public class GlobalInput : MonoBehaviour
 		InputUser.onUnpairedDeviceUsed += (c, e) =>
 		{
 			var device = c.device;
-			Debug.Log(device.name);
 
 			if (device == Keyboard.current)
 				_currentDevice = DEVICE.KEYBOARD;

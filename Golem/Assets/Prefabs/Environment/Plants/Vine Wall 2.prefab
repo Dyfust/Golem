@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 5565202250479432739}
   - component: {fileID: 2163725209768298714}
   m_Layer: 0
-  m_Name: WallVines_2 (2)
+  m_Name: Vine Wall 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3485952451872869909
 Transform:
@@ -58,7 +58,6 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 54960a5e7a985244f848703dd9e8eddf, type: 2}
   - {fileID: 2100000, guid: 54960a5e7a985244f848703dd9e8eddf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

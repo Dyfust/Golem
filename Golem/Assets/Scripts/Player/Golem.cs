@@ -24,14 +24,17 @@ public class Golem : Player, IRequireInput, IReset
 	[SerializeField] private GameObject _orbMesh;
 	[SerializeField] private Vector3 _attachmentOffset; public Vector3 attachmentOffset => _attachmentOffset;
 
+	[CustomHeader("Animation Blending")]
+	[SerializeField] private float _pushingBlendSpeed;
+
 	[CustomHeader("States")]
 	[SerializeField] private State _dormantState;
 
+	[CustomHeader("VFX")]
+	[SerializeField] private EmissionFade _emissionFade; 
+	
 	[CustomHeader("References")]
 	[SerializeField] private Animator _anim;
-
-	[CustomHeader("Emission Anim")]
-	[SerializeField] private GolemBloom _emissionRef; 
 	// --------------------------------------------------------------
 	private PlayerInputData _inputData;
 
@@ -75,13 +78,23 @@ public class Golem : Player, IRequireInput, IReset
 		DebugWindow.AddPrintTask(() => "Golem Ground Normal: " + _controller.GetCollisionNormal().ToString());
 	}
 
+
+	float idleTimestamp;
+	float idleDt = 0.1f;
 	private void Update()
 	{
 		ComputeAxes();
 
 		_fsm.HandleTransitions();
-		_fsm.UpdateLogic();
+		_fsm.UpdateLogic();	
 
+		// Cleanup required.
+		if (_rb.velocity.sqrMagnitude >= 0.1f)
+			idleTimestamp = Time.time;
+
+		bool isIdle = _rb.velocity.sqrMagnitude < 0.1f && Time.time > idleTimestamp + idleDt;
+
+		_anim.SetBool("Idle", isIdle);
 		_anim.SetFloat("Speed", _rb.velocity.sqrMagnitude);
 	}
 
@@ -104,7 +117,6 @@ public class Golem : Player, IRequireInput, IReset
 		State idleState = new IdleState(this);
 		State walkingState = new WalkingState(this);
 		State pushingState = new PushingState(this);
-		State liftingState = new LiftingState(this);
 
 		_fsm.AddTransition(_dormantState, idleState, () => { return !_dormant; });
 
@@ -152,20 +164,6 @@ public class Golem : Player, IRequireInput, IReset
 			return _block == null;
 		});
 
-		// Lifting
-		_fsm.AddTransition(idleState, liftingState, () =>
-		{
-			if (_inputData.liftButtonPressedThisFrame)
-				return BeginLifting();
-
-			return false;
-		});
-
-		_fsm.AddTransition(liftingState, idleState, () =>
-		{
-			return _inputData.liftButtonPressedThisFrame;
-		});
-
 		_fsm.SetDefaultState(idleState);
 	}
 
@@ -204,7 +202,7 @@ public class Golem : Player, IRequireInput, IReset
 
 		OnGolemActive?.Invoke(this);
 		_dormant = false;
-		_emissionRef.OnActivate(); 
+		_emissionFade.OnActivate(); 
 	}
 
 	public void Exit()
@@ -213,7 +211,7 @@ public class Golem : Player, IRequireInput, IReset
 			_orbMesh.SetActive(false);
 
 		_dormant = true;
-		_emissionRef.OnDeactivate(); 
+		_emissionFade.OnDeactivate(); 
 	}
 
 	#region Pushing
@@ -238,6 +236,8 @@ public class Golem : Player, IRequireInput, IReset
 		return false;
 	}
 
+	float time;
+	float dt = 0.1f;
 	public void Push()
 	{
 		bool _blockCentered = Physics.Raycast(transform.position + Vector3.up * 0.85f, transform.forward, 2.0f, _blockLayer);
@@ -247,7 +247,15 @@ public class Golem : Player, IRequireInput, IReset
 			StopPushing();
 			return;
 		}
+
+		// Cleanup required
+		if (_inputData.axes.y != 0f)
+			time = Time.time;
+
+		bool pushingIdle = _inputData.axes.y == 0f && Time.time > time + dt;
+
 		_anim.SetFloat("Direction", _inputData.axes.y);
+		_anim.SetBool("Pushing Idle", pushingIdle);
 		_controller.Move(_inputData.axes.y * -_blockNormal / _block.mass);
 		_block.Move(_rb.velocity * Time.fixedDeltaTime, _inputData.axes.y);
 	}
@@ -258,44 +266,6 @@ public class Golem : Player, IRequireInput, IReset
 			_block.StopPushing();
 		_block = null;
 		_anim.SetBool("Pushing", false);
-	}
-	#endregion
-
-	#region Lifting
-	public bool BeginLifting()
-	{
-		RaycastHit hit;
-		if (Physics.Raycast(_thisTransform.position + Vector3.up * 0.5f, _forwardRelativeToCamera, out hit, _interactionDistance, _blockLayer))
-		{
-			//_block = hit.collider.GetComponent<InteractableCube>(); 
-			_block = hit.collider.GetComponent<Block>();
-			_block.BeginLift();
-			_blockNormal = hit.normal;
-
-			_block.transform.position = this.transform.position + new Vector3(0, _liftingVerticalOffset, 0);
-
-			//Vector3 newGolemPos = _block.transform.position + (_blockNormal * _distFromBlock);
-			//newGolemPos.y = _thisTransform.position.y;
-			//
-			//_thisTransform.position = newGolemPos;
-			//_thisTransform.rotation = Quaternion.LookRotation(-_blockNormal);
-			//
-			//_block.transform.position = _thisTransform.position + new Vector3(0, 2.5f, 0);
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public void Lift()
-	{
-		//_block.transform.position = _handJoint.position;
-	}
-
-	public void StopLifting()
-	{
-		_block.StopLift();
 	}
 	#endregion
 
