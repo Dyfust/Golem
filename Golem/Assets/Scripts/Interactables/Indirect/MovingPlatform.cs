@@ -8,29 +8,28 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 	[SerializeField] private Vector3 _closedOffset;
 	[SerializeField] private float _time;
 
+	[CustomHeader("Audio")]
+	[SerializeField] private AudioEmitter _audioEmitter;
+
+	private Vector3 _startPos;
 	private Vector3 _closedPos;
 	private Vector3 _openedPos;
-	private Vector3 _startPos;
-	private Vector3 _currentPos;
+	private bool _isMoving = false;
 	private bool _open = false;
 
-	private float _startTime;
 	private float _dist;
 	private float _speed;
 
 	private bool _startState;
 
+	private Vector3 pos;
 
-	// Start is called before the first frame update
 	void Start()
 	{
-		// Initialising positions of the pressure plate.
 		_startPos = transform.position;
-		_currentPos = _startPos;
 
 		_openedPos = _startPos + _openedOffset;
 		_closedPos = _startPos + _closedOffset;
-		_startTime = Time.time;
 
 		_dist = Vector3.Distance(_openedPos, _closedPos);
 		_speed = _dist / _time;
@@ -38,34 +37,35 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 
 	private void Update()
 	{
-		float elapsedTime = (Time.time - _startTime);
-		float fractionOfJourney = elapsedTime / _time;
+		Vector3 targetPos = _open ? _openedPos : _closedPos;
+		transform.position = Vector3.MoveTowards(transform.position, targetPos, _speed * Time.deltaTime);
+		pos = transform.position;
 
-		if (_open)
-			transform.position = Vector3.Lerp(_currentPos, _openedPos, fractionOfJourney);
-		else		
-			transform.position = Vector3.Lerp(_currentPos, _closedPos, fractionOfJourney);		
-
-		if (Input.GetKeyDown(KeyCode.G))
-			Interact();
+		if (Vector3.Distance(transform.position, targetPos) <= 0.01f && _isMoving)
+		{
+			OnStopMoving();
+			_isMoving = false;
+		}
 	}
 
 	public void Interact()
 	{
 		_open = !_open;
-		Vector3 targetPos;
-		if (_open)
-			targetPos = _openedPos;
-		else
-			targetPos = _closedPos;
+		_isMoving = true;
 
-		_currentPos = transform.position;
-		_startTime = Time.time;
-
-		_dist = Vector3.Distance(_currentPos, targetPos);
-		_time = _dist / _speed;
+		OnStartMoving();
 	}
 
+	private void OnStartMoving()
+	{
+		_audioEmitter?.Play();
+	}
+
+	private void OnStopMoving()
+	{
+		_audioEmitter?.Stop();
+	}
+	
 	private void OnDrawGizmosSelected()
 	{
 		Gizmos.matrix = transform.localToWorldMatrix;

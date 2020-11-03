@@ -58,8 +58,6 @@ public class Orb : Player, IRequireInput, IReset
     private void Start()
     {
         InitialiseFSM();
-        _rollingSFX.SetValue(0f);
-        _rollingSFX.Play();
 
         DebugWindow.AddPrintTask(() => "Orb State: " + _fsm.GetCurrentState().debugName);
         DebugWindow.AddPrintTask(() => "Orb Heading: " + _currentHeading.ToString());

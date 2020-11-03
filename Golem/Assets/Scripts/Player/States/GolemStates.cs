@@ -91,37 +91,6 @@ namespace GolemStates
 		}
 	}
 
-	public class LiftingState : FSM.State
-	{
-		private Golem _golem;
-
-		public LiftingState(Golem golem) : base("Lifting State")
-		{
-			_golem = golem;
-		}
-
-		public override void OnEnter()
-		{
-			_golem.SetAnimatorBool("Lifting", true);
-		}
-
-		public override void OnExit()
-		{
-			_golem.SetAnimatorBool("Lifting", false);
-			_golem.StopLifting();
-		}
-
-		public override void UpdateLogic()
-		{
-			_golem.Lift();
-		}
-
-		public override void UpdatePhysics()
-		{
-			
-		}
-	}
-
 	public class PushingState : FSM.State
 	{
 		private Golem _golem;
