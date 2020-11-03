@@ -13,6 +13,7 @@ TagManager:
   - Ramp
   - AudioSource
   - TEst
+  - MenuCam
   layers:
   - Default
   - TransparentFX

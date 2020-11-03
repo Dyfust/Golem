@@ -47,7 +47,6 @@ public class VirtualCameraManager : MonoBehaviour
 		_golemVirtualCamera = _golemFreeLookCM.GetComponent<VirtualCamera>();
         _orbTunnelVirtualCamera = _orbTunnelCM.GetComponent<VirtualCamera>();
         _orbTunnelTransposer = _orbTunnelCM.GetCinemachineComponent<CinemachineTransposer>();
-
 		GameObject[] vcamGOs = GameObject.FindGameObjectsWithTag(_identifierTag);
 		_virtualCameras = new VirtualCamera[vcamGOs.Length];
 
