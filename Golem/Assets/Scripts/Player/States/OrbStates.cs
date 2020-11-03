@@ -45,20 +45,20 @@ namespace OrbStates
 
         public override void OnEnter()
         {
-            _rollingSFX.Play();
+            //_rollingSFX.Play();
         }
 
         public override void OnExit()
         {
-            _rollingSFX.Stop();
+            //_rollingSFX.Stop();
         }
 
         public override void UpdateLogic()
         {
-            if (_orb.IsGrounded())
-                _rollingSFX.SetValue(_orb.GetVelocity().magnitude / _orb.GetMaxSpeed());
-            else
-                _rollingSFX.SetValue(0f);
+            //if (_orb.IsGrounded())
+            //    _rollingSFX.SetVolume(_orb.GetVelocity().magnitude / _orb.GetMaxSpeed());
+            //else
+            //    _rollingSFX.SetVolume(0.5f);
         }
 
         public override void UpdatePhysics()

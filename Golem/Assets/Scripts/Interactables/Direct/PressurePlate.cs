@@ -9,9 +9,13 @@ public class PressurePlate : MonoBehaviour
 
     private string[] _targetTags;
 
+    [CustomHeader("VFX")]
     [SerializeField] private EmissionFill _innerEmissionFill;
     [SerializeField] private EmissionFill _outerEmmisionFill;
 
+    [CustomHeader("Audio")]
+    [SerializeField] private OneShotEmitter _sfxEmitter;
+    
     private void Awake()
     {
         _targetTags = new string[2];
@@ -25,6 +29,8 @@ public class PressurePlate : MonoBehaviour
         {
             _interactions[i].GetComponent<IInteractable>().Interact();
         }
+
+        _sfxEmitter.Play();
     }
 
     private void OnTriggerEnter(Collider other)

@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private GameObject _spawn;
 
 	private List<IPauseableObject> _pausableObjects;
-
+	
 	private void Awake()
 	{
 		if (_instance == null)

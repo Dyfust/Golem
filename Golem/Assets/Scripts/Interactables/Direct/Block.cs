@@ -5,7 +5,7 @@ using UnityEngine;
 /// Intractable block. 
 /// Attaches it self to an active Golem with interacted with. 
 /// </summary>
-public class Block : MonoBehaviour, IReset, IPlayAudio
+public class Block : MonoBehaviour
 {
 	//-----------------------------------------------------------------
 	[CustomHeader("Physics Properties")]
@@ -15,11 +15,11 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 	[SerializeField] private GameObject _mesh;
 	[SerializeField] private float _meshSmoothingSpeed; 
 
-	[CustomHeader("Emissive")]
-	[SerializeField] private EmissionFill _emissiveFill;
+	[CustomHeader("VFX")]
+	[SerializeField] private EmissionFade _emissionFade;
 
 	[CustomHeader("Audio")]
-	[SerializeField] private AudioClip _stoneDragging; 
+	[SerializeField] private AudioEmitter _movingSound;
 
 	[CustomHeader("Particles")]
 	[SerializeField] private ParticleSystem _pebbles;
@@ -29,17 +29,16 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 	private ParticleSystem.EmissionModule _emissionModule;
 	private ParticleSystem.MinMaxCurve _emissionCurve; 
 
-
 	private UnityEngine.CharacterController _cc;
 	private Collider _coll; 
 
 	private float _gravity = 10;
 
-	private Vector3 _preLiftPos;
 	private Vector3 _startPos;
 	private Vector3 _pushingNormal;
-	private Vector3 _prevVelocity; 
 	private Vector3 _velocity; 
+
+	private bool _isMoving = false;
 
 	private bool _isGrounded = false;
 	private bool _isConnected = false;
@@ -48,10 +47,6 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 	private RaycastHit _hit;
 
 	private Golem _connectedGolem;
-
-	public event EventHandler<AudioClip> PlayLoopedAudio;
-	public event EventHandler StopLoopedAudio;
-	public event EventHandler<AudioClip> PlayAudioEffect;
 
 	private void Start()
 	{
@@ -63,31 +58,11 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 		_maxEmissionRate = _pebbles.emission.rateOverTime.constant;
 		_emissionModule = _pebbles.emission;
 		_pebbles.Stop();
-		_prevVelocity = Vector3.zero; 
 	}
 
 	private void Update()
 	{
-		_velocity = _cc.velocity;
-
-		Vector3 temp = _velocity;
-		temp.y = 0f; 
-
-
-		if (temp != Vector3.zero && _prevVelocity == Vector3.zero)
-		{
-			StartedMoving();
-		}
-		if (temp == Vector3.zero && _prevVelocity != Vector3.zero)
-		{
-			StoppedMoving();
-		}
-
 		_mesh.transform.position = Vector3.MoveTowards(_mesh.transform.position, this.transform.position - new Vector3(0, _hit.distance, 0), _meshSmoothingSpeed * Time.fixedDeltaTime);
-
-
-		_prevVelocity = _velocity;
-		_prevVelocity.y = 0; 
 	}
 
 	private void FixedUpdate()
@@ -107,23 +82,24 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 		_maxSpeed = maxSpeed; 
 		_pushingNormal = blockNormal;
 
-		_emissiveFill.OnActivate();
+		_emissionFade.OnActivate();
 		_pebbles.Play();
 	}
 
 	public void Move(Vector3 velocity, float direction)
 	{
 		_cc.Move(velocity);
+
+		if (_cc.velocity != Vector3.zero && !_isMoving)
+			StartedMoving();
+		else if (_cc.velocity == Vector3.zero && _isMoving)
+			StoppedMoving();
 		
-
-
 		if (direction != 0)
 		{
 			_pebbles.transform.rotation = Quaternion.LookRotation(_pushingNormal * direction, Vector3.up);
 			_pebbles.transform.position = (this.transform.position + _coll.bounds.extents.x * (_pushingNormal * direction));
 		}
-
-
 
 		_emissionCurve.constant = ((velocity.magnitude/ Time.fixedDeltaTime) / _maxSpeed) * _maxEmissionRate;
 		_emissionModule.rateOverTime = _emissionCurve;
@@ -135,44 +111,23 @@ public class Block : MonoBehaviour, IReset, IPlayAudio
 		_connectedGolem = null;
 		_pebbles.Stop();
 
-		StopLoopedAudio?.Invoke(this, EventArgs.Empty);
-		_emissiveFill.OnDeactivate();
-	}
+		_emissionFade.OnDeactivate();
 
-	public void BeginLift()
-	{
-		_preLiftPos = transform.position; 
-		_isLifted = true;
-	}
-
-	public void StopLift()
-	{
-		transform.position = _preLiftPos;
-		_isLifted = false;
-	}
-
-	void IReset.Reset()
-	{
-		_cc.enabled = false;
-		transform.position = _startPos; 
-		_isConnected = false;
-		_isLifted = false;
-		_cc.enabled = true;
-	}
-
-	void IReset.OnEnter(Vector3 checkpointPos)
-	{
-		_startPos = transform.position; 
+		StoppedMoving();
 	}
 
 	private void StartedMoving()
 	{
-		PlayLoopedAudio?.Invoke(this, _stoneDragging); 
+		_isMoving = true;
+		_movingSound?.Play();
+		Debug.Log("Started moving block");
 	}
 
 	private void StoppedMoving()
 	{
-		StopLoopedAudio?.Invoke(this, EventArgs.Empty);
+		_isMoving = false;
+		_movingSound?.Stop();
+		Debug.Log("Stopped moving block");
 	}
 
 	public bool IsConnected()
