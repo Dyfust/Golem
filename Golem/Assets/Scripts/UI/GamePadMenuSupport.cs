@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class GamePadMenuSupport : MonoBehaviour
 {
 	[SerializeField] private List<GameObject> _mainMenuObjects;
-	[SerializeField] private List<GameObject> _settingsObjects; 
+	[SerializeField] private List<GameObject> _settingsObjects;
+	[SerializeField] private GameObject _title; 
 	[SerializeField] private GameObject _mainMenu; 
 	[SerializeField] private GameObject _settings;
 	[SerializeField] private GameObject _credits;
@@ -166,5 +167,13 @@ public class GamePadMenuSupport : MonoBehaviour
 	public void Quit()
 	{
 		Application.Quit(); 
+	}
+
+	public void Play()
+	{
+		_mainMenu.SetActive(false);
+		_settings.SetActive(false);
+		_credits.SetActive(false);
+		_title.SetActive(false);
 	}
 }
