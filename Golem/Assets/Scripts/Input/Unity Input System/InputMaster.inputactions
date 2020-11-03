@@ -300,10 +300,126 @@
             ]
         },
         {
-            "name": "Menu",
-            "id": "9d7705a7-2f04-4ea1-a0de-a3346c903c86",
-            "actions": [],
-            "bindings": []
+            "name": "MenuNavigation",
+            "id": "38f26d80-0f2a-445f-9a9f-588407c0be50",
+            "actions": [
+                {
+                    "name": "ConfirmButtonPress",
+                    "type": "Button",
+                    "id": "4e1f91f6-3ab5-42ae-946f-73515ca1bdad",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "IndexUp",
+                    "type": "Button",
+                    "id": "1400b5eb-2eff-4921-83c9-d6adb5924116",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "IndexDown",
+                    "type": "Button",
+                    "id": "e12e183e-814a-49bb-a53e-da7f72631c37",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ReturnButtonPress",
+                    "type": "Button",
+                    "id": "e8d8fe8e-77fe-47e4-9a75-50b23c435f26",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SliderIncrease",
+                    "type": "Button",
+                    "id": "6f5faf4b-7ac7-4c99-9d99-954307fc1cc4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SliderDecrease",
+                    "type": "Button",
+                    "id": "bdd137b0-bd86-4f8d-b5b3-576645b61bdf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "33ed8433-de03-44c6-97c0-ffffb63820cd",
+                    "path": "<XInputController>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XBox",
+                    "action": "ConfirmButtonPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "81589fca-c7fe-4504-949b-f7e30d1f1da0",
+                    "path": "<XInputController>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XBox",
+                    "action": "IndexUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5aad2e44-eb1a-49a5-b288-65af7b4270f3",
+                    "path": "<XInputController>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XBox",
+                    "action": "IndexDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6b626172-385f-45b7-896f-8588ed54a4dd",
+                    "path": "<XInputController>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XBox",
+                    "action": "ReturnButtonPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "edd630ec-efc8-4765-a9e3-57b300f5e589",
+                    "path": "<XInputController>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SliderIncrease",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bf8d731f-fb53-4ef3-91ac-164bd37bc003",
+                    "path": "<XInputController>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XBox",
+                    "action": "SliderDecrease",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

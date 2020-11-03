@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Linq; 
+using System.Linq;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Layouts;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,8 +24,8 @@ public class GameManager : MonoBehaviour
 	void Start()
 	{
 		var temp = FindObjectsOfType<MonoBehaviour>().OfType<IPauseableObject>();
-		_pausableObjects = new List<IPauseableObject>(); 
-		
+		_pausableObjects = new List<IPauseableObject>();
+
 		foreach (IPauseableObject pausableObject in temp)
 		{
 			_pausableObjects.Add(pausableObject); 
@@ -65,4 +67,6 @@ public class GameManager : MonoBehaviour
 	{
 		Application.Quit(); 
 	}
+
+
 }

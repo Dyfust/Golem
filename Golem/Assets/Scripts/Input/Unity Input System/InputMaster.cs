@@ -313,10 +313,126 @@ public class @InputMaster : IInputActionCollection, IDisposable
             ]
         },
         {
-            ""name"": ""Menu"",
-            ""id"": ""9d7705a7-2f04-4ea1-a0de-a3346c903c86"",
-            ""actions"": [],
-            ""bindings"": []
+            ""name"": ""MenuNavigation"",
+            ""id"": ""38f26d80-0f2a-445f-9a9f-588407c0be50"",
+            ""actions"": [
+                {
+                    ""name"": ""ConfirmButtonPress"",
+                    ""type"": ""Button"",
+                    ""id"": ""4e1f91f6-3ab5-42ae-946f-73515ca1bdad"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""IndexUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""1400b5eb-2eff-4921-83c9-d6adb5924116"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""IndexDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""e12e183e-814a-49bb-a53e-da7f72631c37"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ReturnButtonPress"",
+                    ""type"": ""Button"",
+                    ""id"": ""e8d8fe8e-77fe-47e4-9a75-50b23c435f26"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SliderIncrease"",
+                    ""type"": ""Button"",
+                    ""id"": ""6f5faf4b-7ac7-4c99-9d99-954307fc1cc4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SliderDecrease"",
+                    ""type"": ""Button"",
+                    ""id"": ""bdd137b0-bd86-4f8d-b5b3-576645b61bdf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""33ed8433-de03-44c6-97c0-ffffb63820cd"",
+                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox"",
+                    ""action"": ""ConfirmButtonPress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""81589fca-c7fe-4504-949b-f7e30d1f1da0"",
+                    ""path"": ""<XInputController>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox"",
+                    ""action"": ""IndexUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5aad2e44-eb1a-49a5-b288-65af7b4270f3"",
+                    ""path"": ""<XInputController>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox"",
+                    ""action"": ""IndexDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6b626172-385f-45b7-896f-8588ed54a4dd"",
+                    ""path"": ""<XInputController>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox"",
+                    ""action"": ""ReturnButtonPress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""edd630ec-efc8-4765-a9e3-57b300f5e589"",
+                    ""path"": ""<XInputController>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SliderIncrease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bf8d731f-fb53-4ef3-91ac-164bd37bc003"",
+                    ""path"": ""<XInputController>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XBox"",
+                    ""action"": ""SliderDecrease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -358,8 +474,14 @@ public class @InputMaster : IInputActionCollection, IDisposable
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
-        // Menu
-        m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
+        // MenuNavigation
+        m_MenuNavigation = asset.FindActionMap("MenuNavigation", throwIfNotFound: true);
+        m_MenuNavigation_ConfirmButtonPress = m_MenuNavigation.FindAction("ConfirmButtonPress", throwIfNotFound: true);
+        m_MenuNavigation_IndexUp = m_MenuNavigation.FindAction("IndexUp", throwIfNotFound: true);
+        m_MenuNavigation_IndexDown = m_MenuNavigation.FindAction("IndexDown", throwIfNotFound: true);
+        m_MenuNavigation_ReturnButtonPress = m_MenuNavigation.FindAction("ReturnButtonPress", throwIfNotFound: true);
+        m_MenuNavigation_SliderIncrease = m_MenuNavigation.FindAction("SliderIncrease", throwIfNotFound: true);
+        m_MenuNavigation_SliderDecrease = m_MenuNavigation.FindAction("SliderDecrease", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -496,30 +618,78 @@ public class @InputMaster : IInputActionCollection, IDisposable
     }
     public CameraActions @Camera => new CameraActions(this);
 
-    // Menu
-    private readonly InputActionMap m_Menu;
-    private IMenuActions m_MenuActionsCallbackInterface;
-    public struct MenuActions
+    // MenuNavigation
+    private readonly InputActionMap m_MenuNavigation;
+    private IMenuNavigationActions m_MenuNavigationActionsCallbackInterface;
+    private readonly InputAction m_MenuNavigation_ConfirmButtonPress;
+    private readonly InputAction m_MenuNavigation_IndexUp;
+    private readonly InputAction m_MenuNavigation_IndexDown;
+    private readonly InputAction m_MenuNavigation_ReturnButtonPress;
+    private readonly InputAction m_MenuNavigation_SliderIncrease;
+    private readonly InputAction m_MenuNavigation_SliderDecrease;
+    public struct MenuNavigationActions
     {
         private @InputMaster m_Wrapper;
-        public MenuActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
-        public InputActionMap Get() { return m_Wrapper.m_Menu; }
+        public MenuNavigationActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ConfirmButtonPress => m_Wrapper.m_MenuNavigation_ConfirmButtonPress;
+        public InputAction @IndexUp => m_Wrapper.m_MenuNavigation_IndexUp;
+        public InputAction @IndexDown => m_Wrapper.m_MenuNavigation_IndexDown;
+        public InputAction @ReturnButtonPress => m_Wrapper.m_MenuNavigation_ReturnButtonPress;
+        public InputAction @SliderIncrease => m_Wrapper.m_MenuNavigation_SliderIncrease;
+        public InputAction @SliderDecrease => m_Wrapper.m_MenuNavigation_SliderDecrease;
+        public InputActionMap Get() { return m_Wrapper.m_MenuNavigation; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
-        public void SetCallbacks(IMenuActions instance)
+        public static implicit operator InputActionMap(MenuNavigationActions set) { return set.Get(); }
+        public void SetCallbacks(IMenuNavigationActions instance)
         {
-            if (m_Wrapper.m_MenuActionsCallbackInterface != null)
+            if (m_Wrapper.m_MenuNavigationActionsCallbackInterface != null)
             {
+                @ConfirmButtonPress.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnConfirmButtonPress;
+                @ConfirmButtonPress.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnConfirmButtonPress;
+                @ConfirmButtonPress.canceled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnConfirmButtonPress;
+                @IndexUp.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnIndexUp;
+                @IndexUp.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnIndexUp;
+                @IndexUp.canceled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnIndexUp;
+                @IndexDown.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnIndexDown;
+                @IndexDown.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnIndexDown;
+                @IndexDown.canceled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnIndexDown;
+                @ReturnButtonPress.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnReturnButtonPress;
+                @ReturnButtonPress.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnReturnButtonPress;
+                @ReturnButtonPress.canceled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnReturnButtonPress;
+                @SliderIncrease.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnSliderIncrease;
+                @SliderIncrease.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnSliderIncrease;
+                @SliderIncrease.canceled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnSliderIncrease;
+                @SliderDecrease.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnSliderDecrease;
+                @SliderDecrease.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnSliderDecrease;
+                @SliderDecrease.canceled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnSliderDecrease;
             }
-            m_Wrapper.m_MenuActionsCallbackInterface = instance;
+            m_Wrapper.m_MenuNavigationActionsCallbackInterface = instance;
             if (instance != null)
             {
+                @ConfirmButtonPress.started += instance.OnConfirmButtonPress;
+                @ConfirmButtonPress.performed += instance.OnConfirmButtonPress;
+                @ConfirmButtonPress.canceled += instance.OnConfirmButtonPress;
+                @IndexUp.started += instance.OnIndexUp;
+                @IndexUp.performed += instance.OnIndexUp;
+                @IndexUp.canceled += instance.OnIndexUp;
+                @IndexDown.started += instance.OnIndexDown;
+                @IndexDown.performed += instance.OnIndexDown;
+                @IndexDown.canceled += instance.OnIndexDown;
+                @ReturnButtonPress.started += instance.OnReturnButtonPress;
+                @ReturnButtonPress.performed += instance.OnReturnButtonPress;
+                @ReturnButtonPress.canceled += instance.OnReturnButtonPress;
+                @SliderIncrease.started += instance.OnSliderIncrease;
+                @SliderIncrease.performed += instance.OnSliderIncrease;
+                @SliderIncrease.canceled += instance.OnSliderIncrease;
+                @SliderDecrease.started += instance.OnSliderDecrease;
+                @SliderDecrease.performed += instance.OnSliderDecrease;
+                @SliderDecrease.canceled += instance.OnSliderDecrease;
             }
         }
     }
-    public MenuActions @Menu => new MenuActions(this);
+    public MenuNavigationActions @MenuNavigation => new MenuNavigationActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -549,7 +719,13 @@ public class @InputMaster : IInputActionCollection, IDisposable
     {
         void OnLook(InputAction.CallbackContext context);
     }
-    public interface IMenuActions
+    public interface IMenuNavigationActions
     {
+        void OnConfirmButtonPress(InputAction.CallbackContext context);
+        void OnIndexUp(InputAction.CallbackContext context);
+        void OnIndexDown(InputAction.CallbackContext context);
+        void OnReturnButtonPress(InputAction.CallbackContext context);
+        void OnSliderIncrease(InputAction.CallbackContext context);
+        void OnSliderDecrease(InputAction.CallbackContext context);
     }
 }
