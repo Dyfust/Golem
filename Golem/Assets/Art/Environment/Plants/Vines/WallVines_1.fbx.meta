@@ -3,7 +3,12 @@ guid: 342f6c5336f76c84abc801b9d451ded3
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WallVines_MAT
+    second: {fileID: 2100000, guid: 83b3d02dd58d153409b62161cb2b4841, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
