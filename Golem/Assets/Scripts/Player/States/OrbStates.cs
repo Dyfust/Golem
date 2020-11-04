@@ -13,7 +13,7 @@ namespace OrbStates
 
         public override void OnEnter()
         {
-
+            _orb.Idle(); 
         }
 
         public override void OnExit()
