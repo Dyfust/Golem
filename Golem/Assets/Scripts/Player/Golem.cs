@@ -64,6 +64,8 @@ public class Golem : Player, IRequireInput, IReset
 		_cameraTransform = Camera.main.transform;
 
 		_controller = new CharacterController(_rb, _characterControllerSettings);
+
+		_dormant = true; 
 	}
 
 	private void Start()
@@ -76,6 +78,9 @@ public class Golem : Player, IRequireInput, IReset
 
 		DebugWindow.AddPrintTask(() => "Golem Grounded: " + _controller.IsGrounded().ToString());
 		DebugWindow.AddPrintTask(() => "Golem Ground Normal: " + _controller.GetCollisionNormal().ToString());
+		DebugWindow.AddPrintTask(() => "Golem State: " + _fsm.GetCurrentState().debugName);
+
+
 	}
 
 
@@ -93,9 +98,10 @@ public class Golem : Player, IRequireInput, IReset
 			idleTimestamp = Time.time;
 
 		bool isIdle = _rb.velocity.sqrMagnitude < 0.1f && Time.time > idleTimestamp + idleDt;
-
+		_anim.SetBool("Dormant", _dormant); 
 		_anim.SetBool("Idle", isIdle);
 		_anim.SetFloat("Speed", _rb.velocity.sqrMagnitude);
+
 	}
 
 	private void FixedUpdate()
