@@ -8,12 +8,11 @@ public class GamePadMenuSupport : MonoBehaviour
 {
 	[SerializeField] private List<GameObject> _mainMenuObjects;
 	[SerializeField] private List<GameObject> _settingsObjects;
-	[SerializeField] private GameObject _title; 
-	[SerializeField] private GameObject _mainMenu; 
+	[SerializeField] private GameObject _title;
+	[SerializeField] private GameObject _mainMenu;
 	[SerializeField] private GameObject _settings;
 	[SerializeField] private GameObject _credits;
-	[SerializeField] private int _sliderIncrement; 
-
+	[SerializeField] private int _sliderIncrement;
 
 
 	private int _mainMenuIndex;

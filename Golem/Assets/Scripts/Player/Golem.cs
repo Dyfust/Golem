@@ -50,6 +50,7 @@ public class Golem : Player, IRequireInput, IReset
 
 	private FSM.FSM _fsm;
 	private bool _dormant = true;
+	private bool _isIdle = true; 
 
 	private Rigidbody _rb;
 	private Transform _thisTransform;
@@ -97,9 +98,9 @@ public class Golem : Player, IRequireInput, IReset
 		if (_rb.velocity.sqrMagnitude >= 0.1f)
 			idleTimestamp = Time.time;
 
-		bool isIdle = _rb.velocity.sqrMagnitude < 0.1f && Time.time > idleTimestamp + idleDt;
+		_isIdle = _rb.velocity.sqrMagnitude < 0.1f && Time.time > idleTimestamp + idleDt;
 		_anim.SetBool("Dormant", _dormant); 
-		_anim.SetBool("Idle", isIdle);
+		_anim.SetBool("Idle", _isIdle);
 		_anim.SetFloat("Speed", _rb.velocity.sqrMagnitude);
 
 	}
@@ -301,5 +302,20 @@ public class Golem : Player, IRequireInput, IReset
 	public override bool IsActive()
 	{
 		return !_dormant;
+	}
+
+	public Vector3 GetVelocity()
+	{
+		return _rb.velocity; 
+	}
+
+	public bool GetDormant()
+	{
+		return _dormant; 
+	}
+
+	public bool GetIdle()
+	{
+		return _isIdle; 
 	}
 }
