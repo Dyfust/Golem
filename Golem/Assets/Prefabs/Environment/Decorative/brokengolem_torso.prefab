@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2318414257547943287}
+  - component: {fileID: 1301196810489235939}
   m_Layer: 0
   m_Name: brokengolem_torso
   m_TagString: Untagged
@@ -31,6 +32,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1301196810489235939
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5970306590455017819}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7714048, y: 0.835289, z: 0.80008477}
+  m_Center: {x: -0.048966803, y: 1.4122777, z: -0.036385834}
 --- !u!1001 &7422053961191809978
 PrefabInstance:
   m_ObjectHideFlags: 0

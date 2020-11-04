@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3110794854973834941}
+  - component: {fileID: 4171901393607310318}
   m_Layer: 0
   m_Name: Brokengolem_leg
   m_TagString: Untagged
@@ -31,6 +32,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4171901393607310318
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5616732920034582949}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3301528, y: 1.0286305, z: 1.0938691}
+  m_Center: {x: -0.08637303, y: -0.059299525, z: -0.067973204}
 --- !u!1001 &8271746427901736935
 PrefabInstance:
   m_ObjectHideFlags: 0
