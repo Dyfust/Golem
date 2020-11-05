@@ -71,14 +71,6 @@ public class Block : MonoBehaviour
 	{
 		_mesh.transform.position = Vector3.MoveTowards(_mesh.transform.position, this.transform.position - new Vector3(0, _hit.distance, 0), _meshSmoothingSpeed * Time.fixedDeltaTime);
 
-		if (_isMoving == true)
-		{
-			_contollerRef.SetShake(_lowFreq, _highFreq); 
-		}
-		else
-		{
-			_contollerRef.StopShake(); 
-		}
 	}
 
 	private void FixedUpdate()
@@ -97,7 +89,7 @@ public class Block : MonoBehaviour
 
 		_maxSpeed = maxSpeed; 
 		_pushingNormal = blockNormal;
-
+		_contollerRef.SetShake(_lowFreq, _highFreq);
 		_emissionFade.OnActivate();
 		_pebbles.Play();
 	}
@@ -129,7 +121,7 @@ public class Block : MonoBehaviour
 		_isConnected = false;
 		_connectedGolem = null;
 		_pebbles.Stop();
-
+		_contollerRef.StopShake();
 		_emissionFade.OnDeactivate();
 
 		StoppedMoving();

@@ -21,7 +21,9 @@ public class ControllerShake : MonoBehaviour
 	public void SetShake(float lowFreq, float highFeq)
 	{
 		if (Gamepad.current != null)
-			Gamepad.current.SetMotorSpeeds(lowFreq, highFeq); 
+			Gamepad.current.SetMotorSpeeds(lowFreq, highFeq);
+		else
+			Debug.Log("No Controller Found");
 	}
 
 	public void StopShake()
@@ -30,5 +32,7 @@ public class ControllerShake : MonoBehaviour
 		{
 			Gamepad.current.SetMotorSpeeds(0.0f, 0.0f); 
 		}
+		else
+			Debug.Log("No Controller Found");
 	}
 }
