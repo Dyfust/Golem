@@ -89,7 +89,6 @@ public class Block : MonoBehaviour
 
 		_maxSpeed = maxSpeed; 
 		_pushingNormal = blockNormal;
-		_contollerRef.SetShake(_lowFreq, _highFreq);
 		_emissionFade.OnActivate();
 		_pebbles.Play();
 	}
@@ -121,7 +120,6 @@ public class Block : MonoBehaviour
 		_isConnected = false;
 		_connectedGolem = null;
 		_pebbles.Stop();
-		_contollerRef.StopShake();
 		_emissionFade.OnDeactivate();
 
 		StoppedMoving();
@@ -129,6 +127,8 @@ public class Block : MonoBehaviour
 
 	private void StartedMoving()
 	{
+		_contollerRef.SetShake(_lowFreq, _highFreq);
+
 		_isMoving = true;
 		_movingSound?.Play();
 		Debug.Log("Started moving block");
@@ -136,6 +136,8 @@ public class Block : MonoBehaviour
 
 	private void StoppedMoving()
 	{
+		_contollerRef.StopShake();
+
 		_isMoving = false;
 		_movingSound?.Stop();
 		Debug.Log("Stopped moving block");
