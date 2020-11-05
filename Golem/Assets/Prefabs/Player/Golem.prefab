@@ -142,6 +142,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6361447155742199112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3400799837014159728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14914c7d7b5d5ad47add056392603a49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8523964358989529213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,18 +170,6 @@ MonoBehaviour:
   _duration: 1
   _start: -2
   _end: 4
---- !u!114 &6361447155742199112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3400799837014159728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14914c7d7b5d5ad47add056392603a49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7903474664121533062
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,7 +829,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: 6ba0e2617f07db946a53d3c1c4677775, type: 2}
+      objectReference: {fileID: 2100000, guid: 4dc08c4bc2b53ba4eaf53a90177cfbca, type: 2}
+    - target: {fileID: 3661768765710512857, guid: 269888d869de6c94ea2b544788ee234a,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 9103376922678640094, guid: 6918841644d169541ab7f2abab7bc5c6,
+        type: 3}
     - target: {fileID: 3685262774051805129, guid: 269888d869de6c94ea2b544788ee234a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1029,6 +1035,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 28.329153
+      objectReference: {fileID: 0}
+    - target: {fileID: 8429691742377499147, guid: 269888d869de6c94ea2b544788ee234a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8727807326755845748, guid: 269888d869de6c94ea2b544788ee234a,
         type: 3}

@@ -14,7 +14,7 @@ public class Orb : Player, IRequireInput, IReset
 
 	[CustomHeader("Interact Settings")]
 	[SerializeField] private float _interactionDistance;
-	[SerializeField] private float _orientationTime; 
+	[SerializeField] private float _orientationSpeed; 
 	[SerializeField] private Transform _meshTransform;
 
 	[CustomHeader("Audio Emitters")]
@@ -84,7 +84,8 @@ public class Orb : Player, IRequireInput, IReset
 			idleTimeStamp = Time.time;
 
 		_isIdle = _rb.velocity.sqrMagnitude < 0.1f && Time.time > idleTimeStamp + idleDt;
-		_anim.SetBool("Idle", _isIdle);
+		if (_anim != null)
+			_anim.SetBool("Idle", _isIdle);
 
 		_fsm.HandleTransitions();
 		_fsm.UpdateLogic();
@@ -156,21 +157,13 @@ public class Orb : Player, IRequireInput, IReset
 		_meshTransform.Rotate(rotAxis, Mathf.Rad2Deg * targetAngularVelocity * Time.fixedDeltaTime, Space.World);
 	}
 
-	public void Idle()
-	{
-		StopAllCoroutines();
-		StartCoroutine(OrientateMesh()); 
-	}
-
-	private IEnumerator OrientateMesh()
+	public void OrientateMeshToCamera()
 	{
 		Vector3 temp = _meshTransform.up;
 		temp.x = 0;
 		temp.z = 0;
-		Quaternion start = _meshTransform.rotation;
-		Quaternion end = Quaternion.LookRotation(-_cameraTransform.forward, temp);
-
-		yield return _meshTransform.rotation = Quaternion.RotateTowards(start, end, Time.time * _orientationTime);
+		Quaternion end = Quaternion.LookRotation(-_cameraTransform.forward, Vector3.up);
+		_meshTransform.rotation = Quaternion.RotateTowards(_meshTransform.rotation, end, Time.fixedDeltaTime * _orientationSpeed);
 	}
 
 	public void OrientateToGolem()
