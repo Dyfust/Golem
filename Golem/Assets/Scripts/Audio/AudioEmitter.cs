@@ -32,10 +32,14 @@ public class AudioEmitter : MonoBehaviour
         }
     }
 
-    public void Play()
+    public void Play(bool fade = true)
     {
         _source.Play();
-        Fade(1);
+
+        if (fade)
+            Fade(1);
+        else
+            _fading = false;
     }
 
     public void Stop()
@@ -57,4 +61,6 @@ public class AudioEmitter : MonoBehaviour
         _fadeSpeed = Mathf.Abs(fade - _source.volume) / time;
         _fading = true;
     }
+
+    public bool IsPlaying() => _source.isPlaying;
 }
