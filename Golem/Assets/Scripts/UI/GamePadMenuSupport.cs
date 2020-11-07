@@ -101,7 +101,7 @@ public class GamePadMenuSupport : MonoBehaviour
 	}
 	private void ConfirmButtonPress_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
 	{
-		_currentButtonRef.GetComponent<UnityEngine.UI.Button>().Select(); 
+		_currentButtonRef.GetComponent<UnityEngine.UI.Button>().Select();
 	}
 	#endregion
 
