@@ -241,8 +241,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _source: {fileID: 1521131098005811609}
   _clip: {fileID: 8300000, guid: 114d39287cc06d5459b1f7ef9ee92319, type: 3}
-  _fadeInDuration: 1
-  _fadeOutDuration: 1
+  _fadeInDuration: 0.25
+  _fadeOutDuration: 0.25
 --- !u!1 &7027665727015190607
 GameObject:
   m_ObjectHideFlags: 0

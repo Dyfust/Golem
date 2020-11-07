@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _source: {fileID: 7809270767612550717}
-  _clip: {fileID: 8300000, guid: aaa493fac8409f84eb7e553ef2c15c79, type: 3}
+  _clip: {fileID: 8300000, guid: 5ee07b16319ad7744b42edf683471886, type: 3}
   _fadeInDuration: 0.2
   _fadeOutDuration: 0.2
 --- !u!1001 &4181372580194403560
