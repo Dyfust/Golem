@@ -41,7 +41,6 @@ public class PlayerInputController : MonoBehaviour, IPauseableObject, IPlayerPau
 		_localInputData.enterButtonPressedThisFrame = _controls.Gameplay.EnterExit.triggered;
 		_localInputData.pushButtonPressedThisFrame = _controls.Gameplay.PushPull.triggered;
 		_localInputData.liftButtonPressedThisFrame = _controls.Gameplay.Lift.triggered;
-
 		_dest.SetInputData(_localInputData);
 	}
 

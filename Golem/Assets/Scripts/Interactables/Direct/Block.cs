@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Intractable block. 
@@ -22,6 +23,13 @@ public class Block : MonoBehaviour
 
 	[CustomHeader("Particles")]
 	[SerializeField] private ParticleSystem _pebbles;
+
+	[CustomHeader("Controller Shake")]
+	[SerializeField] private ControllerShake _contollerRef;
+	[Tooltip("A deeper stronger rumble used for heavier movements")]
+	[SerializeField] private float _lowFreq;
+	[Tooltip("A weaker rumble used for light movements")]
+	[SerializeField] private float _highFreq;
 	//-----------------------------------------------------------------
 	private float _maxEmissionRate; 
 	private float _maxSpeed = 0;
@@ -62,6 +70,7 @@ public class Block : MonoBehaviour
 	private void Update()
 	{
 		_mesh.transform.position = Vector3.MoveTowards(_mesh.transform.position, this.transform.position - new Vector3(0, _hit.distance, 0), _meshSmoothingSpeed * Time.fixedDeltaTime);
+
 	}
 
 	private void FixedUpdate()
@@ -80,7 +89,6 @@ public class Block : MonoBehaviour
 
 		_maxSpeed = maxSpeed; 
 		_pushingNormal = blockNormal;
-
 		_emissionFade.OnActivate();
 		_pebbles.Play();
 	}
@@ -106,10 +114,12 @@ public class Block : MonoBehaviour
 
 	public void StopPushing()
 	{
+		if (Gamepad.current != null)
+			Gamepad.current.SetMotorSpeeds(0.0f, 0.0f);
+
 		_isConnected = false;
 		_connectedGolem = null;
 		_pebbles.Stop();
-
 		_emissionFade.OnDeactivate();
 
 		StoppedMoving();
@@ -117,6 +127,8 @@ public class Block : MonoBehaviour
 
 	private void StartedMoving()
 	{
+		_contollerRef.SetShake(_lowFreq, _highFreq);
+
 		_isMoving = true;
 		_movingSound?.Play();
 		Debug.Log("Started moving block");
@@ -124,6 +136,8 @@ public class Block : MonoBehaviour
 
 	private void StoppedMoving()
 	{
+		_contollerRef.StopShake();
+
 		_isMoving = false;
 		_movingSound?.Stop();
 		Debug.Log("Stopped moving block");

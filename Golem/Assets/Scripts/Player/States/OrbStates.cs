@@ -29,6 +29,7 @@ namespace OrbStates
 
         public override void UpdatePhysics()
         {
+            _orb.OrientateMeshToCamera(); 
 
         }
     }

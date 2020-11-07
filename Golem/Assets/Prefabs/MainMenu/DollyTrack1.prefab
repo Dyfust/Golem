@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5481552820191822874
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5481552820191822872}
+  - component: {fileID: 5481552820191822875}
+  m_Layer: 0
+  m_Name: DollyTrack1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5481552820191822872
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5481552820191822874}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.973136, y: -0.32205313, z: -180.41838}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5481552820191822875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5481552820191822874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a200b19ca1a9685429ed7e043c28e904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Resolution: 20
+  m_Appearance:
+    pathColor: {r: 0, g: 1, b: 0, a: 1}
+    inactivePathColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    width: 0.2
+  m_Looped: 0
+  m_Waypoints:
+  - position: {x: -0.232553, y: -1.3687236, z: -2.7121124}
+    roll: 0
+  - position: {x: -0.39730024, y: -1.9076385, z: 11.268326}
+    roll: 0
+  - position: {x: -0.49240732, y: -2.1843166, z: 16.592926}
+    roll: 0
+  - position: {x: -1.0511665, y: -1.8838358, z: 21.79309}
+    roll: 0
+  - position: {x: -3.579238, y: -2.271009, z: 26.296371}
+    roll: 0
+  - position: {x: -8.8760805, y: -2.2962112, z: 27.215012}
+    roll: 0
+  - position: {x: -14.378484, y: -2.1870558, z: 27.06845}
+    roll: 0
+  - position: {x: -28.610935, y: 2.2437027, z: 27.091934}
+    roll: 0
+  - position: {x: -41.588467, y: 6.687393, z: 34.751114}
+    roll: 0
+  - position: {x: -39.047977, y: 6.4233284, z: 42.672226}
+    roll: 0
+  - position: {x: -28.228844, y: 3.067549, z: 43.162445}
+    roll: 0
+  - position: {x: -18.268066, y: -0.17891526, z: 42.117264}
+    roll: 0
+  - position: {x: -14.20782, y: -0.8782552, z: 42.0076}
+    roll: 0
+  - position: {x: -12.924413, y: -0.9006601, z: 42.03444}
+    roll: 0
+  - position: {x: -10.644603, y: -0.9436572, z: 41.912766}
+    roll: 0
+  - position: {x: -6.8333664, y: -0.8763543, z: 41.352524}
+    roll: 0
+  - position: {x: -4.808238, y: -0.8307319, z: 40.960068}
+    roll: 0
+  - position: {x: -1.7182808, y: -0.8101681, z: 44.44847}
+    roll: 0
+  - position: {x: -0.30380917, y: -0.8917505, z: 59.51729}
+    roll: 0
+  - position: {x: -0.25624466, y: -1.061188, z: 65.89197}
+    roll: 0
+  - position: {x: -0.41525698, y: -0.6805305, z: 70.819305}
+    roll: 0
+  - position: {x: -0.70447826, y: 0.31854856, z: 83.29443}
+    roll: 0
+  - position: {x: -0.71583414, y: 0.9766108, z: 95.74822}
+    roll: 0
+  - position: {x: -1.00741, y: 1.0570252, z: 101.94932}
+    roll: 0
+  - position: {x: -5.0179176, y: 1.1007174, z: 110.77829}
+    roll: 0
+  - position: {x: -7.6064606, y: 1.2640153, z: 115.636154}
+    roll: 0
+  - position: {x: -8.041101, y: 1.5075946, z: 118.769295}
+    roll: 0
+  - position: {x: -9.355754, y: 1.5372219, z: 127.29704}
+    roll: 0
+  - position: {x: -10.473737, y: 1.3753891, z: 140.75792}
+    roll: 0
+  - position: {x: -7.3952017, y: 1.2845967, z: 150.61795}
+    roll: 0
+  - position: {x: 1.0100431, y: 1.419555, z: 151.91425}
+    roll: 0
+  - position: {x: 10.244704, y: 1.3740845, z: 151.49026}
+    roll: 0
+  - position: {x: 15.18386, y: 0.7037556, z: 146.21977}
+    roll: 0
+  - position: {x: 13.833252, y: 1.1738405, z: 135.75784}
+    roll: 0
+  - position: {x: 10.5641165, y: 1.517463, z: 127.417435}
+    roll: 0
+  - position: {x: 1.2498927, y: 1.2269619, z: 133.26137}
+    roll: 0
+  - position: {x: 0.15487003, y: 2.9760163, z: 141.07858}
+    roll: 0
