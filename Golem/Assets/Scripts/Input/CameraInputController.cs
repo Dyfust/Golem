@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Linq;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
@@ -34,6 +32,8 @@ public class CameraInputController : MonoBehaviour, AxisState.IInputAxisProvider
 	[Tooltip("Float action for Z movement")]
 	public InputActionReference ZAxis;
 
+	[SerializeField] private CameraSettings _settings;
+
 	float AxisState.IInputAxisProvider.GetAxisValue(int axis)
 	{
 		var action = ResolveForPlayer(axis, axis == 2 ? ZAxis : XYAxis);
@@ -52,8 +52,8 @@ public class CameraInputController : MonoBehaviour, AxisState.IInputAxisProvider
 			{
 				switch (axis)
 				{
-					case 0: return action.ReadValue<Vector2>().x;
-					case 1: return action.ReadValue<Vector2>().y;
+					case 0: return action.ReadValue<Vector2>().x * _settings.lookSensitivity;
+					case 1: return action.ReadValue<Vector2>().y * _settings.lookSensitivity;
 					case 2: return action.ReadValue<float>();
 				}
 			}
@@ -105,7 +105,6 @@ public class CameraInputController : MonoBehaviour, AxisState.IInputAxisProvider
 	{
 		m_cachedActions = null;
 	}
-
 
 	void IPauseableObject.Pause()
 	{

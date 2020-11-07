@@ -131,7 +131,6 @@ public class Block : MonoBehaviour
 
 		_isMoving = true;
 		_movingSound?.Play();
-		Debug.Log("Started moving block");
 	}
 
 	private void StoppedMoving()
@@ -140,7 +139,6 @@ public class Block : MonoBehaviour
 
 		_isMoving = false;
 		_movingSound?.Stop();
-		Debug.Log("Stopped moving block");
 	}
 
 	public bool IsConnected()
