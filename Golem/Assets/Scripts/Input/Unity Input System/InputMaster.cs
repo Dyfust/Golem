@@ -363,6 +363,14 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""007bc931-d85b-48f2-b5ed-bdfce59a728f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -431,6 +439,17 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""action"": ""SliderDecrease"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18fa225f-3c7c-4c90-9842-d12979d466ab"",
+                    ""path"": ""<XInputController>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -482,6 +501,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_MenuNavigation_ReturnButtonPress = m_MenuNavigation.FindAction("ReturnButtonPress", throwIfNotFound: true);
         m_MenuNavigation_SliderIncrease = m_MenuNavigation.FindAction("SliderIncrease", throwIfNotFound: true);
         m_MenuNavigation_SliderDecrease = m_MenuNavigation.FindAction("SliderDecrease", throwIfNotFound: true);
+        m_MenuNavigation_Pause = m_MenuNavigation.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -627,6 +647,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_MenuNavigation_ReturnButtonPress;
     private readonly InputAction m_MenuNavigation_SliderIncrease;
     private readonly InputAction m_MenuNavigation_SliderDecrease;
+    private readonly InputAction m_MenuNavigation_Pause;
     public struct MenuNavigationActions
     {
         private @InputMaster m_Wrapper;
@@ -637,6 +658,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @ReturnButtonPress => m_Wrapper.m_MenuNavigation_ReturnButtonPress;
         public InputAction @SliderIncrease => m_Wrapper.m_MenuNavigation_SliderIncrease;
         public InputAction @SliderDecrease => m_Wrapper.m_MenuNavigation_SliderDecrease;
+        public InputAction @Pause => m_Wrapper.m_MenuNavigation_Pause;
         public InputActionMap Get() { return m_Wrapper.m_MenuNavigation; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -664,6 +686,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @SliderDecrease.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnSliderDecrease;
                 @SliderDecrease.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnSliderDecrease;
                 @SliderDecrease.canceled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnSliderDecrease;
+                @Pause.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_MenuNavigationActionsCallbackInterface = instance;
             if (instance != null)
@@ -686,6 +711,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @SliderDecrease.started += instance.OnSliderDecrease;
                 @SliderDecrease.performed += instance.OnSliderDecrease;
                 @SliderDecrease.canceled += instance.OnSliderDecrease;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -727,5 +755,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnReturnButtonPress(InputAction.CallbackContext context);
         void OnSliderIncrease(InputAction.CallbackContext context);
         void OnSliderDecrease(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }
