@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PauseManager : MonoBehaviour
 {
@@ -17,9 +18,40 @@ public class PauseManager : MonoBehaviour
 	private VirtualCamera _currentRoomCamera;
 	[SerializeField] private VirtualCamera _startingCam;
 
-	[SerializeField] private GameObject _pauseScreen;
+	[SerializeField] private PanelManager _panaelManagerRef;
+	[SerializeField] private Panel _pauseScreen;
+	[SerializeField] private float _pauseTimer; 
 
-	private bool _isPaused = false; 
+	private bool _isPaused = false;
+
+	private InputMaster _input;
+
+	private float _timeStamp; 
+
+	private void OnEnable()
+	{
+		_input = new InputMaster();
+		_input.Enable();
+		_input.MenuNavigation.Pause.performed += Pause_performed;
+	}
+
+	private void OnDisable()
+	{
+		_input.MenuNavigation.Pause.performed -= Pause_performed;
+		_input.Disable(); 
+	}
+
+	private void Pause_performed(InputAction.CallbackContext obj)
+	{
+		if (Time.time >= _timeStamp + _pauseTimer)
+		{
+			if (_isPaused)
+				PlayerResume();
+			else
+				PlayerPause();
+		}
+
+	}
 
 	private void Awake()
 	{
@@ -36,7 +68,7 @@ public class PauseManager : MonoBehaviour
 
 		_currentRoomCamera = _startingCam;
 
-		_pauseScreen.SetActive(false);
+		//_panaelManagerRef.CloseAllPanels();
 	}
 
 	// Start is called before the first frame update
@@ -54,7 +86,7 @@ public class PauseManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.P))
+		if (Input.GetKeyDown(KeyCode.P) && Time.time >= _timeStamp + _pauseTimer)
 		{
 			if (_isPaused)
 				PlayerResume();
@@ -68,6 +100,7 @@ public class PauseManager : MonoBehaviour
 	/// </summary>
 	public void PlayerPause()
 	{
+		_timeStamp = Time.time; 
 		if (_isPaused == true)
 			return; 
 
@@ -75,6 +108,7 @@ public class PauseManager : MonoBehaviour
 		{
 			_pausableObjects[i].Pause();
 		}
+		
 		VirtualCameraManager.instance.ToggleExternalCamera(_currentRoomCamera);
 
 		StopAllCoroutines();
@@ -87,6 +121,7 @@ public class PauseManager : MonoBehaviour
 
 	public void PlayerResume()
 	{
+		_timeStamp = Time.time; 
 		if (_isPaused == false)
 			return; 
 
@@ -95,13 +130,13 @@ public class PauseManager : MonoBehaviour
 			_pausableObjects[i].Resume();
 		}
 
-		VirtualCameraManager.instance.TogglePlayerCamera();
 
-		_pauseScreen.SetActive(false);
+		_panaelManagerRef.CloseAllPanels(); 
 
 		CursorManager.instance.ToggleCursor(false);
 
 		_isPaused = false; 
+		VirtualCameraManager.instance.TogglePlayerCamera();
 	}
 
 	public void SetCurrentCamera(VirtualCamera cam)
@@ -112,6 +147,6 @@ public class PauseManager : MonoBehaviour
 	private IEnumerator PauseUI()
 	{
 		yield return new WaitForSeconds(1);
-		_pauseScreen.SetActive(true);
+		_panaelManagerRef.ActivatePanel(_pauseScreen); 
 	}
 }
