@@ -15,6 +15,10 @@ public class FootstepsSFX : MonoBehaviour
     [CustomHeader("Audio")]
     [SerializeField] private OneShotEmitter _sfxEmitter;
 
+    [CustomHeader("VFX")]
+    [SerializeField] private ParticleSystem _leftFootVFX;
+    [SerializeField] private ParticleSystem _rightFootVFX;
+
     private Transform[] _parentBones;
     private Transform[] _feet;
     private float[] _feetPos = new float[2];
@@ -47,6 +51,11 @@ public class FootstepsSFX : MonoBehaviour
 
     private void Step(FOOT foot)
     {
+        if (foot == FOOT.LEFT)
+            _leftFootVFX.Play();
+        else
+            _rightFootVFX.Play();
+            
         _sfxEmitter.Play();
         _feetAboveThreshold[(int)foot] = false;
     }

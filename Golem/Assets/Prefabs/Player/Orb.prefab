@@ -81,9 +81,11 @@ MonoBehaviour:
   _controllerSettings: {fileID: 11400000, guid: 909af9a64c71d0a4483feca2e676051f,
     type: 2}
   _interactionDistance: 1.5
+  _orientationSpeed: 0
   _meshTransform: {fileID: 7372586536742205992}
   _golemAttachmentSFX: {fileID: 2836568430077968143}
   _rollingSFX: {fileID: 8587662929706005974}
+  _anim: {fileID: 0}
 --- !u!114 &1323688339277252294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,7 +511,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: 6ba0e2617f07db946a53d3c1c4677775, type: 2}
+      objectReference: {fileID: 2100000, guid: 4dc08c4bc2b53ba4eaf53a90177cfbca, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 490cc523575db8544b927deaa3c6294e, type: 3}
 --- !u!4 &888332794920593967 stripped

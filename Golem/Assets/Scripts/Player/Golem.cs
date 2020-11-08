@@ -2,7 +2,7 @@
 using GolemStates;
 using FSM;
 
-public class Golem : Player, IRequireInput, IReset
+public class Golem : Player, IRequireInput
 {
 	public delegate void GolemEventHandler(Golem golem);
 	public static event GolemEventHandler OnGolemActive;
@@ -50,6 +50,7 @@ public class Golem : Player, IRequireInput, IReset
 
 	private FSM.FSM _fsm;
 	private bool _dormant = true;
+	private bool _isIdle = true; 
 
 	private Rigidbody _rb;
 	private Transform _thisTransform;
@@ -71,7 +72,6 @@ public class Golem : Player, IRequireInput, IReset
 	private void Start()
 	{
 		InitaliseFSM();
-		_initPos = _thisTransform.position;
 
 		if (_orbMesh != null)
 			_orbMesh.SetActive(false);
@@ -79,8 +79,6 @@ public class Golem : Player, IRequireInput, IReset
 		DebugWindow.AddPrintTask(() => "Golem Grounded: " + _controller.IsGrounded().ToString());
 		DebugWindow.AddPrintTask(() => "Golem Ground Normal: " + _controller.GetCollisionNormal().ToString());
 		DebugWindow.AddPrintTask(() => "Golem State: " + _fsm.GetCurrentState().debugName);
-
-
 	}
 
 
@@ -97,9 +95,9 @@ public class Golem : Player, IRequireInput, IReset
 		if (_rb.velocity.sqrMagnitude >= 0.1f)
 			idleTimestamp = Time.time;
 
-		bool isIdle = _rb.velocity.sqrMagnitude < 0.1f && Time.time > idleTimestamp + idleDt;
+		_isIdle = _rb.velocity.sqrMagnitude < 0.1f && Time.time > idleTimestamp + idleDt;
 		_anim.SetBool("Dormant", _dormant); 
-		_anim.SetBool("Idle", isIdle);
+		_anim.SetBool("Idle", _isIdle);
 		_anim.SetFloat("Speed", _rb.velocity.sqrMagnitude);
 
 	}
@@ -285,21 +283,23 @@ public class Golem : Player, IRequireInput, IReset
 		_inputData = data;
 	}
 
-	private Vector3 _initPos;
-
-	void IReset.Reset()
-	{
-		_fsm.MoveTo(_dormantState);
-		_thisTransform.position = new Vector3(_initPos.x, _initPos.y, _initPos.z);
-	}
-
-	void IReset.OnEnter(Vector3 checkpointPos)
-	{
-
-	}
-
 	public override bool IsActive()
 	{
 		return !_dormant;
+	}
+
+	public Vector3 GetVelocity()
+	{
+		return _rb.velocity; 
+	}
+
+	public bool GetDormant()
+	{
+		return _dormant; 
+	}
+
+	public bool GetIdle()
+	{
+		return _isIdle; 
 	}
 }

@@ -18,25 +18,11 @@ public class ResetSystem : MonoBehaviour
 			_instance = this;
 		else
 			Debug.LogWarning("Multiple reset systems present!");
-
-		GameObject[] boundingBoxGOs = GameObject.FindGameObjectsWithTag(_identifierTag);
-		_boundingBoxes = new ResetBoundingBox[boundingBoxGOs.Length];
-
-		for (int i = 0; i < _boundingBoxes.Length; i++)
-		{
-			_boundingBoxes[i] = boundingBoxGOs[i].GetComponent<ResetBoundingBox>(); 
-		}
-
-		_currentBoundingBox = _startingBoundingBox; 
 	}
 
-	private void Update()
+	public void SetCurrentBoundingBox(ResetBoundingBox currentBoundingBox)
 	{
-		if (Input.GetKeyDown(KeyCode.R))
-		{
-			_currentBoundingBox.Reset(); 
-		}
+		_currentBoundingBox.OnExit();
+		_currentBoundingBox = currentBoundingBox;
 	}
-
-	public void SetCurrentBoundingBox(ResetBoundingBox currentBoundingBox) => _currentBoundingBox = currentBoundingBox;
 }

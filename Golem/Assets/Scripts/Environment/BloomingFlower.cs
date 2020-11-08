@@ -1,58 +1,59 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// When a game object enters the trigger it will activated the bloom animation for the flower 
 /// </summary>
 public class BloomingFlower : MonoBehaviour
 {
-	enum TARGET
-	{
-		ORB, 
-		MENUCAM
-	}
-
 	private enum FlowerState { NORMAL, BLOOMED }
 
 	[SerializeField] private float _distance;
 	[SerializeField] private Animator _anim;
 
-	private TARGET _target = TARGET.ORB;
-	private string _targetTag; 
-	private Transform _targetTranform;
+	private string[] _targetTags;
 	private FlowerState _state;
 
-
-	private bool _targetFound;
+	private List<Transform> _targets;
+	private bool _targetFound = false;
 
 	private void Awake()
 	{
-		switch (_target)
-		{
-			case TARGET.ORB:
-				_targetTag = "Orb";
-				break;
-			case TARGET.MENUCAM:
-				_targetTag = "MenuCam";
-				break;
-		}
+        _targetTags = new string[2];
+        _targetTags[0] = "Orb";
+        _targetTags[1] = "MainCamera";
 
-		_targetTranform = GameObject.FindGameObjectWithTag(_targetTag).transform;
-		_targetFound = _targetTranform != null;
+        _targets = new List<Transform>();
+        for (int i = 0; i < _targetTags.Length; i++)
+        {
+            GameObject go = GameObject.FindGameObjectWithTag(_targetTags[i]);
+
+            if (go != null)
+                _targets.Add(go.transform);
+        }
+
+        if (_targets.Count > 0)
+            _targetFound = true;
 
 		_state = FlowerState.NORMAL;
-
 	}
 
 	private void Update()
 	{
 		if (_state == FlowerState.NORMAL && _targetFound)
-		{
-			float distBetweenOrb = (_targetTranform.position - transform.position).magnitude;
+		{   
+            for (int i = 0; i < _targets.Count; i++)
+            {
+                Vector3 targetPos = _targets[i].position;
+                targetPos.y = transform.position.y;
 
-			if (distBetweenOrb <= _distance)
-			{
-				Bloom();
-			}
+                float distBetweenTarget = (targetPos - transform.position).magnitude;
+
+			    if (distBetweenTarget <= _distance)
+			    {
+				    Bloom();
+			    }
+            }
 		}
 	}
 
@@ -61,11 +62,5 @@ public class BloomingFlower : MonoBehaviour
 		int index = Random.Range(0, 2);
 		_anim.SetBool("Bloom_" + index, true);
 		_state = FlowerState.BLOOMED;
-	}
-
-	private void OnTriggerEnter(Collider other)
-	{
-		if (other.gameObject.CompareTag("TEst"))
-			Bloom();
 	}
 }
