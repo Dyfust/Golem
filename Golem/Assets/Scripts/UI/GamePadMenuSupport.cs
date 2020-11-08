@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
 
 public class GamePadMenuSupport : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class GamePadMenuSupport : MonoBehaviour
 	private int _settingsIndex; 
 	private InputMaster _navigation; 
 	private GameObject _currentButtonRef;
-	private Text _currentText;
+	private TextMeshProUGUI _currentText;
 	private UnityEngine.UI.Button _currentButton; 
 
 	#region Input
@@ -114,8 +115,8 @@ public class GamePadMenuSupport : MonoBehaviour
 		_settingsIndex = _settingsObjects.Count - 1; 
 		_currentButtonRef = _mainMenuObjects[_mainMenuIndex];
 		EventSystem.current.SetSelectedGameObject(_currentButtonRef);
-		Transform child = _currentButtonRef.transform.Find("Text");
-		_currentText = child.transform.GetComponent<Text>();
+		Transform child = _currentButtonRef.transform.Find("Text (TMP)");
+		_currentText = child.transform.GetComponent<TextMeshProUGUI>();
 		EventSystem.current.SetSelectedGameObject(_currentButtonRef);
 
 	}
@@ -133,15 +134,15 @@ public class GamePadMenuSupport : MonoBehaviour
 		_currentText.color = Color.black; 
 		_currentButtonRef = _mainMenuObjects[_mainMenuIndex];
 		EventSystem.current.SetSelectedGameObject(_currentButtonRef);
-		Transform child = _currentButtonRef.transform.Find("Text");
-		_currentText = child.gameObject.GetComponent<Text>(); 
+		Transform child = _currentButtonRef.transform.Find("Text (TMP)");
+		_currentText = child.gameObject.GetComponent<TextMeshProUGUI>(); 
 	}
 
 	private void ChangeCurrentSlider()
 	{
 		_currentText.color = Color.white;
-		Transform child = _settingsObjects[_settingsIndex].transform.Find("Text");
-		_currentText = child.gameObject.GetComponent<Text>(); 
+		Transform child = _settingsObjects[_settingsIndex].transform.Find("Text (TMP)");
+		_currentText = child.gameObject.GetComponent<TextMeshProUGUI>(); 
 	}
 
 	private void MoveSlider(int value)
@@ -154,7 +155,7 @@ public class GamePadMenuSupport : MonoBehaviour
 	{
 		_mainMenu.gameObject.SetActive(false);
 		_settings.gameObject.SetActive(true);
-		ChangeCurrentSlider(); 
+		//ChangeCurrentSlider(); 
 	}
 
 	public void Credits()
@@ -171,8 +172,5 @@ public class GamePadMenuSupport : MonoBehaviour
 	public void Play()
 	{
 		_mainMenu.SetActive(false);
-		_settings.SetActive(false);
-		_credits.SetActive(false);
-		_title.SetActive(false);
 	}
 }

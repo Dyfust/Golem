@@ -5,7 +5,8 @@ public class CursorManager : MonoBehaviour
     private static CursorManager _instance;
     public static CursorManager instance => _instance; 
 
-    private bool _state = false;
+    [SerializeField] private bool _defaultState = false;
+    private bool _state;
 
 	private void Awake()
 	{
@@ -14,7 +15,7 @@ public class CursorManager : MonoBehaviour
 	}
 	private void Start()
     {
-        ToggleCursor(_state);
+        ToggleCursor(_defaultState);
     }
 
     private void Update()
@@ -32,8 +33,8 @@ public class CursorManager : MonoBehaviour
 
     public void ToggleCursor(bool state)
     {
+        _state = state;
         Cursor.lockState = state ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = state;
-        _state = state;
     }
 }

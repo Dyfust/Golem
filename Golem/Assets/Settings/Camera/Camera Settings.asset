@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0e0a5512d6ad842804b5fd18361987, type: 3}
   m_Name: Camera Settings
   m_EditorClassIdentifier: 
-  controllerSensitivity: 20
-  mouseSensitivity: 20
+  lookSensitivity: 1
