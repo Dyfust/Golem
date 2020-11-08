@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // This is a hold interactable, held state and not held state. Interact to alternate between.
 public class Door : MonoBehaviour, IInteractable
@@ -9,6 +10,7 @@ public class Door : MonoBehaviour, IInteractable
 	[SerializeField] private Vector3 _openedOffset;
 	[SerializeField] private Vector3 _closedOffset;
 	[SerializeField] private float _time;
+	[SerializeField] private bool _dontControllerRumble; 
 
 	private Vector3 _closedPos;
 	private Vector3 _openedPos;
@@ -45,6 +47,17 @@ public class Door : MonoBehaviour, IInteractable
 		if (fractionOfJourney >= 1 && _isMoving == true)
 		{
 			_isMoving = false; 
+		}
+
+		if (_isMoving == true && _dontControllerRumble == false)
+		{
+			if (Gamepad.current != null)
+				Gamepad.current.SetMotorSpeeds(0.75f, 0.75f);
+		}
+		else
+		{
+			if (Gamepad.current != null)
+				Gamepad.current.SetMotorSpeeds(0.0f, 0.0f); 
 		}
 
 		if (_open)

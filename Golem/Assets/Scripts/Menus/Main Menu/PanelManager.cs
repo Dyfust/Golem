@@ -15,7 +15,8 @@ public class PanelManager : MonoBehaviour
 
 	private void Start()
 	{
-		ActivatePanel(_defaultPanel); 
+		if (_defaultPanel != null)
+			ActivatePanel(_defaultPanel); 
 	}
 
 	private void Update()
@@ -26,9 +27,17 @@ public class PanelManager : MonoBehaviour
 			{
 				if (p.gameObject.activeInHierarchy == true)
 				{
-					EventSystem.current.SetSelectedGameObject(p.GetDefaultSelectedObject()); 
+					EventSystem.current.SetSelectedGameObject(p.GetDefaultSelectedObject());
 				}
 			}
+		}
+	}
+
+	public void CloseAllPanels()
+	{
+		foreach (Panel p in _panels)
+		{
+			p.gameObject.SetActive(false); 
 		}
 	}
 
@@ -41,6 +50,11 @@ public class PanelManager : MonoBehaviour
 		}
 
 		targetPanel.gameObject.SetActive(true);
-		targetPanel.OnOpen(); 
+		targetPanel.OnOpen();
+	}
+
+	public void Quit()
+	{
+		Application.Quit(); 
 	}
 }

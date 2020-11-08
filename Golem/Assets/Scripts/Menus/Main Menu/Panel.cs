@@ -12,6 +12,12 @@ public class Panel : MonoBehaviour
 		EventSystem.current.SetSelectedGameObject(_defaultSelectedObject); 
 	}
 
+	private void Update()
+	{
+		if (EventSystem.current.currentSelectedGameObject == null)
+			EventSystem.current.SetSelectedGameObject(_defaultSelectedObject); 
+	}
+
 	public GameObject GetDefaultSelectedObject()
 	{
 		return _defaultSelectedObject; 
