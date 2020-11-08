@@ -2,47 +2,32 @@
 
 public class ResetBoundingBox : MonoBehaviour
 {
+    [SerializeField] private GameObject _root;
     [SerializeField] private Collider _boundingBox;
-    [SerializeField] private LayerMask _resetLayerMask;
-    [SerializeField] private Transform _checkpoint;
 
     [SerializeField] private Orb _orb;
-
-    private IReset _orbReset;
-    private IReset[] _detectedObjects;
-
-    private void Start()
-    {
-        _orbReset = _orb.GetComponent<IReset>();
-
-        Collider[] results = Physics.OverlapBox(transform.position, _boundingBox.bounds.extents, Quaternion.identity, _resetLayerMask);
-
-        _detectedObjects = new IReset[results.Length];
-
-        for (int i = 0; i < results.Length; i++)
-        {
-            _detectedObjects[i] = results[i].GetComponent<IReset>();
-            _detectedObjects[i].OnEnter(_checkpoint.position);
-        }
-    }
-
-    public void Reset()
-    {
-        for (int i = 0; i < _detectedObjects.Length; i++)
-        {
-            _detectedObjects[i].Reset();
-        }
-
-        _orbReset.Reset();
-    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag.Equals("Orb"))
         {
             ResetSystem.instance.SetCurrentBoundingBox(this);
-            _orbReset.OnEnter(_checkpoint.position);
         }
+    }
+
+    public void OnExit()
+    {
+        Disable();
+    }
+
+    public void Enable()
+    {
+        _root.SetActive(true);
+    }
+
+    private void Disable()
+    {
+        _root.SetActive(false);
     }
 
     private void OnDrawGizmos()

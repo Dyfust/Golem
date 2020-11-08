@@ -3,7 +3,7 @@ using UnityEngine;
 using FSM;
 using System.Collections;
 
-public class Orb : Player, IRequireInput, IReset
+public class Orb : Player, IRequireInput
 {
 	public delegate void OrbEventHandler(Orb orb);
 	public static event OrbEventHandler OnOrbActive;
@@ -41,9 +41,6 @@ public class Orb : Player, IRequireInput, IReset
 	private bool _isIdle;
 	private const float _exitEnterCD = 1f;
 	private float _exitEnterTimeStamp;
-
-	// Resetting
-	private Vector3 _checkpointPos;
 
 	private Rigidbody _rb;
 	private Transform _thisTransform;
@@ -236,17 +233,6 @@ public class Orb : Player, IRequireInput, IReset
 	void IRequireInput.SetInputData(PlayerInputData data)
 	{
 		_inputData = data;
-	}
-
-	void IReset.Reset()
-	{
-		_fsm.MoveTo(_idleState);
-		_thisTransform.position = new Vector3(_checkpointPos.x, _checkpointPos.y, _checkpointPos.z);
-	}
-
-	void IReset.OnEnter(Vector3 checkpointPos)
-	{
-		_checkpointPos = checkpointPos;
 	}
 
 	private void OnCollisionStay(Collision collision)
