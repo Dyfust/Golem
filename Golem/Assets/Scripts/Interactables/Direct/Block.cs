@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
@@ -114,8 +115,8 @@ public class Block : MonoBehaviour
 
 	public void StopPushing()
 	{
-		if (Gamepad.current != null)
-			Gamepad.current.SetMotorSpeeds(0.0f, 0.0f);
+		if (_contollerRef != null)
+			_contollerRef.SetShake(0, 0); 
 
 		_isConnected = false;
 		_connectedGolem = null;
@@ -127,7 +128,8 @@ public class Block : MonoBehaviour
 
 	private void StartedMoving()
 	{
-		_contollerRef.SetShake(_lowFreq, _highFreq);
+		if (_contollerRef != null)
+			_contollerRef.SetShake(_lowFreq, _highFreq);
 
 		_isMoving = true;
 		_movingSound?.Play();

@@ -28,6 +28,8 @@ public class ScreenFader : MonoBehaviour
 
     private void Start()
     {
+        _screenFadeUI.gameObject.SetActive(false);
+
         if (_fadeOnInit)
             Fade(FadeType.IN, _fadeOnInit);
     }

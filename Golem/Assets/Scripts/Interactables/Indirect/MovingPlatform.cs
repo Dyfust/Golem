@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MovingPlatform : MonoBehaviour, IInteractable
 {
@@ -45,6 +46,17 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 		{
 			OnStopMoving();
 			_isMoving = false;
+		}
+
+		if (_isMoving == true)
+		{
+			if (Gamepad.current != null)
+				Gamepad.current.SetMotorSpeeds(0.75f, 0.75f);
+		}
+		else
+		{
+			if (Gamepad.current != null)
+				Gamepad.current.SetMotorSpeeds(0.0f, 0.0f); 
 		}
 	}
 
