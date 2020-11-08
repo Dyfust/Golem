@@ -2,7 +2,7 @@
 using GolemStates;
 using FSM;
 
-public class Golem : Player, IRequireInput, IReset
+public class Golem : Player, IRequireInput
 {
 	public delegate void GolemEventHandler(Golem golem);
 	public static event GolemEventHandler OnGolemActive;
@@ -72,7 +72,6 @@ public class Golem : Player, IRequireInput, IReset
 	private void Start()
 	{
 		InitaliseFSM();
-		_initPos = _thisTransform.position;
 
 		if (_orbMesh != null)
 			_orbMesh.SetActive(false);
@@ -80,8 +79,6 @@ public class Golem : Player, IRequireInput, IReset
 		DebugWindow.AddPrintTask(() => "Golem Grounded: " + _controller.IsGrounded().ToString());
 		DebugWindow.AddPrintTask(() => "Golem Ground Normal: " + _controller.GetCollisionNormal().ToString());
 		DebugWindow.AddPrintTask(() => "Golem State: " + _fsm.GetCurrentState().debugName);
-
-
 	}
 
 
@@ -284,19 +281,6 @@ public class Golem : Player, IRequireInput, IReset
 	public void SetInputData(PlayerInputData data)
 	{
 		_inputData = data;
-	}
-
-	private Vector3 _initPos;
-
-	void IReset.Reset()
-	{
-		_fsm.MoveTo(_dormantState);
-		_thisTransform.position = new Vector3(_initPos.x, _initPos.y, _initPos.z);
-	}
-
-	void IReset.OnEnter(Vector3 checkpointPos)
-	{
-
 	}
 
 	public override bool IsActive()
