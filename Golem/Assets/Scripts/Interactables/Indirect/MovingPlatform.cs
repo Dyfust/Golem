@@ -76,6 +76,7 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 	{
 		_particleEffect?.PlayEffect();
 		_audioEmitter?.Play();
+		DebugWrapper.Log(gameObject.name + " has started moving!");
 	}
 
 	private void OnStopMoving()
