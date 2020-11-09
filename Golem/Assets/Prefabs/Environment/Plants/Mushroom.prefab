@@ -85,7 +85,12 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 66ca3a0a30652594fbfa0344c19ccc11,
         type: 3}
       propertyPath: m_Name
-      value: Mush_b2
+      value: Mushroom
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 66ca3a0a30652594fbfa0344c19ccc11,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66ca3a0a30652594fbfa0344c19ccc11, type: 3}
