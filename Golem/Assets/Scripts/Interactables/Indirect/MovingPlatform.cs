@@ -9,6 +9,9 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 	[SerializeField] private Vector3 _closedOffset;
 	[SerializeField] private float _time;
 
+	[CustomHeader("VFX")]
+	[SerializeField] private CompositeParticleEffect _particleEffect;
+
 	[CustomHeader("Audio")]
 	[SerializeField] private AudioEmitter _audioEmitter;
 
@@ -70,11 +73,13 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 
 	private void OnStartMoving()
 	{
+		_particleEffect?.PlayEffect();
 		_audioEmitter?.Play();
 	}
 
 	private void OnStopMoving()
 	{
+		_particleEffect?.StopEffect();
 		_audioEmitter?.Stop();
 	}
 	
