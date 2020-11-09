@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 16
   m_IsActive: 1
 --- !u!4 &4124580931444212901
 Transform:
@@ -61,7 +61,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 16
   m_IsActive: 1
 --- !u!4 &8771607421118737841
 Transform:
@@ -153,7 +153,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 16
   m_IsActive: 0
 --- !u!4 &8771607421641683207
 Transform:
@@ -245,7 +245,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 16
   m_IsActive: 1
 --- !u!4 &8771607422221336321
 Transform:
@@ -403,6 +403,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Mushroom short
+      objectReference: {fileID: 0}
+    - target: {fileID: 3169946038673837369, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7283062989743005268, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 180c7f76a928e1b428f5fc248d9b6f87, type: 3}
@@ -584,6 +594,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom short (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3169946038673837369, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 6001603866812738631, guid: 180c7f76a928e1b428f5fc248d9b6f87,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -598,6 +613,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: -5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7283062989743005268, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 180c7f76a928e1b428f5fc248d9b6f87, type: 3}
@@ -779,6 +799,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom short (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 3169946038673837369, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 6001603866812738631, guid: 180c7f76a928e1b428f5fc248d9b6f87,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -793,6 +818,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: -5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7283062989743005268, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 180c7f76a928e1b428f5fc248d9b6f87, type: 3}
@@ -1139,6 +1169,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom short (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 3169946038673837369, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 6001603866812738631, guid: 180c7f76a928e1b428f5fc248d9b6f87,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -1153,6 +1188,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: -5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7283062989743005268, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 180c7f76a928e1b428f5fc248d9b6f87, type: 3}
@@ -1244,6 +1284,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom short (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 3169946038673837369, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 6001603866812738631, guid: 180c7f76a928e1b428f5fc248d9b6f87,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -1258,6 +1303,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: -5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7283062989743005268, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 180c7f76a928e1b428f5fc248d9b6f87, type: 3}
@@ -1349,6 +1399,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom short (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3169946038673837369, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7283062989743005268, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 180c7f76a928e1b428f5fc248d9b6f87, type: 3}
 --- !u!4 &9023729355649077223 stripped
@@ -1438,6 +1498,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Mushroom short (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3169946038673837369, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7283062989743005268, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 180c7f76a928e1b428f5fc248d9b6f87, type: 3}
@@ -1639,6 +1709,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4124580931444212901}
     m_Modifications:
+    - target: {fileID: 92717398831419925, guid: 98e855a1f16f3554ba0ed9ff46ac2f2d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 1516774945771805840, guid: 98e855a1f16f3554ba0ed9ff46ac2f2d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1744,10 +1819,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushglow
       objectReference: {fileID: 0}
+    - target: {fileID: 5043104495225369001, guid: 98e855a1f16f3554ba0ed9ff46ac2f2d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 5047029552750661618, guid: 98e855a1f16f3554ba0ed9ff46ac2f2d,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5047029552750661618, guid: 98e855a1f16f3554ba0ed9ff46ac2f2d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98e855a1f16f3554ba0ed9ff46ac2f2d, type: 3}
@@ -1839,6 +1924,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom short (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 3169946038673837369, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 6001603866812738631, guid: 180c7f76a928e1b428f5fc248d9b6f87,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -1853,6 +1943,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: -5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7283062989743005268, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 180c7f76a928e1b428f5fc248d9b6f87, type: 3}
@@ -1943,6 +2038,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Mushroom short (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3169946038673837369, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7283062989743005268, guid: 180c7f76a928e1b428f5fc248d9b6f87,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 180c7f76a928e1b428f5fc248d9b6f87, type: 3}

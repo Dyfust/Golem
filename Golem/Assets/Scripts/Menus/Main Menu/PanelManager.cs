@@ -16,7 +16,7 @@ public class PanelManager : MonoBehaviour
 	private void Start()
 	{
 		if (_defaultPanel != null)
-			ActivatePanel(_defaultPanel); 
+			ActivatePanel(_defaultPanel);
 	}
 
 	private void Update()
