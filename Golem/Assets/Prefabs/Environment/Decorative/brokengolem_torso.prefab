@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 85
   m_IsActive: 1
 --- !u!4 &2318414257547943287
 Transform:
@@ -55,12 +55,12 @@ PrefabInstance:
     - target: {fileID: -9016400395524304362, guid: 7238b3b311b1b3141b20d06a6ee9460d,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 85
       objectReference: {fileID: 0}
     - target: {fileID: -5192314950196504308, guid: 7238b3b311b1b3141b20d06a6ee9460d,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 85
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 7238b3b311b1b3141b20d06a6ee9460d,
         type: 3}
@@ -125,27 +125,27 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 7238b3b311b1b3141b20d06a6ee9460d,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 85
       objectReference: {fileID: 0}
     - target: {fileID: -887048627029601582, guid: 7238b3b311b1b3141b20d06a6ee9460d,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 85
       objectReference: {fileID: 0}
     - target: {fileID: 2542113446116955026, guid: 7238b3b311b1b3141b20d06a6ee9460d,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 85
       objectReference: {fileID: 0}
     - target: {fileID: 8477911159283970604, guid: 7238b3b311b1b3141b20d06a6ee9460d,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 85
       objectReference: {fileID: 0}
     - target: {fileID: 9117943074576497051, guid: 7238b3b311b1b3141b20d06a6ee9460d,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 85
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7238b3b311b1b3141b20d06a6ee9460d, type: 3}
