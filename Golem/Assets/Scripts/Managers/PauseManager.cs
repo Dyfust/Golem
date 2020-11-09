@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PauseManager : MonoBehaviour
+public class PauseManager : MonoBehaviour, IPauseableObject
 {
 	private static PauseManager _instance;
 
@@ -23,6 +23,7 @@ public class PauseManager : MonoBehaviour
 	[SerializeField] private float _pauseTimer; 
 
 	private bool _isPaused = false;
+	private bool _interactable = true; 
 
 	private InputMaster _input;
 
@@ -43,7 +44,7 @@ public class PauseManager : MonoBehaviour
 
 	private void Pause_performed(InputAction.CallbackContext obj)
 	{
-		if (Time.time >= _timeStamp + _pauseTimer)
+		if (Time.time >= _timeStamp + _pauseTimer && _interactable == true)
 		{
 			if (_isPaused)
 				PlayerResume();
@@ -86,7 +87,7 @@ public class PauseManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.P) && Time.time >= _timeStamp + _pauseTimer)
+		if (Input.GetKeyDown(KeyCode.P) && Time.time >= _timeStamp + _pauseTimer  && _interactable == true)
 		{
 			if (_isPaused)
 				PlayerResume();
@@ -148,5 +149,15 @@ public class PauseManager : MonoBehaviour
 	{
 		yield return new WaitForSeconds(1);
 		_panaelManagerRef.ActivatePanel(_pauseScreen); 
+	}
+
+	public void Pause()
+	{
+		_interactable = false; 
+	}
+
+	public void Resume()
+	{
+		_interactable = true; 
 	}
 }
