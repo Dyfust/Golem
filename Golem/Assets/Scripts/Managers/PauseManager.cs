@@ -87,13 +87,13 @@ public class PauseManager : MonoBehaviour, IPauseableObject
 	// Update is called once per frame
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.P) && Time.time >= _timeStamp + _pauseTimer  && _interactable == true)
-		{
-			if (_isPaused)
-				PlayerResume();
-			else
-				PlayerPause();
-		}
+		//if (Input.GetKeyDown(KeyCode.P) && Time.time >= _timeStamp + _pauseTimer  && _interactable == true)
+		//{
+		//	if (_isPaused)
+		//		PlayerResume();
+		//	else
+		//		PlayerPause();
+		//}
 	}
 
 	/// <summary>
