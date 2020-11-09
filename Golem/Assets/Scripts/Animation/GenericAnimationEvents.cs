@@ -11,4 +11,9 @@ public class GenericAnimationEvents : MonoBehaviour
     {
         GameManager.instance.SystemResume();
     }
+
+    public void LoadScene(int buildIndex)
+    {
+        SceneLoader.instance.LoadScene(buildIndex);
+    }
 }
