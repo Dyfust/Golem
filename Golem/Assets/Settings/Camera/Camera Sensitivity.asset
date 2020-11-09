@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Camera Sensitivity
   m_EditorClassIdentifier: Assembly-CSharp::SliderValue
-  value: 0.40753242
+  value: 1
   min: 0
   max: 10
