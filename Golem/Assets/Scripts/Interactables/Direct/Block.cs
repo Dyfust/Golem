@@ -115,8 +115,8 @@ public class Block : MonoBehaviour
 
 	public void StopPushing()
 	{
-		if (_contollerRef != null)
-			_contollerRef.SetShake(0, 0); 
+		//if (_contollerRef != null)
+		//	_contollerRef.SetShake(0, 0);
 
 		_isConnected = false;
 		_connectedGolem = null;
@@ -128,8 +128,8 @@ public class Block : MonoBehaviour
 
 	private void StartedMoving()
 	{
-		if (_contollerRef != null)
-			_contollerRef.SetShake(_lowFreq, _highFreq);
+		//if (_contollerRef != null)
+		//	_contollerRef.SetShake(_lowFreq, _highFreq);
 
 		_isMoving = true;
 		_movingSound?.Play();

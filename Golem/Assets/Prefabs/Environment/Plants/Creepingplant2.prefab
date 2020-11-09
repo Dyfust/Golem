@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 81
   m_IsActive: 1
 --- !u!4 &4671207949163039160
 Transform:
@@ -56,6 +56,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SmallPlantMound (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1547964330677913818, guid: 34907a0686500b14f9d97654da7d9bc0,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 81
       objectReference: {fileID: 0}
     - target: {fileID: 4557126142088425824, guid: 34907a0686500b14f9d97654da7d9bc0,
         type: 3}
@@ -126,6 +131,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6491999227813911276, guid: 34907a0686500b14f9d97654da7d9bc0,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 81
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34907a0686500b14f9d97654da7d9bc0, type: 3}

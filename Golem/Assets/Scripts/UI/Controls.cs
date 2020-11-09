@@ -33,7 +33,6 @@ public class Controls : MonoBehaviour, IUIDisplay
 
 	private void Start()
 	{
-
 		var temp = FindObjectsOfType<MonoBehaviour>().OfType<IUIDisplay>();
 		_uiDisplays = new List<IUIDisplay>();
 
@@ -43,7 +42,6 @@ public class Controls : MonoBehaviour, IUIDisplay
 				continue; 
 			_uiDisplays.Add(ui); 
 		}
-
 
 		_textRef = _text.GetComponent<TMP_Text>();
 		_col = GetComponent<SphereCollider>();

@@ -9,7 +9,7 @@ public class Panel : MonoBehaviour
 
 	public void OnOpen()
 	{
-		EventSystem.current.SetSelectedGameObject(_defaultSelectedObject); 
+		EventSystem.current.SetSelectedGameObject(null); 
 	}
 
 	private void Update()
