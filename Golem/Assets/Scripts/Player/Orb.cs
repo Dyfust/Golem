@@ -18,7 +18,6 @@ public class Orb : Player, IRequireInput
 	[SerializeField] private Transform _meshTransform;
 
 	[CustomHeader("Audio Emitters")]
-	[SerializeField] private OneShotEmitter _golemAttachmentSFX;
 	[SerializeField] private AudioEmitter _rollingSFX;
 
 	[CustomHeader("References")]
@@ -206,8 +205,6 @@ public class Orb : Player, IRequireInput
 		GetComponent<Collider>().enabled = false;
 		_meshTransform.gameObject.SetActive(false);
 		_currentGolem.Enter();
-
-		_golemAttachmentSFX.Play();
 
 		_exitEnterTimeStamp = Time.time;
 	}
