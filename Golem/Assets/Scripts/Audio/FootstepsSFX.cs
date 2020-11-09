@@ -2,7 +2,7 @@
 
 public class FootstepsSFX : MonoBehaviour
 {
-    private enum FOOT {LEFT, RIGHT};
+    private enum FOOT { LEFT, RIGHT };
 
     [SerializeField] private float _threshold;
 
@@ -49,14 +49,21 @@ public class FootstepsSFX : MonoBehaviour
         }
     }
 
+    int i = 0;
     private void Step(FOOT foot)
     {
-        if (foot == FOOT.LEFT)
-            _leftFootVFX.Play();
-        else
-            _rightFootVFX.Play();
-            
-        _sfxEmitter.Play();
-        _feetAboveThreshold[(int)foot] = false;
+        i++;
+
+        if (i > 1)
+        {
+            if (foot == FOOT.LEFT)
+                _leftFootVFX.Play();
+            else
+                _rightFootVFX.Play();
+
+            DebugWrapper.Log("Step");
+            _sfxEmitter.Play();
+            _feetAboveThreshold[(int)foot] = false;
+        }
     }
 }

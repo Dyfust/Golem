@@ -205,8 +205,8 @@ public class Golem : Player, IRequireInput
 			_orbMesh.SetActive(true);
 
 		OnGolemActive?.Invoke(this);
-		_dormant = false;
 		_emissionFade.OnActivate(); 
+		_dormant = false;
 	}
 
 	public void Exit()
