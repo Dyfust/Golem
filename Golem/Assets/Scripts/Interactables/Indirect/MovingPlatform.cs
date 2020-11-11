@@ -8,6 +8,7 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 	[SerializeField] private Vector3 _openedOffset;
 	[SerializeField] private Vector3 _closedOffset;
 	[SerializeField] private float _time;
+	[SerializeField] private bool _dontControllerRumble;
 
 	[CustomHeader("VFX")]
 	[SerializeField] private CompositeParticleEffect _particleEffect;
@@ -51,7 +52,7 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 			_isMoving = false;
 		}
 
-		if (_isMoving == true)
+		if (_isMoving && !_dontControllerRumble)
 		{
 			if (Gamepad.current != null)
 				Gamepad.current.SetMotorSpeeds(0.75f, 0.75f);
@@ -75,6 +76,7 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 	{
 		_particleEffect?.PlayEffect();
 		_audioEmitter?.Play();
+		DebugWrapper.Log(gameObject.name + " has started moving!");
 	}
 
 	private void OnStopMoving()

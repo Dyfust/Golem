@@ -1,44 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Button : MonoBehaviour
 {
-	enum ButtonType { ORB, GOLEM, BLOCK }
-
-	[SerializeField] private ButtonType _type;
 	[SerializeField] private GameObject[] _interactions;
-	[SerializeField] private bool _oneTimeActivate;
+
+	[CustomHeader("Audio")]
+	[SerializeField] private OneShotEmitter _sfxEmitter;
 
 	private bool _activated; 
-
-	private string _targetTag;
+	private string _targetTag = "Orb";
 
 	private EmissionFill _emmisiveAnim;
-	private bool _emmisiveActivated; 
 
 	private void Awake()
 	{
 		_emmisiveAnim = GetComponent<EmissionFill>(); 
-
-		switch (_type)
-		{
-			case ButtonType.ORB:
-				{
-					_targetTag = "Orb";
-					break;
-				}
-			case ButtonType.GOLEM:
-				{
-					_targetTag = "Golem";
-					break;
-				}
-			case ButtonType.BLOCK:
-				{
-					_targetTag = "Block";
-					break;
-				}
-		}
 	}
 
 	private void ToggleInteractions()
@@ -47,13 +23,15 @@ public class Button : MonoBehaviour
 		{
 			_interactions[i].GetComponent<IInteractable>().Interact();
 		}
+
+		_sfxEmitter?.Play();
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.gameObject.CompareTag(_targetTag))
 		{
-			if (_oneTimeActivate == true && _activated == false)
+			if (_activated == false)
 			{
 				ToggleInteractions();
 				_activated = true;
@@ -61,25 +39,6 @@ public class Button : MonoBehaviour
 				if (_emmisiveAnim != null)
 					_emmisiveAnim.OnActivate(); 
 			}
-			else if (_oneTimeActivate == false)
-			{
-				ToggleInteractions();
-
-				if (_emmisiveActivated == true)
-				{
-					if (_emmisiveAnim != null)
-						_emmisiveAnim.OnDeactivate();
-					_emmisiveActivated = false;
-				}
-				else
-				{
-					if (_emmisiveAnim != null)
-						_emmisiveAnim.OnActivate();
-					_emmisiveActivated = true; 
-				}
-			}
 		}
 	}
-
-
 }
