@@ -35,8 +35,8 @@ public class GameManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.T))
-			_player.transform.position = _spawn.transform.position; 
+		//if (Input.GetKeyDown(KeyCode.T))
+		//	_player.transform.position = _spawn.transform.position; 
 
 		//if (Input.GetKeyDown(KeyCode.P))
 		//	PauseGame();

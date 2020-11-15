@@ -32,7 +32,7 @@ public class CameraInputController : MonoBehaviour, AxisState.IInputAxisProvider
 	[Tooltip("Float action for Z movement")]
 	public InputActionReference ZAxis;
 
-	[SerializeField] private CameraSettings _settings;
+	[SerializeField] private SliderValue _sensitivity;
 
 	float AxisState.IInputAxisProvider.GetAxisValue(int axis)
 	{
@@ -52,8 +52,8 @@ public class CameraInputController : MonoBehaviour, AxisState.IInputAxisProvider
 			{
 				switch (axis)
 				{
-					case 0: return action.ReadValue<Vector2>().x * _settings.lookSensitivity;
-					case 1: return action.ReadValue<Vector2>().y * _settings.lookSensitivity;
+					case 0: return action.ReadValue<Vector2>().x * _sensitivity.value;
+					case 1: return action.ReadValue<Vector2>().y * _sensitivity.value;
 					case 2: return action.ReadValue<float>();
 				}
 			}

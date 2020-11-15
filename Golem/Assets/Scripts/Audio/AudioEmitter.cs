@@ -18,6 +18,7 @@ public class AudioEmitter : MonoBehaviour
         _source.loop = true;
         _source.playOnAwake = false;
         _source.clip = _clip;
+        _source.volume = _maxVolume;
     }
 
     private void Update()
