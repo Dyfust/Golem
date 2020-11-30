@@ -1,51 +1,52 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
-
-public class CameraTrigger : MonoBehaviour
+/// <summary>
+/// Used to switch to a desired camera when the triggered is activated. 
+/// </summary>
+public class CameraTrigger : MonoBehaviour, IInteractable
 {
-	enum Target { ORB, GOLEM }
-
-	[SerializeField] private Target _target;
+	[SerializeField] private bool _backToPlayer = true; 
+	[SerializeField] private bool _oneTimeActivate = true;
+	[SerializeField] private float _timerDuration;
 	[SerializeField] private VirtualCamera _virtualCamera;
+
+
+	private bool _activated = false; 
 	private string _targetTag;
+	private float _timer;
+	private bool _startTimer; 
 
 	private void Awake()
 	{
-		switch (_target)
-		{
-			case Target.ORB:
-				_targetTag = "Orb";
-				break;
 
-			case Target.GOLEM:
-				_targetTag = "Golem";
-				break;
+	}
+
+
+	private void Update()
+	{
+		if (_startTimer == true)
+		{
+			_timer += Time.deltaTime;
+
+			if (_timer > _timerDuration && _backToPlayer == true)
+			{
+				VirtualCameraManager.instance.TogglePlayerCamera(); 
+				GameManager.instance.SystemResume();
+				_startTimer = false;
+			}
 		}
 	}
 
-	private void OnTriggerEnter(Collider other)
+	public void Interact()
 	{
-		if (other.CompareTag(_targetTag))
+		if (_oneTimeActivate == false || _activated == false)
 		{
-			StopCoroutine("CameraFade"); 
-			StartCoroutine("CameraFade");
+			VirtualCameraManager.instance.ToggleExternalCamera(_virtualCamera);
+			GameManager.instance.SystemPause();
+			_timer = 0;
+			_startTimer = true;
+			_activated = true;
 		}
 	}
-
-	private void OnTriggerExit(Collider other)
-	{
-		if (other.CompareTag(_targetTag))
-			VirtualCameraManager.instance.TogglePlayerCamera();
-	}
-
-	IEnumerator CameraFade()
-	{
-		yield return StartCoroutine(ScreenFader.instance.FadeCo(ScreenFader.FadeType.OUT, false));
-		VirtualCameraManager.instance.ToggleCamera(_virtualCamera);
-		yield return StartCoroutine(ScreenFader.instance.FadeCo(ScreenFader.FadeType.IN, false));
-
-	}
-
-
 }

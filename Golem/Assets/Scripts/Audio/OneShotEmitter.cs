@@ -13,16 +13,13 @@ public class OneShotEmitter : MonoBehaviour
 
     public void Play()
     {
+        if (_source.isPlaying)
+            return;
+
         AudioClip clip = _clips[Random.Range(0, _clips.Length)];
         float pitch = Random.Range(_minPitch, _maxPitch);
 
         _source.pitch = pitch;
         _source.PlayOneShot(clip);
-    }
-    InputMaster i = new InputMaster();
-    private void Update()
-    {
-        if (i.Gameplay.PushPull.triggered)
-            Play();
     }
 }

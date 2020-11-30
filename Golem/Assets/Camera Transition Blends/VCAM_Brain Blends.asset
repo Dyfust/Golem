@@ -13,22 +13,44 @@ MonoBehaviour:
   m_Name: VCAM_Brain Blends
   m_EditorClassIdentifier: 
   m_CustomBlends:
-  - m_From: '**ANY CAMERA**'
-    m_To: Pillar_cam
+  - m_From: VCAM_Orb
+    m_To: VCAM_Golem
     m_Blend:
-      m_Style: 0
-      m_Time: 2
+      m_Style: 1
+      m_Time: 1
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: Pillar_cam
-    m_To: '**ANY CAMERA**'
+  - m_From: VCAM_Golem
+    m_To: VCAM_Orb
     m_Blend:
-      m_Style: 0
-      m_Time: 2
+      m_Style: 1
+      m_Time: 1
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: VCAM_Orb
+    m_To: VCAM_TunnelCam
+    m_Blend:
+      m_Style: 1
+      m_Time: 0.65
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: VCAM_TunnelCam
+    m_To: VCAM_Orb
+    m_Blend:
+      m_Style: 1
+      m_Time: 0.65
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []

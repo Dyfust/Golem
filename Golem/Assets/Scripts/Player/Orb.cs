@@ -1,8 +1,9 @@
 ﻿using OrbStates;
 using UnityEngine;
 using FSM;
+using System.Collections;
 
-public class Orb : MonoBehaviour, IRequireInput, IReset, IPause
+public class Orb : Player, IRequireInput
 {
 	public delegate void OrbEventHandler(Orb orb);
 	public static event OrbEventHandler OnOrbActive;
@@ -13,32 +14,38 @@ public class Orb : MonoBehaviour, IRequireInput, IReset, IPause
 
 	[CustomHeader("Interact Settings")]
 	[SerializeField] private float _interactionDistance;
+	[SerializeField] private float _orientationSpeed; 
 	[SerializeField] private Transform _meshTransform;
 
+	[CustomHeader("Audio Emitters")]
+	[SerializeField] private AudioEmitter _rollingSFX;
+
+	[CustomHeader("References")]
+	[SerializeField] private Animator _anim; 
+
 	// --------------------------------------------------------------
+	private State _idleState;
+
 	private PlayerInputData _inputData;
 
 	private Transform _cameraTransform;
 	private Vector3 _forwardRelativeToCamera;
 	private Vector3 _rightRelativeToCamera;
 	private Vector3 _currentHeading;
+
 	private Quaternion _targetRotation;
-	private Vector3 _realVelocity;
-	private Vector3 _prevPosition;
-	private Vector3 _currentPosition;
 
 	private FSM.FSM _fsm;
 	private Golem _currentGolem;
+	private bool _isIdle;
+	private const float _exitEnterCD = 1f;
+	private float _exitEnterTimeStamp;
 
 	private Rigidbody _rb;
 	private Transform _thisTransform;
 
 	private CharacterController _controller;
 
-	private void OnEnable()
-	{
-			
-	}
 	private void Awake()
 	{
 		_rb = GetComponent<Rigidbody>();
@@ -61,68 +68,73 @@ public class Orb : MonoBehaviour, IRequireInput, IReset, IPause
 		DebugWindow.AddPrintTask(() => "Orb Ground Normal: " + _controller.GetCollisionNormal().ToString());
 	}
 
+
+	float idleTimeStamp;
+	float idleDt = 0.1f; 
 	private void Update()
 	{
 		ComputeAxes();
 
+		//Clean up required. 
+		if (_rb.velocity.sqrMagnitude >= 0.1f)
+			idleTimeStamp = Time.time;
+
+		_isIdle = _rb.velocity.sqrMagnitude < 0.1f && Time.time > idleTimeStamp + idleDt;
+		if (_anim != null)
+			_anim.SetBool("Idle", _isIdle);
+
 		_fsm.HandleTransitions();
 		_fsm.UpdateLogic();
-
-		_inputData.enterButtonPressedThisFrame = false;
 	}
 
 	private void FixedUpdate()
 	{
-		_currentPosition = _rb.position;
-		_realVelocity = (_currentPosition - _prevPosition) / Time.fixedDeltaTime;
 		_fsm.UpdatePhysics();
-		Roll();
-		_prevPosition = _currentPosition;
+		_controller.FixedUpdate();
 	}
-
-	private State _idleState;
 
 	private void InitialiseFSM()
 	{
 		_fsm = new FSM.FSM();
 
-		State idleState = new IdleState(this);
-		_idleState = idleState;
-		State rollingState = new RollingState(this);
+		_idleState = new IdleState(this);
+		State rollingState = new RollingState(this, _rollingSFX);
 		State mountedState = new MountedState(this);
 
-		_fsm.AddTransition(idleState, rollingState, () =>
+		_fsm.AddTransition(_idleState, rollingState, IsRollingOnSurface);
+		_fsm.AddTransition(rollingState, _idleState, IsNotRolling);
+
+		_fsm.AddTransition(_idleState, mountedState, IsEnteringGolem);
+		_fsm.AddTransition(rollingState, mountedState, IsEnteringGolem);
+
+		_fsm.AddTransition(mountedState, _idleState, IsExitingGolem);
+
+		_fsm.SetDefaultState(_idleState);
+	}
+
+	private bool IsRollingOnSurface()
+	{
+		return _currentHeading != Vector3.zero;
+	}
+
+	private bool IsNotRolling()
+	{
+		return !IsRollingOnSurface() && _controller.GetVelocity() == Vector3.zero;
+	}
+
+	private bool IsEnteringGolem()
+	{
+		if (_inputData.enterButtonPressedThisFrame && Time.time >= _exitEnterTimeStamp + _exitEnterCD)
 		{
-			return _currentHeading != Vector3.zero;
-		});
+			return FindGolem();
+		}
 
-		_fsm.AddTransition(rollingState, idleState, () =>
-		{
-			return _currentHeading == Vector3.zero;
-		});
+		return false;
+	}
 
-		_fsm.AddTransition(idleState, mountedState, () =>
-		{
-			if (_inputData.enterButtonPressedThisFrame)
-				return EnterGolem();
-
-			return false;
-		});
-
-		_fsm.AddTransition(rollingState, mountedState, () =>
-		{
-			if (_inputData.enterButtonPressedThisFrame)
-				return EnterGolem();
-
-			return false;
-		});
-
-		_fsm.AddTransition(mountedState, idleState, () =>
-		{
-			return _inputData.enterButtonPressedThisFrame;
-		});
-
-		_fsm.SetDefaultState(idleState);
+	private bool IsExitingGolem()
+	{
+		return _inputData.enterButtonPressedThisFrame && _currentGolem != null;
 	}
 
 	private void ComputeAxes()
@@ -130,21 +142,24 @@ public class Orb : MonoBehaviour, IRequireInput, IReset, IPause
 		float angle = _cameraTransform.rotation.eulerAngles.y;
 		_forwardRelativeToCamera = Quaternion.AngleAxis(angle, Vector3.up) * Vector3.forward;
 		_rightRelativeToCamera = Vector3.Cross(Vector3.up, _forwardRelativeToCamera);
-
-		_currentHeading = _inputData.normalizedAxes.x * _rightRelativeToCamera + _inputData.normalizedAxes.y * _forwardRelativeToCamera;
-	}
-
-	public void UpdateController()
-	{
-		_controller.FixedUpdate();
+		_currentHeading = _inputData.axes.x * _rightRelativeToCamera + _inputData.axes.y * _forwardRelativeToCamera;
 	}
 
 	public void Roll()
 	{
-		Vector3 rotAxis = Vector3.Cross(Vector3.up, _realVelocity.normalized);
-		float targetAngularVelocity = _realVelocity.magnitude / 1f;
+		Vector3 rotAxis = Vector3.Cross(Vector3.up, _controller.GetVelocity().normalized);
+		float targetAngularVelocity = _controller.GetVelocity().magnitude / 0.5f;
 
 		_meshTransform.Rotate(rotAxis, Mathf.Rad2Deg * targetAngularVelocity * Time.fixedDeltaTime, Space.World);
+	}
+
+	public void OrientateMeshToCamera()
+	{
+		Vector3 temp = _meshTransform.up;
+		temp.x = 0;
+		temp.z = 0;
+		Quaternion end = Quaternion.LookRotation(-_cameraTransform.forward, Vector3.up);
+		_meshTransform.rotation = Quaternion.RotateTowards(_meshTransform.rotation, end, Time.fixedDeltaTime * _orientationSpeed);
 	}
 
 	public void OrientateToGolem()
@@ -155,16 +170,12 @@ public class Orb : MonoBehaviour, IRequireInput, IReset, IPause
 
 	public void Move()
 	{
-		_controller.Move(_currentHeading, _inputData.joystickDepth);
+		_controller.Move(_currentHeading);
 	}
 
-	public void ResetState()
+	public void ResetMovement()
 	{
-		_controller.Move(Vector3.zero, 0f);
-	}
-
-	public void ResetVelocity()
-	{
+		_controller.Move(Vector3.zero);
 		_rb.velocity = Vector3.zero;
 	}
 
@@ -188,41 +199,35 @@ public class Orb : MonoBehaviour, IRequireInput, IReset, IPause
 		return false;
 	}
 
-	public bool EnterGolem()
+	public void EnterGolem()
 	{
-		if (FindGolem())
-		{
-			_rb.useGravity = false;
-			_rb.velocity = Vector3.zero;
+		_controller.Toggle(false);
+		GetComponent<Collider>().enabled = false;
+		_meshTransform.gameObject.SetActive(false);
+		_currentGolem.Enter();
 
-			GetComponent<Collider>().enabled = false;
-
-			_currentGolem.Enter();
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public void StickToGolem()
-	{
-		_rb.position = _currentGolem.transform.position + _currentGolem.attachmentOffset;
+		_exitEnterTimeStamp = Time.time;
 	}
 
 	public void ExitGolem()
 	{
+		_thisTransform.position = _currentGolem.transform.position + _currentGolem.attachmentOffset;
+		GetComponent<Collider>().enabled = true;
+		_meshTransform.gameObject.SetActive(true);
+
 		_currentGolem.Exit();
 		_currentGolem = null;
 
-		GetComponent<Collider>().enabled = true;
-		_rb.useGravity = true;
-
 		OnOrbActive?.Invoke(this);
+
+		_controller.Toggle(true);
+
+		_exitEnterTimeStamp = Time.time;
+
 	}
 
 	// Interfaces
-	public void SetInputData(PlayerInputData data)
+	void IRequireInput.SetInputData(PlayerInputData data)
 	{
 		_inputData = data;
 	}
@@ -232,28 +237,12 @@ public class Orb : MonoBehaviour, IRequireInput, IReset, IPause
 		_controller.OnCollisionStay(collision);
 	}
 
-	private Vector3 _checkpointPos;
-
-	void IReset.Reset()
+	public override bool IsActive()
 	{
-		_fsm.MoveTo(_idleState);
-
-		ResetVelocity();
-
-		_thisTransform.position = new Vector3(_checkpointPos.x, _checkpointPos.y, _checkpointPos.z);
+		return true;
 	}
 
-	void IReset.OnEnter(Vector3 checkpointPos)
-	{
-		_checkpointPos = checkpointPos;
-	}
-
-	void IPause.Pause()
-	{
-	}
-
-	void IPause.Resume()
-	{
-		return; 
-	}
+	public bool IsGrounded() => _controller.IsGrounded();
+	public float GetMaxSpeed() => _controller.GetMaxSpeed();
+	public Vector3 GetVelocity() => _controller.GetVelocity();
 }

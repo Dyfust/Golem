@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
+/// <summary>
+/// This class is responsible for handling all aspects of motion including slope handling & ground detection.
+/// </summary>
 public class CharacterController : IMovementController
 {
-    /// This class is responsible for handling all aspects of motion including slope handling & ground detection.
     private CharacterControllerSettings _settings;
-
+    private float _maxSpeed;
     private float _acceleration;
-    private Vector3 _bufferedAcceleration;
+
     private Vector3 _velocity;
-    private float _t;
+    private Vector3 _bufferedAccelerationNextTick;
 
     private bool _isGrounded;
     private Vector3 _groundNormal;
     private List<Vector3> _collisionNormals = new List<Vector3>();
+
+    private bool _active;
 
     private Rigidbody _rb;
 
@@ -23,25 +27,33 @@ public class CharacterController : IMovementController
     {
         _rb = rb;
         _settings = settings;
-        _acceleration = (_settings.maxSpeed / _settings.timeToMaxSpeed) + _settings.friction;
+        _maxSpeed = _settings.maxSpeed;
+        
+        _acceleration = (_maxSpeed / _settings.timeToMaxSpeed) + _settings.friction;
+
+        _active = true;
     }
 
     public void FixedUpdate()
     {
+        if (!_active)
+            return;
+
         _velocity = _rb.velocity;
-        Vector3 acceleration = _bufferedAcceleration;
-        _bufferedAcceleration = Vector3.zero;
+
+        Vector3 accelerationThisTick = _bufferedAccelerationNextTick;
+        _bufferedAccelerationNextTick = Vector3.zero;
 
         _isGrounded = DetectGround();
 
         //This raycast is responsible for detecting a slope in front of the character.
         if (_isGrounded)
         {
-            _velocity = HandleSlope(_velocity, acceleration, _groundNormal);
+            _velocity = HandleSlope(_velocity, accelerationThisTick, _groundNormal);
         }
         else
         {
-            _velocity += acceleration;
+            _velocity += accelerationThisTick;
         }
 
         if (_isGrounded)
@@ -77,7 +89,6 @@ public class CharacterController : IMovementController
             _velocity += Vector3.down * _settings.gravity * Time.fixedDeltaTime;
 
         //Clamp velocity to prevent exceeding max speed.
-        float cappedSpeed = _settings.maxSpeed * _t;
         if (_rb.velocity.magnitude > _settings.maxSpeed)
         {
             if (_isGrounded)
@@ -135,7 +146,6 @@ public class CharacterController : IMovementController
             _groundNormal = (_groundNormal / amountOfGroundNormals).normalized;
 
         _collisionNormals.Clear();
-
         return isGrounded;
     }
 
@@ -146,13 +156,19 @@ public class CharacterController : IMovementController
         _collisionNormals.Add(normal);
     }
 
-    public void Move(Vector3 dir, float t)
+    public void Move(Vector3 dir)
     {
-        _bufferedAcceleration += dir * _acceleration * Time.fixedDeltaTime * t;
-        _t = t;
+        _bufferedAccelerationNextTick += dir * _acceleration * Time.fixedDeltaTime;
     }
 
-    public Vector3 GetVelocity() => _velocity;
+    public void Toggle(bool state)
+    {
+        _active = state;
+        _rb.velocity = Vector3.zero;
+    }
+
     public bool IsGrounded() => _isGrounded;
+    public float GetMaxSpeed() => _maxSpeed;
+    public Vector3 GetVelocity() => _velocity;
     public Vector3 GetCollisionNormal() => _groundNormal;
 }

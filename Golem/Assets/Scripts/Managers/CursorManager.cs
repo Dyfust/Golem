@@ -2,30 +2,39 @@
 
 public class CursorManager : MonoBehaviour
 {
-    private bool _state = false;
+    private static CursorManager _instance;
+    public static CursorManager instance => _instance; 
 
-    private void Start()
+    [SerializeField] private bool _defaultState = false;
+    private bool _state;
+
+	private void Awake()
+	{
+        if (_instance == null)
+            _instance = this;
+	}
+	private void Start()
     {
-        ToggleCursor(_state);
+        ToggleCursor(_defaultState);
     }
 
     private void Update()
     {
-		if (Input.GetKeyDown(KeyCode.Escape))
-			ToggleCursor();
+		//if (Input.GetKeyDown(KeyCode.Escape))
+		//	ToggleCursor();
 	}
 
     private void ToggleCursor()
     {
+        _state = !_state;
         Cursor.lockState = _state ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = _state;
-        _state = !_state;
     }
 
-    private void ToggleCursor(bool state)
+    public void ToggleCursor(bool state)
     {
+        _state = state;
         Cursor.lockState = state ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = state;
-        _state = state;
     }
 }

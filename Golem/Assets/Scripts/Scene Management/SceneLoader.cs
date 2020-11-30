@@ -1,13 +1,21 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
+    private static SceneLoader _instance;
+    public static SceneLoader instance => _instance;  
     private AsyncOperation _currentOperation;
     private ScreenFader _screenFader;
 
-    private void Start()
+	private void Awake()
+	{
+        if (_instance == null)
+            _instance = this;
+    }
+	private void Start()
     {
         _screenFader = ScreenFader.instance;
     }
@@ -25,7 +33,7 @@ public class SceneLoader : MonoBehaviour
 
     private IEnumerator LoadSceneAsync(int sceneBuildIndex)
     {
-        _currentOperation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
+        _currentOperation = SceneManager.LoadSceneAsync(sceneBuildIndex, LoadSceneMode.Single);
         _currentOperation.allowSceneActivation = false;
 
         while (_currentOperation.progress < 0.9f)

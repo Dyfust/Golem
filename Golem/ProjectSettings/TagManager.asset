@@ -12,6 +12,8 @@ TagManager:
   - Room
   - Ramp
   - AudioSource
+  - TEst
+  - MenuCam
   layers:
   - Default
   - TransparentFX
@@ -31,9 +33,9 @@ TagManager:
   - Particles
   - Door
   - Invis_Ramp
-  - 
-  - 
-  - 
+  - Phys_Rubble
+  - Ceiling
+  - Invis_Cam
   - 
   - 
   - 

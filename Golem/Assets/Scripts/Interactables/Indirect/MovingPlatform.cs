@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MovingPlatform : MonoBehaviour, IInteractable
 {
@@ -9,33 +8,33 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 	[SerializeField] private Vector3 _openedOffset;
 	[SerializeField] private Vector3 _closedOffset;
 	[SerializeField] private float _time;
-	[SerializeField] private GameObject _camTrigger;
+	[SerializeField] private bool _dontControllerRumble;
 
+	[CustomHeader("VFX")]
+	[SerializeField] private CompositeParticleEffect _particleEffect;
+
+	[CustomHeader("Audio")]
+	[SerializeField] private AudioEmitter _audioEmitter;
+
+	private Vector3 _startPos;
 	private Vector3 _closedPos;
 	private Vector3 _openedPos;
-	private Vector3 _startPos;
-	private Vector3 _currentPos;
+	private bool _isMoving = false;
 	private bool _open = false;
 
-	private float _startTime;
 	private float _dist;
 	private float _speed;
 
 	private bool _startState;
 
-	private VirtualCameraManager _vCamRef;
+	private Vector3 pos;
 
-
-	// Start is called before the first frame update
 	void Start()
 	{
-		// Initialising positions of the pressure plate.
 		_startPos = transform.position;
-		_currentPos = _startPos;
 
 		_openedPos = _startPos + _openedOffset;
 		_closedPos = _startPos + _closedOffset;
-		_startTime = Time.time;
 
 		_dist = Vector3.Distance(_openedPos, _closedPos);
 		_speed = _dist / _time;
@@ -43,34 +42,49 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 
 	private void Update()
 	{
-		float elapsedTime = (Time.time - _startTime);
-		float fractionOfJourney = elapsedTime / _time;
+		Vector3 targetPos = _open ? _openedPos : _closedPos;
+		transform.position = Vector3.MoveTowards(transform.position, targetPos, _speed * Time.deltaTime);
+		pos = transform.position;
 
-		if (_open)
-			transform.position = Vector3.Lerp(_currentPos, _openedPos, fractionOfJourney);
-		else		
-			transform.position = Vector3.Lerp(_currentPos, _closedPos, fractionOfJourney);		
+		if (Vector3.Distance(transform.position, targetPos) <= 0.01f && _isMoving)
+		{
+			OnStopMoving();
+			_isMoving = false;
+		}
 
-		if (Input.GetKeyDown(KeyCode.G))
-			Interact();
+		if (_isMoving && !_dontControllerRumble)
+		{
+			if (Gamepad.current != null)
+				Gamepad.current.SetMotorSpeeds(0.75f, 0.75f);
+		}
+		else
+		{
+			if (Gamepad.current != null)
+				Gamepad.current.SetMotorSpeeds(0.0f, 0.0f); 
+		}
 	}
 
 	public void Interact()
 	{
 		_open = !_open;
-		Vector3 targetPos;
-		if (_open)
-			targetPos = _openedPos;
-		else
-			targetPos = _closedPos;
+		_isMoving = true;
 
-		_currentPos = transform.position;
-		_startTime = Time.time;
-
-		_dist = Vector3.Distance(_currentPos, targetPos);
-		_time = _dist / _speed;
+		OnStartMoving();
 	}
 
+	private void OnStartMoving()
+	{
+		_particleEffect?.PlayEffect();
+		_audioEmitter?.Play();
+		DebugWrapper.Log(gameObject.name + " has started moving!");
+	}
+
+	private void OnStopMoving()
+	{
+		_particleEffect?.StopEffect();
+		_audioEmitter?.Stop();
+	}
+	
 	private void OnDrawGizmosSelected()
 	{
 		Gizmos.matrix = transform.localToWorldMatrix;
@@ -83,7 +97,7 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.tag.Equals("Orb") || other.gameObject.tag.Equals("Golem") || other.gameObject.tag.Equals("Block"))
+		if (other.gameObject.tag.Equals("Orb") || other.gameObject.tag.Equals("Golem") || other.gameObject.tag.Equals("Block") || other.gameObject.layer.Equals("Ground"))
 		{
 			other.gameObject.transform.SetParent(transform);
 		}
@@ -91,21 +105,9 @@ public class MovingPlatform : MonoBehaviour, IInteractable
 
 	private void OnTriggerExit(Collider other)
 	{
-		if (other.gameObject.tag.Equals("Orb") || other.gameObject.tag.Equals("Golem") || other.gameObject.tag.Equals("Block"))
+		if (other.gameObject.tag.Equals("Orb") || other.gameObject.tag.Equals("Golem") || other.gameObject.tag.Equals("Block") || other.gameObject.layer.Equals("Ground"))
 		{
 			other.gameObject.transform.SetParent(null);
 		}
-	}
-
-	private void Moving()
-	{
-		Debug.Log("MOVING TRIGGERED");
-		_camTrigger.SetActive(true);
-	}
-
-	private void Stationary()
-	{
-		Debug.Log("STATIONARY TRIGGERED"); 
-		_camTrigger.SetActive(false);
 	}
 }

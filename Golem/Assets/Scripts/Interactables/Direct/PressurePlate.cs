@@ -2,72 +2,67 @@
 
 public class PressurePlate : MonoBehaviour
 {
-	enum PressurePlateType { ORB, GOLEM, BLOCK }
+    [SerializeField] private GameObject[] _interactions;
 
-	[SerializeField] private PressurePlateType _type;
-	[SerializeField] private GameObject[] _interactions;
+    //[Tooltip("If set to false, what ever the pressure plate activates will deactivate when the player leaves the trigger. If true then the pressure plate will stay active forever")]
+    //[SerializeField] private bool _functionToggle = false;
 
-	[Tooltip("If set to false, what ever the pressure plate activates will deactivate when the player leaves the trigger. If true then the pressure plate will stay active forever")]
-	[SerializeField] private bool _functionToggle = false;
+    private string[] _targetTags;
 
-	private string _targetTag;
+    [CustomHeader("VFX")]
+    [SerializeField] private EmissionFill _innerEmissionFill;
+    [SerializeField] private EmissionFill _outerEmmisionFill;
 
-	private EmissionFill _emmisiveAnim;
+    [CustomHeader("Audio")]
+    [SerializeField] private OneShotEmitter _sfxEmitter;
+    
+    private void Awake()
+    {
+        _targetTags = new string[2];
+        _targetTags[0] = "Golem";
+        _targetTags[1] = "Block";
+    }
 
-	private void Awake()
-	{
-		_emmisiveAnim = GetComponent<EmissionFill>();
+    private void ToggleInteractions()
+    {
+        for (int i = 0; i < _interactions.Length; i++)
+        {
+            _interactions[i].GetComponent<IInteractable>().Interact();
+        }
 
-		switch (_type)
-		{
-			case PressurePlateType.ORB:
-				{
-					_targetTag = "Orb";
-					break;
-				}
-			case PressurePlateType.GOLEM:
-				{
-					_targetTag = "Golem";
-					break;
-				}
-			case PressurePlateType.BLOCK:
-				{
-					_targetTag = "Block";
-					break;
-				}
-		}
-	}
+        _sfxEmitter.Play();
+    }
 
-	private void ToggleInteractions()
-	{
-		for (int i = 0; i < _interactions.Length; i++)
-		{
-			_interactions[i].GetComponent<IInteractable>().Interact();
-		}
-	}
+    private void OnTriggerEnter(Collider other)
+    {
+        if (CompareTag(other.gameObject.tag, _targetTags))
+        {
+            ToggleInteractions();
 
-	private void OnTriggerEnter(Collider other)
-	{
-		if (other.gameObject.CompareTag(_targetTag))
-		{
-			ToggleInteractions();
+            _innerEmissionFill.OnActivate();
+            _outerEmmisionFill.OnActivate();
+        }
+    }
 
-			if (_emmisiveAnim != null)
-				_emmisiveAnim.OnActivate();
-		}
-	}
+    private void OnTriggerExit(Collider other)
+    {
+        if (CompareTag(other.gameObject.tag, _targetTags))
+        {
+            ToggleInteractions();
 
-	private void OnTriggerExit(Collider other)
-	{
-		if (_functionToggle == false)
-		{
-			if (other.gameObject.CompareTag(_targetTag))
-			{
-				ToggleInteractions();
+            _innerEmissionFill.OnDeactivate();
+            _outerEmmisionFill.OnDeactivate();
+        }
+    }
 
-				if (_emmisiveAnim != null)
-					_emmisiveAnim.OnDeactivate();
-			}
-		}
-	}
+    private bool CompareTag(string tag, string[] tags)
+    {
+        for (int i = 0; i < tags.Length; i++)
+        {
+            if (tag == tags[i])
+                return true;
+        }
+
+        return false;
+    }
 }

@@ -1,5 +1,5 @@
-using FSM;
 using UnityEngine;
+using FSM;
 
 namespace OrbStates
 {
@@ -19,7 +19,7 @@ namespace OrbStates
 
         public override void OnExit()
         {
-            _orb.ResetState();
+
         }
 
         public override void UpdateLogic()
@@ -29,37 +29,51 @@ namespace OrbStates
 
         public override void UpdatePhysics()
         {
-            _orb.UpdateController();
+            _orb.OrientateMeshToCamera(); 
+
         }
     }
 
     public class RollingState : State
     {
         private Orb _orb;
+        private AudioEmitter _rollingSFX;
 
-        public RollingState(Orb orb) : base("Rolling State")
+        public RollingState(Orb orb, AudioEmitter rollingSFX) : base("Rolling State")
         {
             _orb = orb;
+            _rollingSFX = rollingSFX;
         }
 
         public override void OnEnter()
         {
-
+            _rollingSFX.Play();
         }
 
         public override void OnExit()
         {
-            _orb.ResetState();
+            _rollingSFX.Stop();
         }
 
         public override void UpdateLogic()
         {
+            if (_orb.IsGrounded())
+            {
+                if (!_rollingSFX.IsPlaying())
+                    _rollingSFX.Play();
+
+                _rollingSFX.SetVolume(_orb.GetVelocity().magnitude / _orb.GetMaxSpeed());
+            }
+            else
+            {
+                _rollingSFX.Stop();
+            }
         }
 
         public override void UpdatePhysics()
         {
             _orb.Move();
-            _orb.UpdateController();
+            _orb.Roll();
         }
     }
 
@@ -74,13 +88,13 @@ namespace OrbStates
 
         public override void OnEnter()
         {
-
+            _orb.ResetMovement();
+            _orb.EnterGolem();
         }
 
         public override void OnExit()
         {
-            _orb.ResetState();
-            _orb.ResetVelocity();
+            _orb.ResetMovement();
             _orb.ExitGolem();
         }
 
@@ -90,7 +104,6 @@ namespace OrbStates
 
         public override void UpdatePhysics()
         {
-            _orb.StickToGolem();
             _orb.OrientateToGolem();
         }
     }
